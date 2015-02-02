@@ -114,6 +114,16 @@ vector.equals = function(first, second)
 	error(geterror("equation", type(first), type(second)), 2)
 end
 
+vector.magnitude = function(vect)
+	if vector.isvector(vect) then
+		local x = vect:getx() ^ 2
+		local y = vect:gety() ^ 2
+		local z = vect:getz() ^ 2
+		return math.sqrt(x + y + z)
+	end
+	error(geterror("magnetude", type(vect)), 2)
+end
+
 
 
 local notsupported = function(operation)
