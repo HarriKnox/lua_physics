@@ -104,4 +104,19 @@ vector.equals = function(first, second)
 	error(geterror("equation", type(first), type(second)), 2)
 end
 
+vector_meta.__add = vector.add
+vector_meta.__sub = vector.subtract
+vector_meta.__mul = vector.multiply
+vector_meta.__div = vector.divide
+vector_meta.__unm = vector.negate
+vector_meta.__idiv = vector.intdivide
+vector_meta.__eq = vector.equals
+
+vector_meta.getx = function(this) return this.x end
+vector_meta.gety = function(this) return this.y end
+vector_meta.getz = function(this) return this.z end
+vector_meta.setx = function(this, num) this.x = num end
+vector_meta.sety = function(this, num) this.y = num end
+vector_meta.setz = function(this, num) this.z = num end
+
 return vector
