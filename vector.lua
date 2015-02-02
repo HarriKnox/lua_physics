@@ -94,4 +94,14 @@ vector.negate = function(vect)
 	error(geterror("negation", type(vect)), 2)
 end
 
+vector.equals = function(first, second)
+	if vector.isvector(first) and vector.isvector(second) then
+		local x = first:getx() == second:getx()
+		local y = first:gety() == second:gety()
+		local z = first:getz() == second:getz()
+		return x and y and z
+	end
+	error(geterror("equation", type(first), type(second)), 2)
+end
+
 return vector
