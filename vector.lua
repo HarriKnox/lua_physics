@@ -54,7 +54,7 @@ vector.clone = function(vect)
 		local x = vect:getx()
 		local y = vect:gety()
 		local z = vect:getz()
-		return vector.new(x, y, z(
+		return vector.new(x, y, z)
 	end
 	error(geterror("cloning", type(vect)), 2)
 end
@@ -148,7 +148,7 @@ end
 
 vector.normalize = function(vect)
 	if vector.isvector(vect) then
-		local mag = vectormagnitude(vect)
+		local mag = vector.magnitude(vect)
 		local x = vect:getx() / mag
 		local y = vect:gety() / mag
 		local z = vect:getz() / mag
