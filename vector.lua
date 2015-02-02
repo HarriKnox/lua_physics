@@ -26,6 +26,7 @@ local geterror = function(operation, ...)
 	return message .. "and " .. types[#types]
 end
 
+
 vector.new = function(parx, pary, parz)
 	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
 		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
