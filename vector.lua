@@ -34,6 +34,8 @@ vector.new = function(parx, pary, parz)
 	error(geterror("creation", type(parx), type(pary), type(parz)), 2)
 end
 
+setmetatable(vector, {__call = function(vector, ...) vector.new(...) end})
+
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
 end
