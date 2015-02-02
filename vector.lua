@@ -159,5 +159,6 @@ vector_meta.getz = function(this) return this.z end
 vector_meta.setx = function(this, num) this.x = num end
 vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
+vector_meta.getmagnitude = function(this) return vector.magnitude(this) end
 
 return vector
