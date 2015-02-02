@@ -32,4 +32,14 @@ vector.subtract = function(first, second)
 	return first - second
 end
 
+vector.multiply = function(first, second)
+	if vector.isvector(first) and type(second) == "number" then
+		local x = first:getx() * second
+		local y = first:gety() * second
+		local z = first:getz() * second
+		return vector.new(x, y, z)
+	end
+	return first * second
+end
+
 return vector
