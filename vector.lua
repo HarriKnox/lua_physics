@@ -27,19 +27,23 @@ local geterror = function(operation, ...)
 end
 
 
-vector.new = function(parx, pary, parz, parw)
-	if type(parx) == "table" and parx == vector then
-		parx = pary
-		pary = parz
-		parz = parw
-	end
+vector.new = function(parx, pary, parz)
 	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
 		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
 	end
 	error(geterror("creation", type(parx), type(pary), type(parz)), 2)
 end
 
-setmetatable(vector, {__call = vector.new})
+setmetatable(vector, {
+		__call = function(_, ...)
+			local ok, vect = pcall(vector.new, ...)
+			if not ok then
+				error(vect, 2)
+			end
+			return vect
+		end
+	}
+)
 
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
