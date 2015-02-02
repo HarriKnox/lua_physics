@@ -73,4 +73,15 @@ vector.divide = function(first, second)
 	error(geterror("division", type(first), type(second)), 2)
 end
 
+vector.intdivide = function(first, second)
+	if vector.isvector(first) and type(second) == "number" then
+		local vect = vector.divide(first, second)
+		vect:setx(math.floor(vect:getx()))
+		vect:sety(math.floor(vect:gety()))
+		vect:setz(math.floor(vect:getz()))
+		return vect
+	end
+	error(geterror("division", type(first), type(second)), 2)
+end
+
 return vector
