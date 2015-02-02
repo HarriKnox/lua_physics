@@ -165,6 +165,10 @@ vector_meta.__bnot = vector_meta.__band
 vector_meta.__shl = vector_meta.__band
 vector_meta.__shr = vector_meta.__band
 
+vector_meta.__tostring = function(this)
+	return "vector: (" .. tostring(this:getx()) .. ", " .. tostring(this:gety()) .. ", " .. tostring(this:getz()) .. ")"
+end
+
 vector_meta.getx = function(this) return this.x end
 vector_meta.gety = function(this) return this.y end
 vector_meta.getz = function(this) return this.z end
