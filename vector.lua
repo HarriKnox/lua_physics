@@ -39,6 +39,12 @@ vector.multiply = function(first, second)
 		local z = first:getz() * second
 		return vector.new(x, y, z)
 	end
+	if vector.isvector(second) and type(first) == "number" then
+		local x = second:getx() * first
+		local y = second:gety() * first
+		local z = second:getz() * first
+		return vector.new(x, y, z)
+	end
 	error("incompatible types for vector multiplication: " .. type(first) .. " and " .. type(second), 2)
 end
 
