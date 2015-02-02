@@ -27,7 +27,10 @@ local geterror = function(operation, ...)
 end
 
 vector.new = function(parx, pary, parz)
-	return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
+	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
+		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
+	end
+	error(geterror("creation", type(parx), type(pary), type(parz)), 2)
 end
 
 vector.isvector = function(vect)
