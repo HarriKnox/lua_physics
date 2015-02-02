@@ -84,4 +84,14 @@ vector.intdivide = function(first, second)
 	error(geterror("division", type(first), type(second)), 2)
 end
 
+vector.negate = function(vect)
+	if vector.isvector(vect) then
+		local x = vect:getx()
+		local y = vect:gety()
+		local z = vect:getz()
+		return vector.new(-x, -y, -z)
+	end
+	error(geterror("negation", type(vect)), 2)
+end
+
 return vector
