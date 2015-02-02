@@ -115,6 +115,7 @@ vector.equals = function(first, second)
 end
 
 
+
 local notsupported = function(operation)
 	return function(this, that)
 		error(operation .. "not supported with vectors", 2)
@@ -131,16 +132,16 @@ vector_meta.__eq = vector.equals
 
 vector_meta.__mod = notsupported("modulo")
 vector_meta.__pow = notsupported("powers")
+vector_meta.__concat = notsupported("concatination")
+vector_meta.__len = notsupported("length")
+vector_meta.__lt = notsupported("less-than")
+vector_meta.__le = notsupported("less-than-or-equal-to")
 vector_meta.__band = notsupported("bitwise")
 vector_meta.__bor = vector_meta.__band
 vector_meta.__bxor = vector_meta.__band
 vector_meta.__bnot = vector_meta.__band
 vector_meta.__shl = vector_meta.__band
 vector_meta.__shr = vector_meta.__band
-vector_meta.__concat = notsupported("concatination")
-vector_meta.__len = notsupported("length")
-vector_meta.__lt = notsupported("less-than")
-vector_meta.__le = notsupported("less-than-or-equal-to")
 
 vector_meta.getx = function(this) return this.x end
 vector_meta.gety = function(this) return this.y end
