@@ -45,6 +45,16 @@ vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
 end
 
+vector.clone = function(vect)
+	if vector.isvector(vect) then
+		local x = vect:getx()
+		local y = vect:gety()
+		local z = vect:getz()
+		return vector.new(x, y, z(
+	end
+	error(geterror("cloning", type(vect)), 2)
+end
+
 vector.add = function(first, second)
 	if vector.isvector(first) and vector.isvector(second) then
 		local x = first:getx() + second:getx()
