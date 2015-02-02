@@ -2,6 +2,15 @@ local vector = {}
 local vector_meta = {}
 vector_meta.__index = vector_meta
 
+local _type = type
+type = function(thing)
+	local t = _type(thing)
+	if t == "table" and vector.isvector(thing) then
+		t = "vector"
+	end
+	return t
+end
+
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
 end
