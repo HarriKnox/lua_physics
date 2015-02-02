@@ -114,6 +114,8 @@ vector.equals = function(first, second)
 	error(geterror("equation", type(first), type(second)), 2)
 end
 
+
+
 vector_meta.__add = vector.add
 vector_meta.__sub = vector.subtract
 vector_meta.__mul = vector.multiply
@@ -121,6 +123,19 @@ vector_meta.__div = vector.divide
 vector_meta.__unm = vector.negate
 vector_meta.__idiv = vector.intdivide
 vector_meta.__eq = vector.equals
+
+vector_meta.__mod = function(this, that) error("modulo not supported with vectors", 2) end
+vector_meta.__pow = function(this, that) error("powers not supported with vectors", 2) end
+vector_meta.__band = function(this, that) error("bitwise-and not supported with vectors", 2) end
+vector_meta.__bor = function(this, that) error("bitwise-or not supported with vectors", 2) end
+vector_meta.__bxor = function(this, that) error("bitwise-xor not supported with vectors", 2) end
+vector_meta.__bnot = function(this, that) error("bitwise-not not supported with vectors", 2) end
+vector_meta.__shl = function(this, that) error("bitshift not supported with vectors", 2) end
+vector_meta.__shr = function(this, that) error("bitshift not supported with vectors", 2) end
+vector_meta.__concat = function(this, that) error("concatination not supported with vectors", 2) end
+vector_meta.__len = function(this, that) error("length not supported with vectors", 2) end
+vector_meta.__lt = function(this, that) error("less-than not supported with vectors", 2) end
+vector_meta.__le = function(this, that) error("less-than-or-equal-to not supported with vectors", 2) end
 
 vector_meta.getx = function(this) return this.x end
 vector_meta.gety = function(this) return this.y end
