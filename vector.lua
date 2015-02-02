@@ -19,7 +19,7 @@ vector.add = function(first, second)
 		local z = first:getz() + second:getz()
 		return vector.new(x, y, z)
 	end
-	return first + second
+	error("incompatible types for vector addition: " .. type(first) .. " and " .. type(second), 2)
 end
 
 vector.subtract = function(first, second)
@@ -29,7 +29,7 @@ vector.subtract = function(first, second)
 		local z = first:getz() - second:getz()
 		return vector.new(x, y, z)
 	end
-	return first - second
+	error("incompatible types for vector subtraction: " .. type(first) .. " and " .. type(second), 2)
 end
 
 vector.multiply = function(first, second)
@@ -39,7 +39,7 @@ vector.multiply = function(first, second)
 		local z = first:getz() * second
 		return vector.new(x, y, z)
 	end
-	return first * second
+	error("incompatible types for vector multiplication: " .. type(first) .. " and " .. type(second), 2)
 end
 
 return vector
