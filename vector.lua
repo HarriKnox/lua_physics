@@ -7,9 +7,7 @@ vector.isvector = function(vect)
 end
 
 vector.new = function(parx, pary, parz)
-	local vect = {x = parx, y = pary, z = parz}
-	setmetatable(vect, vector_meta)
-	return vect
+	return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
 end
 
 local geterror = function(operation, ...)
