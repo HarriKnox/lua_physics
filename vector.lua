@@ -48,4 +48,14 @@ vector.multiply = function(first, second)
 	error("incompatible types for vector multiplication: " .. type(first) .. " and " .. type(second), 2)
 end
 
+vector.divide = function(first, second)
+	if vector.isvector(first) and type(second) == "number" then
+		local x = first:getx() / second
+		local y = first:gety() / second
+		local z = first:getz() / second
+		return vector.new(x, y, z)
+	end
+	error("incompatible types for vector division: " .. type(first) .. " and " .. type(second), 2)
+end
+
 return vector
