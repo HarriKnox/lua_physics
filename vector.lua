@@ -1,5 +1,6 @@
 local vector = {}
 local vector_meta = {}
+vector_meta.__index = vector_meta
 
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
@@ -8,7 +9,6 @@ end
 vector.new = function(parx, pary, parz)
 	local vect = {x = parx, y = pary, z = parz}
 	setmetatable(vect, vector_meta)
-	vector_meta.__index = vector_meta
 	return vect
 end
 
