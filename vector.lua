@@ -151,11 +151,11 @@ vector_meta.__div = vector.divide
 vector_meta.__unm = vector.negate
 vector_meta.__idiv = vector.intdivide
 vector_meta.__eq = vector.equals
+vector_meta.__len = vector.magnitude
 
 vector_meta.__mod = notsupported("modulo")
 vector_meta.__pow = notsupported("powers")
 vector_meta.__concat = notsupported("concatination")
-vector_meta.__len = notsupported("length")
 vector_meta.__lt = notsupported("less-than")
 vector_meta.__le = notsupported("less-than-or-equal-to")
 vector_meta.__band = notsupported("bitwise")
