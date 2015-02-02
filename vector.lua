@@ -14,23 +14,20 @@ end
 
 vector.add = function(first, second)
 	if vector.isvector(first) and vector.isvector(second) then
-		-- if both passed values are vectors, then return a vector
-		return vector.new(
-			first.x + second.x,
-			first.y + second.y,
-			first.z + second.z
-		)
+		local x = first:getx() + second:getx()
+		local y = first:gety() + second:gety()
+		local z = first:getz() + second:getz()
+		return vector.new(x, y, z)
 	end
-	return first + second -- fallback
+	return first + second
 end
 
 vector.subtract = function(first, second)
 	if vector.isvector(first) and vector.isvector(second) then
-		return vector.new(
-			first.x - second.x,
-			first.y - second.y,
-			first.z - second.z
-		)
+		local x = first:getx() - second:getx()
+		local y = first:gety() - second:gety()
+		local z = first:getz() - second:getz()
+		return vector.new(x, y, z)
 	end
 	return first - second
 end
