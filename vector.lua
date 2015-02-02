@@ -12,6 +12,21 @@ vector.new = function(parx, pary, parz)
 	return vect
 end
 
+local geterror = function(operation, ...)
+	local types = {...}
+	local message = string.format("incompatible type%s for vector %s: ", #types == 1 and "" or "s", operation)
+	if #types < 2 then
+		return message .. types[1]
+	end
+	if #types == 2 then
+		return message .. types[1] .. " and " .. types[2]
+	end
+	for i = 1, #types - 1 do
+		message = message .. types[i] .. ", "
+	end
+	return message .. "and " .. types[#types]
+end
+
 vector.add = function(first, second)
 	if vector.isvector(first) and vector.isvector(second) then
 		local x = first:getx() + second:getx()
@@ -19,7 +34,7 @@ vector.add = function(first, second)
 		local z = first:getz() + second:getz()
 		return vector.new(x, y, z)
 	end
-	error("incompatible types for vector addition: " .. type(first) .. " and " .. type(second), 2)
+	error(geterror("addition", type(first), type(second)), 2)
 end
 
 vector.subtract = function(first, second)
@@ -29,7 +44,7 @@ vector.subtract = function(first, second)
 		local z = first:getz() - second:getz()
 		return vector.new(x, y, z)
 	end
-	error("incompatible types for vector subtraction: " .. type(first) .. " and " .. type(second), 2)
+	error(geterror("subtraction", type(first), type(second)), 2)
 end
 
 vector.multiply = function(first, second)
@@ -45,7 +60,7 @@ vector.multiply = function(first, second)
 		local z = second:getz() * first
 		return vector.new(x, y, z)
 	end
-	error("incompatible types for vector multiplication: " .. type(first) .. " and " .. type(second), 2)
+	error(geterror("multiplication", type(first), type(second)), 2)
 end
 
 vector.divide = function(first, second)
@@ -55,7 +70,7 @@ vector.divide = function(first, second)
 		local z = first:getz() / second
 		return vector.new(x, y, z)
 	end
-	error("incompatible types for vector division: " .. type(first) .. " and " .. type(second), 2)
+	error(geterror("division", type(first), type(second)), 2)
 end
 
 return vector
