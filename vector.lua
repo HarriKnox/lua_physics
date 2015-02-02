@@ -116,7 +116,9 @@ end
 
 
 local notsupported = function(operation)
-	return operation .. "not supported with vectors"
+	return function(this, that)
+		error(operation .. "not supported with vectors", 2)
+	end
 end
 
 vector_meta.__add = vector.add
@@ -127,18 +129,18 @@ vector_meta.__unm = vector.negate
 vector_meta.__idiv = vector.intdivide
 vector_meta.__eq = vector.equals
 
-vector_meta.__mod = function(this, that) error(notsupported("modulo"), 2) end
-vector_meta.__pow = function(this, that) error(notsupported("powers"), 2) end
-vector_meta.__band = function(this, that) error(notsupported("bitwise-and"), 2) end
-vector_meta.__bor = function(this, that) error(notsupported("bitwise-or"), 2) end
-vector_meta.__bxor = function(this, that) error(notsupported("bitwise-xor"), 2) end
-vector_meta.__bnot = function(this, that) error(notsupported("bitwise-not"), 2) end
-vector_meta.__shl = function(this, that) error(notsupported("bitshift"), 2) end
-vector_meta.__shr = function(this, that) error(notsupported("bitshift"), 2) end
-vector_meta.__concat = function(this, that) error(notsupported("concatination"), 2) end
-vector_meta.__len = function(this, that) error(notsupported("length"), 2) end
-vector_meta.__lt = function(this, that) error(notsupported("less-than"), 2) end
-vector_meta.__le = function(this, that) error(notsupported("less-than-or-equal-to"), 2) end
+vector_meta.__mod = notsupported("modulo")
+vector_meta.__pow = notsupported("powers")
+vector_meta.__band = notsupported("bitwise-and")
+vector_meta.__bor = notsupported("bitwise-or")
+vector_meta.__bxor = notsupported("bitwise-xor")
+vector_meta.__bnot = notsupported("bitwise-not")
+vector_meta.__shl = notsupported("bitshift")
+vector_meta.__shr = notsupported("bitshift")
+vector_meta.__concat = notsupported("concatination")
+vector_meta.__len = notsupported("length")
+vector_meta.__lt = notsupported("less-than")
+vector_meta.__le = notsupported("less-than-or-equal-to")
 
 vector_meta.getx = function(this) return this.x end
 vector_meta.gety = function(this) return this.y end
