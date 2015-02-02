@@ -124,6 +124,17 @@ vector.magnitude = function(vect)
 	error(geterror("magnetude", type(vect)), 2)
 end
 
+vector.normalize = function(vect)
+	if vector.isvector(vect) then
+		local mag = vectormagnitude(vect)
+		local x = vect:getx() / mag
+		local y = vect:gety() / mag
+		local z = vect:getz() / mag
+		return vector.new(x, y, z)
+	end
+	error(geterror("normalize", type(vect)), 2)
+end
+
 
 
 local notsupported = function(operation)
@@ -160,5 +171,6 @@ vector_meta.setx = function(this, num) this.x = num end
 vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
 vector_meta.getmagnitude = function(this) return vector.magnitude(this) end
+vector_meta.getnormal = function(this) return vector.normalize(this) end
 
 return vector
