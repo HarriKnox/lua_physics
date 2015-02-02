@@ -11,14 +11,6 @@ type = function(thing)
 	return t
 end
 
-vector.isvector = function(vect)
-	return getmetatable(vect) == vector_meta
-end
-
-vector.new = function(parx, pary, parz)
-	return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
-end
-
 local geterror = function(operation, ...)
 	local types = {...}
 	local message = string.format("incompatible type%s for vector %s: ", #types == 1 and "" or "s", operation)
@@ -32,6 +24,14 @@ local geterror = function(operation, ...)
 		message = message .. types[i] .. ", "
 	end
 	return message .. "and " .. types[#types]
+end
+
+vector.new = function(parx, pary, parz)
+	return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
+end
+
+vector.isvector = function(vect)
+	return getmetatable(vect) == vector_meta
 end
 
 vector.add = function(first, second)
