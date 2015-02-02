@@ -194,5 +194,6 @@ vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
 vector_meta.getmagnitude = vector.magnitude
 vector_meta.getnormal = vector.normalize
+vector_meta.clone = vector.clone
 
 return vector
