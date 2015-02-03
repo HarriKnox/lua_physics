@@ -143,7 +143,7 @@ vector.magnitude = function(vect)
 		local z = vect:getz() ^ 2
 		return math.sqrt(x + y + z)
 	end
-	error(geterror("magnetude", type(vect)), 2)
+	error(geterror("calculation (magnitude)", type(vect)), 2)
 end
 
 vector.normalize = function(vect)
@@ -154,7 +154,7 @@ vector.normalize = function(vect)
 		local z = vect:getz() / mag
 		return vector.new(x, y, z)
 	end
-	error(geterror("normalize", type(vect)), 2)
+	error(geterror("calculation (normalize)", type(vect)), 2)
 end
 
 
