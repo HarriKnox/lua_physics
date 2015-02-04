@@ -32,3 +32,5 @@ common.typeerror = function(typename, operation, ...)
 	end
 	error(message, 3)
 end
+
+return common
