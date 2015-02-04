@@ -1,6 +1,7 @@
 local common = {}
 
 local _type = type
+local types = {}
 type = function(thing)
 	local t = _type(thing)
 	for check, name in pairs(types) do
@@ -12,7 +13,6 @@ type = function(thing)
 	return t
 end
 
-local types = {}
 common.registertype = function(checkfunction, typename)
 	types[checkfunction] = typename
 end
