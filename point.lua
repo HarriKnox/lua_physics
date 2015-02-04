@@ -55,3 +55,13 @@ point.clone = function(pnt)
 	end
 	incompatable("cloning", type(pnt))
 end
+
+point.equals = function(first, second)
+	if point.ispoint(first) and point.ispoint(second) then
+		local x = first:getx() == second:getx()
+		local y = first:gety() == second:gety()
+		local z = first:getz() == second:getz()
+		return x and y and z
+	end
+	incompatable("equation", type(first), type(second))
+end
