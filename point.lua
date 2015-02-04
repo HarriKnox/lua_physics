@@ -5,8 +5,6 @@ point_meta.__index = point_meta
 local vector = require('vector')
 local common = require('common')
 
-common.registertype(point.ispoint, 'point')
-
 
 point.new = function(parx, pary, parz)
 	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
@@ -29,6 +27,7 @@ setmetatable(point, {
 point.ispoint = function(pnt)
 	return getmetatable(pnt) == point_meta
 end
+common.registertype(point.ispoint, 'point')
 
 point.clone = function(pnt)
 	if point.ispoint(pnt) then

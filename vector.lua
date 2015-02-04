@@ -4,8 +4,6 @@ vector_meta.__index = vector_meta
 
 local common = require('common')
 
-common.registertype(vector.isvector, 'vector')
-
 
 vector.new = function(parx, pary, parz)
 	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
@@ -28,6 +26,7 @@ setmetatable(vector, {
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
 end
+common.registertype(vector.isvector, 'vector')
 
 vector.clone = function(vect)
 	if vector.isvector(vect) then
