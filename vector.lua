@@ -6,28 +6,12 @@ local common = require('common')
 
 common.regsitertype(vector.isvector, 'vector')
 
-local incompatable = function(operation, ...)
-	local types = {...}
-	local message = string.format("incompatible type%s for vector %s: ", #types == 1 and "" or "s", operation)
-	if #types < 2 then
-		message = message .. types[1]
-	elseif #types == 2 then
-		message = message .. types[1] .. " and " .. types[2]
-	else
-		for i = 1, #types - 1 do
-			message = message .. types[i] .. ", "
-		end
-		message = message .. "and " .. types[#types]
-	end
-	error(message, 3)
-end
-
 
 vector.new = function(parx, pary, parz)
-	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
+	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
 		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
 	end
-	incompatable("creation", type(parx), type(pary), type(parz))
+	common.typeerror('vector', 'creation', type(parx), type(pary), type(parz))
 end
 
 setmetatable(vector, {
@@ -52,7 +36,7 @@ vector.clone = function(vect)
 		local z = vect:getz()
 		return vector.new(x, y, z)
 	end
-	incompatable("cloning", type(vect))
+	common.typeerror('vector', 'cloning', type(vect))
 end
 
 vector.add = function(first, second)
@@ -62,7 +46,7 @@ vector.add = function(first, second)
 		local z = first:getz() + second:getz()
 		return vector.new(x, y, z)
 	end
-	incompatable("addition", type(first), type(second))
+	common.typeerror('vector', 'addition', type(first), type(second))
 end
 
 vector.subtract = function(first, second)
@@ -72,44 +56,44 @@ vector.subtract = function(first, second)
 		local z = first:getz() - second:getz()
 		return vector.new(x, y, z)
 	end
-	incompatable("subtraction", type(first), type(second))
+	common.typeerror('vector', 'subtraction', type(first), type(second))
 end
 
 vector.multiply = function(first, second)
-	if vector.isvector(first) and type(second) == "number" then
+	if vector.isvector(first) and type(second) == 'number' then
 		local x = first:getx() * second
 		local y = first:gety() * second
 		local z = first:getz() * second
 		return vector.new(x, y, z)
 	end
-	if vector.isvector(second) and type(first) == "number" then
+	if vector.isvector(second) and type(first) == 'number' then
 		local x = second:getx() * first
 		local y = second:gety() * first
 		local z = second:getz() * first
 		return vector.new(x, y, z)
 	end
-	incompatable("multiplication", type(first), type(second))
+	common.typeerror('vector', 'multiplication', type(first), type(second))
 end
 
 vector.divide = function(first, second)
-	if vector.isvector(first) and type(second) == "number" then
+	if vector.isvector(first) and type(second) == 'number' then
 		local x = first:getx() / second
 		local y = first:gety() / second
 		local z = first:getz() / second
 		return vector.new(x, y, z)
 	end
-	incompatable("division", type(first), type(second))
+	common.typeerror('vector', 'division', type(first), type(second))
 end
 
 vector.intdivide = function(first, second)
-	if vector.isvector(first) and type(second) == "number" then
+	if vector.isvector(first) and type(second) == 'number' then
 		local vect = vector.divide(first, second)
 		vect:setx(math.floor(vect:getx()))
 		vect:sety(math.floor(vect:gety()))
 		vect:setz(math.floor(vect:getz()))
 		return vect
 	end
-	incompatable("division", type(first), type(second))
+	common.typeerror('vector', 'division', type(first), type(second))
 end
 
 vector.negate = function(vect)
@@ -119,7 +103,7 @@ vector.negate = function(vect)
 		local z = vect:getz()
 		return vector.new(-x, -y, -z)
 	end
-	incompatable("negation", type(vect))
+	common.typeerror('vector', 'negation', type(vect))
 end
 
 vector.equals = function(first, second)
@@ -129,7 +113,7 @@ vector.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	incompatable("equation", type(first), type(second))
+	common.typeerror('vector', 'equation', type(first), type(second))
 end
 
 vector.magnitude = function(vect)
@@ -139,7 +123,7 @@ vector.magnitude = function(vect)
 		local z = vect:getz() ^ 2
 		return math.sqrt(x + y + z)
 	end
-	incompatable("magnitude", type(vect))
+	common.typeerror('vector', 'magnitude', type(vect))
 end
 
 vector.normalize = function(vect)
@@ -150,7 +134,7 @@ vector.normalize = function(vect)
 		local z = vect:getz() / mag
 		return vector.new(x, y, z)
 	end
-	incompatable("normalize", type(vect))
+	common.typeerror('vector', 'normalize', type(vect))
 end
 
 vector.dotproduct = function(first, second)
@@ -160,7 +144,7 @@ vector.dotproduct = function(first, second)
 		local z = first:getz() * second:getz()
 		return x + y + z
 	end
-	incompatable("dot product", type(first), type(second))
+	common.typeerror('vector', 'dot-product', type(first), type(second))
 end
 
 vector.crossproduct = function(first, second)
@@ -170,7 +154,7 @@ vector.crossproduct = function(first, second)
 		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
 		return vector.new(x, y, z)
 	end
-	incompatable("cross product", type(first), type(second))
+	common.typeerror('vector', 'cross-product', type(first), type(second))
 end
 
 vector.azimuth = function(vect)
@@ -183,7 +167,7 @@ vector.azimuth = function(vect)
 		end
 		return arctan(vect:gety(), vect:getx())
 	end
-	incompatable("calculation (azimuth)", type(vect))
+	common.typeerror('vector', 'azimuth', type(vect))
 end
 
 vector.altitude = function(vect)
@@ -198,7 +182,7 @@ vector.altitude = function(vect)
 		local y = vect:gety() ^ 2
 		return arctan(vect:getz(), math.sqrt(x + y))
 	end
-	incompatable("calculation (altitude)", type(vect))
+	common.typeerror('vector', 'altitude', type(vect))
 end
 
 
@@ -218,12 +202,12 @@ vector_meta.__idiv = vector.intdivide
 vector_meta.__eq = vector.equals
 vector_meta.__len = vector.magnitude
 
-vector_meta.__mod = notsupported("modulo")
-vector_meta.__pow = notsupported("powers")
-vector_meta.__concat = notsupported("concatination")
-vector_meta.__lt = notsupported("less-than")
-vector_meta.__le = notsupported("less-than-or-equal-to")
-vector_meta.__band = notsupported("bitwise")
+vector_meta.__mod = notsupported('modulo')
+vector_meta.__pow = notsupported('powers')
+vector_meta.__concat = notsupported('concatination')
+vector_meta.__lt = notsupported('less-than')
+vector_meta.__le = notsupported('less-than-or-equal-to')
+vector_meta.__band = notsupported('bitwise')
 vector_meta.__bor = vector_meta.__band
 vector_meta.__bxor = vector_meta.__band
 vector_meta.__bnot = vector_meta.__band

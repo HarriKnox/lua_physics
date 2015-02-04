@@ -7,28 +7,12 @@ local common = require('common')
 
 common.registertype(point.ispoint, 'point')
 
-local incompatable = function(operation, ...)
-	local types = {...}
-	local message = string.format("incompatible type%s for point %s: ", #types == 1 and "" or "s", operation)
-	if #types < 2 then
-		message = message .. types[1]
-	elseif #types == 2 then
-		message = message .. types[1] .. " and " .. types[2]
-	else
-		for i = 1, #types - 1 do
-			message = message .. types[i] .. ", "
-		end
-		message = message .. "and " .. types[#types]
-	end
-	error(message, 3)
-end
-
 
 point.new = function(parx, pary, parz)
-	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
+	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
 		return setmetatable({x = parx, y = pary, z = parz}, point_meta)
 	end
-	incompatable("creation", type(parx), type(pary), type(parz))
+	common.typeerror('point', 'creation', type(parx), type(pary), type(parz))
 end
 
 setmetatable(point, {
@@ -53,7 +37,7 @@ point.clone = function(pnt)
 		local z = pnt:getz()
 		return point.new(x, y, z)
 	end
-	incompatable("cloning", type(pnt))
+	common.typeerror('point', 'cloning', type(pnt))
 end
 
 point.equals = function(first, second)
@@ -63,7 +47,7 @@ point.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	incompatable("equation", type(first), type(second))
+	common.typeerror('point', 'equation', type(first), type(second))
 end
 
 point.translate = function(pnt, vect)
@@ -73,7 +57,7 @@ point.translate = function(pnt, vect)
 		local z = pnt:getz() + vect:getz()
 		return point.new(x, y, z)
 	end
-	incompatable("translation", type(pnt), type(vect))
+	common.typeerror('point', 'translation', type(pnt), type(vect))
 end
 
 
@@ -86,19 +70,19 @@ end
 
 point_meta.__eq = point.equals
 
-point_meta.__add = notsupported("addition")
-point_meta.__sub = notsupported("subtraction")
-point_meta.__mul = notsupported("multiplication")
-point_meta.__div = notsupported("division")
-point_meta.__unm = notsupported("unary-minus")
+point_meta.__add = notsupported('addition')
+point_meta.__sub = notsupported('subtraction')
+point_meta.__mul = notsupported('multiplication')
+point_meta.__div = notsupported('division')
+point_meta.__unm = notsupported('unary-minus')
 point_meta.__idiv = notsupported("int-division")
-point_meta.__len = notsupported("length")
-point_meta.__mod = notsupported("modulo")
-point_meta.__pow = notsupported("powers")
-point_meta.__concat = notsupported("concatination")
-point_meta.__lt = notsupported("less-than")
-point_meta.__le = notsupported("less-than-or-equal-to")
-point_meta.__band = notsupported("bitwise")
+point_meta.__len = notsupported('length')
+point_meta.__mod = notsupported('modulo')
+point_meta.__pow = notsupported('powers')
+point_meta.__concat = notsupported('concatination')
+point_meta.__lt = notsupported('less-than')
+point_meta.__le = notsupported('less-than-or-equal-to')
+point_meta.__band = notsupported('bitwise')
 point_meta.__bor = point_meta.__band
 point_meta.__bxor = point_meta.__band
 point_meta.__bnot = point_meta.__band
