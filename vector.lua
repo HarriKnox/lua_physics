@@ -143,7 +143,7 @@ vector.magnitude = function(vect)
 		local z = vect:getz() ^ 2
 		return math.sqrt(x + y + z)
 	end
-	error(geterror("calculation (magnitude)", type(vect)), 2)
+	error(geterror("magnitude", type(vect)), 2)
 end
 
 vector.normalize = function(vect)
@@ -154,7 +154,7 @@ vector.normalize = function(vect)
 		local z = vect:getz() / mag
 		return vector.new(x, y, z)
 	end
-	error(geterror("calculation (normalize)", type(vect)), 2)
+	error(geterror("normalize", type(vect)), 2)
 end
 
 vector.dotproduct = function(first, second)
@@ -164,7 +164,7 @@ vector.dotproduct = function(first, second)
 		local z = first:getz() * second:getz()
 		return x + y + z
 	end
-	error(geterror("calculation (dot product)", type(first), type(second)), 2)
+	error(geterror("dot product", type(first), type(second)), 2)
 end
 
 vector.crossproduct = function(first, second)
@@ -174,7 +174,7 @@ vector.crossproduct = function(first, second)
 		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
 		return vector.new(x, y, z)
 	end
-	error(geterror("calculation (cross product)", type(first), type(second)), 2)
+	error(geterror("cross product", type(first), type(second)), 2)
 end
 
 vector.azimuth = function(vect)
