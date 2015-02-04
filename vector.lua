@@ -220,5 +220,6 @@ vector_meta.getmagnitude = vector.magnitude
 vector_meta.getnormal = vector.normalize
 vector_meta.clone = vector.clone
 vector_meta.dot = vector.dotproduct
+vector_meta.cross = vector.crossproduct
 
 return vector
