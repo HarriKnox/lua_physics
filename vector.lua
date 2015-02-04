@@ -177,6 +177,19 @@ vector.crossproduct = function(first, second)
 	error(geterror("calculation (cross product)", type(first), type(second)), 2)
 end
 
+vector.azimuth = function(vect)
+	if vector.isvector(vect) then
+		local arctan
+		if math.atan == math.atan2 or math.atan2 == nil then
+			arctan = math.atan
+		else
+			arctan = math.atan2
+		end
+		return math.deg(arctan(vect:gety(), vect:getx()))
+	end
+	error(geterror("calculation (azimuth)", type(vect)), 2)
+end
+
 
 
 local notsupported = function(operation)
@@ -218,6 +231,7 @@ vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
 vector_meta.getmagnitude = vector.magnitude
 vector_meta.getnormal = vector.normalize
+vector_meta.getazimuth = vector.azimuth
 vector_meta.clone = vector.clone
 vector_meta.dot = vector.dotproduct
 vector_meta.cross = vector.crossproduct
