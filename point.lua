@@ -2,6 +2,8 @@ local point = {}
 local point_meta = {}
 point_meta.__index = point_meta
 
+local vector = require("vector")
+
 local _type = type
 type = function(thing)
 	local t = _type(thing)
@@ -37,11 +39,11 @@ end
 
 setmetatable(point, {
 		__call = function(_, ...)
-			local ok, vect = pcall(point.new, ...)
+			local ok, pnt = pcall(point.new, ...)
 			if not ok then
-				error(vect, 2)
+				error(pnt, 2)
 			end
-			return vect
+			return pnt
 		end
 	}
 )
@@ -68,6 +70,16 @@ point.equals = function(first, second)
 		return x and y and z
 	end
 	incompatable("equation", type(first), type(second))
+end
+
+point.translate = function(pnt, vect)
+	if point.ispoint(pnt) and vector.isvector(vect) then
+		local x = pnt:getx() + vect:getx()
+		local y = pnt:gety() + vect:gety()
+		local z = pnt:getz() + vect:getz()
+		return point.new(x, y, z)
+	end
+	incompatable("translation", type(pnt), type(vect))
 end
 
 
