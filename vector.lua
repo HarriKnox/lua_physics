@@ -198,7 +198,9 @@ vector.altitude = function(vect)
 		else
 			arctan = math.atan2
 		end
-		return math.deg(arctan(vect:getz(), vect:getmagnitude()))
+		local x = vect:getx() ^ 2
+		local y = vect:gety() ^ 2
+		return math.deg(arctan(vect:getz(), math.sqrt(x + y))
 	end
 	error(geterror("calculation (altitude)", type(vect)), 2)
 end
