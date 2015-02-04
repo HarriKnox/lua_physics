@@ -76,13 +76,13 @@ end
 
 point_meta.__eq = point.equals
 
-point_meta.__add = point.add
-point_meta.__sub = point.subtract
-point_meta.__mul = point.multiply
-point_meta.__div = point.divide
-point_meta.__unm = point.negate
-point_meta.__idiv = point.intdivide
-point_meta.__len = point.magnitude
+point_meta.__add = notsupported("addition")
+point_meta.__sub = notsupported("subtraction")
+point_meta.__mul = notsupported("multiplication")
+point_meta.__div = notsupported("division")
+point_meta.__unm = notsupported("unary-minus")
+point_meta.__idiv = notsupported("int-division")
+point_meta.__len = notsupported("length")
 point_meta.__mod = notsupported("modulo")
 point_meta.__pow = notsupported("powers")
 point_meta.__concat = notsupported("concatination")
@@ -105,3 +105,5 @@ point_meta.getz = function(this) return this.z end
 point_meta.setx = function(this, num) this.x = num end
 point_meta.sety = function(this, num) this.y = num end
 point_meta.setz = function(this, num) this.z = num end
+
+return point
