@@ -109,5 +109,6 @@ point_meta.getz = function(this) return this.z end
 point_meta.setx = function(this, num) this.x = num end
 point_meta.sety = function(this, num) this.y = num end
 point_meta.setz = function(this, num) this.z = num end
+point_meta.clone = point.clone
 
 return point
