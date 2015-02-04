@@ -2,16 +2,10 @@ local point = {}
 local point_meta = {}
 point_meta.__index = point_meta
 
-local vector = require("vector")
+local vector = require('vector')
+local common = require('common')
 
-local _type = type
-type = function(thing)
-	local t = _type(thing)
-	if t == "table" and point.ispoint(thing) then
-		t = "point"
-	end
-	return t
-end
+common.registertype(point.ispoint, 'point')
 
 local incompatable = function(operation, ...)
 	local types = {...}
