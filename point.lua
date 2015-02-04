@@ -26,3 +26,32 @@ local incompatable = function(operation, ...)
 	end
 	error(message, 3)
 end
+
+
+point.new = function(parx, pary, parz)
+	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
+		return setmetatable({x = parx, y = pary, z = parz}, point_meta)
+	end
+	incompatable("creation", type(parx), type(pary), type(parz))
+end
+
+setmetatable(point, {
+		__call = function(_, ...)
+			local ok, vect = pcall(point.new, ...)
+			if not ok then
+				error(vect, 2)
+			end
+			return vect
+		end
+	}
+)
+
+point.clone = function(pnt)
+	if point.ispoint(pnt) then
+		local x = pnt:getx()
+		local y = pnt:gety()
+		local z = pnt:getz()
+		return point.new(x, y, z)
+	end
+	incompatable("cloning", type(pnt))
+end
