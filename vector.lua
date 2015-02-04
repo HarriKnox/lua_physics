@@ -157,6 +157,16 @@ vector.normalize = function(vect)
 	error(geterror("calculation (normalize)", type(vect)), 2)
 end
 
+vector.dotproduct = function(first, second)
+	if vector.isvector(first) and vector.isvector(second) then
+		local x = first:getx() * second:getx()
+		local y = first:gety() * second:gety()
+		local z = first:getz() * second:getz()
+		return x + y + z
+	end
+	error(geterror("calculation (dot product)", type(first) type(second)), 2)
+end
+
 
 
 local notsupported = function(operation)
@@ -199,5 +209,6 @@ vector_meta.setz = function(this, num) this.z = num end
 vector_meta.getmagnitude = vector.magnitude
 vector_meta.getnormal = vector.normalize
 vector_meta.clone = vector.clone
+vector_meta.dot = vector.dotproduct
 
 return vector
