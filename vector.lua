@@ -207,7 +207,7 @@ vector_meta.__shl = vector_meta.__band
 vector_meta.__shr = vector_meta.__band
 
 vector_meta.__tostring = function(this)
-	return string.format("vector: (%d, %d, %d)", this:getx(), this:gety(), this:getz())
+	return string.format("vector: (%g, %g, %g)", this:getx(), this:gety(), this:getz())
 end
 
 vector_meta.getx = function(this) return this.x end
