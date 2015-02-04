@@ -61,27 +61,21 @@ end
 
 
 
-local notsupported = function(operation)
-	return function(this, that)
-		error(operation .. " not supported with points", 2)
-	end
-end
-
 point_meta.__eq = point.equals
 
-point_meta.__add = notsupported('addition')
-point_meta.__sub = notsupported('subtraction')
-point_meta.__mul = notsupported('multiplication')
-point_meta.__div = notsupported('division')
-point_meta.__unm = notsupported('unary-minus')
-point_meta.__idiv = notsupported("int-division")
-point_meta.__len = notsupported('length')
-point_meta.__mod = notsupported('modulo')
-point_meta.__pow = notsupported('powers')
-point_meta.__concat = notsupported('concatination')
-point_meta.__lt = notsupported('less-than')
-point_meta.__le = notsupported('less-than-or-equal-to')
-point_meta.__band = notsupported('bitwise')
+point_meta.__add = common.notsupported('points', 'addition')
+point_meta.__sub = common.notsupported('points', 'subtraction')
+point_meta.__mul = common.notsupported('points', 'multiplication')
+point_meta.__div = common.notsupported('points', 'division')
+point_meta.__unm = common.notsupported('points', 'unary-minus')
+point_meta.__idiv = common.notsupported('points', 'int-division')
+point_meta.__len = common.notsupported('points', 'length')
+point_meta.__mod = common.notsupported('points', 'modulo')
+point_meta.__pow = common.notsupported('points', 'powers')
+point_meta.__concat = common.notsupported('points', 'concatination')
+point_meta.__lt = common.notsupported('points', 'less-than')
+point_meta.__le = common.notsupported('points', 'less-than-or-equal-to')
+point_meta.__band = common.notsupported('points', 'bitwise')
 point_meta.__bor = point_meta.__band
 point_meta.__bxor = point_meta.__band
 point_meta.__bnot = point_meta.__band

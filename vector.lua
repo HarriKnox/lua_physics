@@ -185,13 +185,6 @@ vector.altitude = function(vect)
 end
 
 
-
-local notsupported = function(operation)
-	return function(this, that)
-		error(operation .. " not supported with vectors", 2)
-	end
-end
-
 vector_meta.__add = vector.add
 vector_meta.__sub = vector.subtract
 vector_meta.__mul = vector.multiply
@@ -201,12 +194,12 @@ vector_meta.__idiv = vector.intdivide
 vector_meta.__eq = vector.equals
 vector_meta.__len = vector.magnitude
 
-vector_meta.__mod = notsupported('modulo')
-vector_meta.__pow = notsupported('powers')
-vector_meta.__concat = notsupported('concatination')
-vector_meta.__lt = notsupported('less-than')
-vector_meta.__le = notsupported('less-than-or-equal-to')
-vector_meta.__band = notsupported('bitwise')
+vector_meta.__mod = common.notsupported('vectors', 'modulo')
+vector_meta.__pow = common.notsupported('vectors', 'powers')
+vector_meta.__concat = common.notsupported('vectors', 'concatination')
+vector_meta.__lt = common.notsupported('vectors', 'less-than')
+vector_meta.__le = common.notsupported('vectors', 'less-than-or-equal-to')
+vector_meta.__band = common.notsupported('vectors', 'bitwise')
 vector_meta.__bor = vector_meta.__band
 vector_meta.__bxor = vector_meta.__band
 vector_meta.__bnot = vector_meta.__band

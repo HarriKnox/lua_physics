@@ -33,4 +33,10 @@ common.typeerror = function(typename, operation, ...)
 	error(message, 3)
 end
 
+common.notsupported = function(typename, operation)
+	return function(this, that)
+		error(operation .. " not supported with " .. typename, 2)
+	end
+end
+
 return common
