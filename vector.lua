@@ -164,7 +164,17 @@ vector.dotproduct = function(first, second)
 		local z = first:getz() * second:getz()
 		return x + y + z
 	end
-	error(geterror("calculation (dot product)", type(first) type(second)), 2)
+	error(geterror("calculation (dot product)", type(first), type(second)), 2)
+end
+
+vector.crossproduct = function(first, second)
+	if vector.isvector(first) and vector.isvector(second) then
+		local x = (first:gety() * second:getz()) - (first:getz() * second:gety())
+		local y = (first:getz() * second:getx()) - (first:getx() * second:getz())
+		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
+		return vector.new(x, y, z)
+	end
+	error(geterror("calculation (cross product)", type(first), type(second)), 2)
 end
 
 
