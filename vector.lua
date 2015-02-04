@@ -4,7 +4,7 @@ vector_meta.__index = vector_meta
 
 local common = require('common')
 
-common.regsitertype(vector.isvector, 'vector')
+common.registertype(vector.isvector, 'vector')
 
 
 vector.new = function(parx, pary, parz)
