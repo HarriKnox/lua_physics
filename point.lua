@@ -46,6 +46,10 @@ setmetatable(point, {
 	}
 )
 
+point.ispoint = function(pnt)
+	return getmetatable(pnt) == point_meta
+end
+
 point.clone = function(pnt)
 	if point.ispoint(pnt) then
 		local x = pnt:getx()
