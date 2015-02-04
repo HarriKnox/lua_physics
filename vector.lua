@@ -11,19 +11,20 @@ type = function(thing)
 	return t
 end
 
-local geterror = function(operation, ...)
+local incompatable = function(operation, ...)
 	local types = {...}
 	local message = string.format("incompatible type%s for vector %s: ", #types == 1 and "" or "s", operation)
 	if #types < 2 then
-		return message .. types[1]
+		message = message .. types[1]
+	elseif #types == 2 then
+		message = message .. types[1] .. " and " .. types[2]
+	else
+		for i = 1, #types - 1 do
+			message = message .. types[i] .. ", "
+		end
+		message = message .. "and " .. types[#types]
 	end
-	if #types == 2 then
-		return message .. types[1] .. " and " .. types[2]
-	end
-	for i = 1, #types - 1 do
-		message = message .. types[i] .. ", "
-	end
-	return message .. "and " .. types[#types]
+	error(message, 3)
 end
 
 
@@ -31,7 +32,7 @@ vector.new = function(parx, pary, parz)
 	if type(parx) == "number" and type(pary) == "number" and type(parz) == "number" then
 		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
 	end
-	error(geterror("creation", type(parx), type(pary), type(parz)), 2)
+	incompatable("creation", type(parx), type(pary), type(parz))
 end
 
 setmetatable(vector, {
@@ -56,7 +57,7 @@ vector.clone = function(vect)
 		local z = vect:getz()
 		return vector.new(x, y, z)
 	end
-	error(geterror("cloning", type(vect)), 2)
+	incompatable("cloning", type(vect))
 end
 
 vector.add = function(first, second)
@@ -66,7 +67,7 @@ vector.add = function(first, second)
 		local z = first:getz() + second:getz()
 		return vector.new(x, y, z)
 	end
-	error(geterror("addition", type(first), type(second)), 2)
+	incompatable("addition", type(first), type(second))
 end
 
 vector.subtract = function(first, second)
@@ -76,7 +77,7 @@ vector.subtract = function(first, second)
 		local z = first:getz() - second:getz()
 		return vector.new(x, y, z)
 	end
-	error(geterror("subtraction", type(first), type(second)), 2)
+	incompatable("subtraction", type(first), type(second))
 end
 
 vector.multiply = function(first, second)
@@ -92,7 +93,7 @@ vector.multiply = function(first, second)
 		local z = second:getz() * first
 		return vector.new(x, y, z)
 	end
-	error(geterror("multiplication", type(first), type(second)), 2)
+	incompatable("multiplication", type(first), type(second))
 end
 
 vector.divide = function(first, second)
@@ -102,7 +103,7 @@ vector.divide = function(first, second)
 		local z = first:getz() / second
 		return vector.new(x, y, z)
 	end
-	error(geterror("division", type(first), type(second)), 2)
+	incompatable("division", type(first), type(second))
 end
 
 vector.intdivide = function(first, second)
@@ -113,7 +114,7 @@ vector.intdivide = function(first, second)
 		vect:setz(math.floor(vect:getz()))
 		return vect
 	end
-	error(geterror("division", type(first), type(second)), 2)
+	incompatable("division", type(first), type(second))
 end
 
 vector.negate = function(vect)
@@ -123,7 +124,7 @@ vector.negate = function(vect)
 		local z = vect:getz()
 		return vector.new(-x, -y, -z)
 	end
-	error(geterror("negation", type(vect)), 2)
+	incompatable("negation", type(vect))
 end
 
 vector.equals = function(first, second)
@@ -133,7 +134,7 @@ vector.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	error(geterror("equation", type(first), type(second)), 2)
+	incompatable("equation", type(first), type(second))
 end
 
 vector.magnitude = function(vect)
@@ -143,7 +144,7 @@ vector.magnitude = function(vect)
 		local z = vect:getz() ^ 2
 		return math.sqrt(x + y + z)
 	end
-	error(geterror("magnitude", type(vect)), 2)
+	incompatable("magnitude", type(vect))
 end
 
 vector.normalize = function(vect)
@@ -154,7 +155,7 @@ vector.normalize = function(vect)
 		local z = vect:getz() / mag
 		return vector.new(x, y, z)
 	end
-	error(geterror("normalize", type(vect)), 2)
+	incompatable("normalize", type(vect))
 end
 
 vector.dotproduct = function(first, second)
@@ -164,7 +165,7 @@ vector.dotproduct = function(first, second)
 		local z = first:getz() * second:getz()
 		return x + y + z
 	end
-	error(geterror("dot product", type(first), type(second)), 2)
+	incompatable("dot product", type(first), type(second))
 end
 
 vector.crossproduct = function(first, second)
@@ -174,7 +175,7 @@ vector.crossproduct = function(first, second)
 		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
 		return vector.new(x, y, z)
 	end
-	error(geterror("cross product", type(first), type(second)), 2)
+	incompatable("cross product", type(first), type(second))
 end
 
 vector.azimuth = function(vect)
@@ -187,7 +188,7 @@ vector.azimuth = function(vect)
 		end
 		return arctan(vect:gety(), vect:getx())
 	end
-	error(geterror("calculation (azimuth)", type(vect)), 2)
+	incompatable("calculation (azimuth)", type(vect))
 end
 
 vector.altitude = function(vect)
@@ -202,7 +203,7 @@ vector.altitude = function(vect)
 		local y = vect:gety() ^ 2
 		return arctan(vect:getz(), math.sqrt(x + y))
 	end
-	error(geterror("calculation (altitude)", type(vect)), 2)
+	incompatable("calculation (altitude)", type(vect))
 end
 
 
