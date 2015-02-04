@@ -65,3 +65,43 @@ point.equals = function(first, second)
 	end
 	incompatable("equation", type(first), type(second))
 end
+
+
+
+local notsupported = function(operation)
+	return function(this, that)
+		error(operation .. " not supported with points", 2)
+	end
+end
+
+point_meta.__eq = point.equals
+
+point_meta.__add = point.add
+point_meta.__sub = point.subtract
+point_meta.__mul = point.multiply
+point_meta.__div = point.divide
+point_meta.__unm = point.negate
+point_meta.__idiv = point.intdivide
+point_meta.__len = point.magnitude
+point_meta.__mod = notsupported("modulo")
+point_meta.__pow = notsupported("powers")
+point_meta.__concat = notsupported("concatination")
+point_meta.__lt = notsupported("less-than")
+point_meta.__le = notsupported("less-than-or-equal-to")
+point_meta.__band = notsupported("bitwise")
+point_meta.__bor = point_meta.__band
+point_meta.__bxor = point_meta.__band
+point_meta.__bnot = point_meta.__band
+point_meta.__shl = point_meta.__band
+point_meta.__shr = point_meta.__band
+
+point_meta.__tostring = function(this)
+	return string.format("point: (%g, %g, %g)", this:getx(), this:gety(), this:getz())
+end
+
+point_meta.getx = function(this) return this.x end
+point_meta.gety = function(this) return this.y end
+point_meta.getz = function(this) return this.z end
+point_meta.setx = function(this, num) this.x = num end
+point_meta.sety = function(this, num) this.y = num end
+point_meta.setz = function(this, num) this.z = num end
