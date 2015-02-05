@@ -77,11 +77,11 @@ unit_meta.__tostring = function(this)
 	if #numerator == 0 then
 		table.insert(numerator, '1')
 	end
-	local numer = table.concat(numerator, ' ')
+	local str = table.concat(numerator, ' ')
 	if #denominator > 0 then
-		return numer .. " / " .. table.concat(denominator, ' ')
+		return str .. " / " .. table.concat(denominator, ' ')
 	end
-	return numer
+	return str
 end
 
 unit_meta.getkilogram = function(this) return this.kilogram end
