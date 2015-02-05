@@ -63,13 +63,13 @@ end
 
 unit.power = function(unt, num)
 	if unit.isunit(unt) and type(num) == 'number' then
-		local kg = first:getkilogram() * num
-		local m = first:getmeter() * num
-		local s = first:getsecond() * num
-		local a = first:getampere() * num
-		local k = first:getkelvin() * num
-		local mol = first:getmole() * num
-		local cd = first:getcandela() * num
+		local kg = unt:getkilogram() * num
+		local m = unt:getmeter() * num
+		local s = unt:getsecond() * num
+		local a = unt:getampere() * num
+		local k = unt:getkelvin() * num
+		local mol = unt:getmole() * num
+		local cd = unt:getcandela() * num
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
 	common.typeerror('unit', 'power', type(unt), type(num))
