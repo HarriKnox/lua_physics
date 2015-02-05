@@ -33,6 +33,20 @@ unit.clone = function(un)
 	common.typeerror('unit', 'cloning', type(un))
 end
 
+unit.multiply = function(first, second)
+	if unit.isunit(first) and unit.isunit(second) then
+		local kg = first:getkilogram() + second:getkilogram()
+		local m = first:getmeter() + second:getmeter()
+		local s = first:getsecond() + second:getsecond()
+		local a = first:getampere() + second:getampere()
+		local k = first:getkelvin() + second:getkelvin()
+		local mol = first:getmole() + second:getmole()
+		local cd = first:getcandela() + second:getcandela()
+		return unit.new(kg, m, s, a, k, mol, cd)
+	end
+	common.typeerror('unit', 'multiplication', type(first), type(second))
+end
+
 unit.equals = function(first, second)
 	if unit.isunit(first) and unit.isunit(second) then
 		local kg = first:getkilogram() == second:getkilogram()
