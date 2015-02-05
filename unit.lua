@@ -83,4 +83,12 @@ unit_meta.__tostring = function(this)
 	return str .. numerator
 end
 
+unit_meta.getkilogram = function(this) return this.kilogram end
+unit_meta.getmeter = function(this) return this.meter end
+unit_meta.getsecond = function(this) return this.second end
+unit_meta.getampere = function(this) return this.ampere end
+unit_meta.getkelvin = function(this) return this.kelvin end
+unit_meta.getmole = function(this) return this.mole end
+unit_meta.getcandela = function(this) return this.candela end
+
 return unit
