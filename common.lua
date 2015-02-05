@@ -13,17 +13,16 @@ type = function(thing)
 	return t
 end
 
-common.getcall = function(newfunc)
-	return {
-		__call = function(_, ...)
-			local ok, obj = pcall(newfunc, ...)
-			if not ok then
-				error(obj, 2)
-			end
-			return obj
-		end
-	}
-)
+common.setcallmeta = function(parmodule)
+	setmetatable(parmodule, {
+			__call = function(_, ...)
+				local ok, obj = pcall(parmodule.new, ...)
+				if not ok then
+					error(obj, 2)
+				end
+				return obj
+			end})
+end
 
 common.registertype = function(checkfunction, typename)
 	types[checkfunction] = typename

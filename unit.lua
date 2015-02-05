@@ -12,7 +12,7 @@ unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
 	common.typeerror('unit', 'creation', type(parkg), type(parm), type(pars), type(para), type(park), type(parmol), type(parcd))
 end
 
-setmetatable(unit, common.getcall(unit.new))
+common.setcallmeta(unit)
 
 unit.isunit = function(un)
 	return getmetatable(un) == unit_meta

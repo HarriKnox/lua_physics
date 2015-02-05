@@ -13,7 +13,7 @@ point.new = function(parx, pary, parz)
 	common.typeerror('point', 'creation', type(parx), type(pary), type(parz))
 end
 
-setmetatable(point, common.getcall(point.new))
+common.setcallmeta(point)
 
 point.ispoint = function(pnt)
 	return getmetatable(pnt) == point_meta
