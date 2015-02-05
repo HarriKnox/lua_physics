@@ -47,6 +47,28 @@ unit.equals = function(first, second)
 	common.typeerror('unit', 'equation', type(first), type(second))
 end
 
+
+unit_meta.__eq = unit.equals
+
+unit_meta.__add = common.notsupported('units', 'addition')
+unit_meta.__sub = common.notsupported('units', 'subtraction')
+unit_meta.__mul = common.notsupported('units', 'multiplication')
+unit_meta.__div = common.notsupported('units', 'division')
+unit_meta.__unm = common.notsupported('units', 'unary-minus')
+unit_meta.__idiv = common.notsupported('units', 'int-division')
+unit_meta.__len = common.notsupported('units', 'length')
+unit_meta.__mod = common.notsupported('units', 'modulo')
+unit_meta.__pow = common.notsupported('units', 'powers')
+unit_meta.__concat = common.notsupported('units', 'concatination')
+unit_meta.__lt = common.notsupported('units', 'less-than')
+unit_meta.__le = common.notsupported('units', 'less-than-or-equal-to')
+unit_meta.__band = common.notsupported('units', 'bitwise')
+unit_meta.__bor = unit_meta.__band
+unit_meta.__bxor = unit_meta.__band
+unit_meta.__bnot = unit_meta.__band
+unit_meta.__shl = unit_meta.__band
+unit_meta.__shr = unit_meta.__band
+
 unit_meta.__tostring = function(this)
 	local numerator = {}
 	local denominator = {}
@@ -99,5 +121,7 @@ unit_meta.setampere = function(this, num) this.ampere = num end
 unit_meta.setkelvin = function(this, num) this.kelvin = num end
 unit_meta.setmole = function(this, num) this.mole = num end
 unit_meta.setcandela = function(this, num) this.candela = num end
+
+unit_meta.clone = unit.clone
 
 return unit
