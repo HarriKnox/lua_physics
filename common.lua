@@ -13,6 +13,18 @@ type = function(thing)
 	return t
 end
 
+common.getcall = function(newfunc)
+	return {
+		__call = function(_, ...)
+			local ok, obj = pcall(newfunc, ...)
+			if not ok then
+				error(obj, 2)
+			end
+			return obj
+		end
+	}
+)
+
 common.registertype = function(checkfunction, typename)
 	types[checkfunction] = typename
 end
