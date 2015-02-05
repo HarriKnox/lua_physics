@@ -204,9 +204,11 @@ end
 vector_meta.getx = function(this) return this.x end
 vector_meta.gety = function(this) return this.y end
 vector_meta.getz = function(this) return this.z end
+
 vector_meta.setx = function(this, num) this.x = num end
 vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
+
 vector_meta.getmagnitude = vector.magnitude
 vector_meta.getnormal = vector.normalize
 vector_meta.getazimuth = vector.azimuth
