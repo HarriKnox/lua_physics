@@ -19,4 +19,18 @@ unit.isunit = function(un)
 end
 common.registertype(unit.isunit, 'unit')
 
+unit.clone = function(un)
+	if unit.isunit(un) then
+		local kg = un:getkilogram()
+		local m = un:getmeter()
+		local s = un:getsecond()
+		local a = un:getampere()
+		local k = un:getkelvin()
+		local mol = un:getmole()
+		local cd = un:getcandela()
+		return unit.new(kg, m, s, a, k, mol, cd)
+	end
+	common.typeerror('unit', 'cloning', type(un))
+end
+
 return unit
