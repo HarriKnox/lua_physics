@@ -12,6 +12,17 @@ unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
 	common.typeerror('unit', 'creation', type(parkg), type(parm), type(pars), type(para), type(park), type(parmol), type(parcd))
 end
 
+setmetatable(unit, {
+		__call = function(_, ...)
+			local ok, unt = pcall(unit.new, ...)
+			if not ok then
+				error(unt, 2)
+			end
+			return unt
+		end
+	}
+)
+
 unit.isunit = function(un)
 	return getmetatable(un) == unit_meta
 end
