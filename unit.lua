@@ -47,6 +47,20 @@ unit.multiply = function(first, second)
 	common.typeerror('unit', 'multiplication', type(first), type(second))
 end
 
+unit.divide = function(first, second)
+	if unit.isunit(first) and unit.isunit(second) then
+		local kg = first:getkilogram() - second:getkilogram()
+		local m = first:getmeter() - second:getmeter()
+		local s = first:getsecond() - second:getsecond()
+		local a = first:getampere() - second:getampere()
+		local k = first:getkelvin() - second:getkelvin()
+		local mol = first:getmole() - second:getmole()
+		local cd = first:getcandela() - second:getcandela()
+		return unit.new(kg, m, s, a, k, mol, cd)
+	end
+	common.typeerror('unit', 'division', type(first), type(second))
+end
+
 unit.equals = function(first, second)
 	if unit.isunit(first) and unit.isunit(second) then
 		local kg = first:getkilogram() == second:getkilogram()
@@ -62,12 +76,12 @@ unit.equals = function(first, second)
 end
 
 
+unit_meta.__mul = unit.multiply
+unit_meta.__div = unit.divide
 unit_meta.__eq = unit.equals
 
 unit_meta.__add = common.notsupported('units', 'addition')
 unit_meta.__sub = common.notsupported('units', 'subtraction')
-unit_meta.__mul = common.notsupported('units', 'multiplication')
-unit_meta.__div = common.notsupported('units', 'division')
 unit_meta.__unm = common.notsupported('units', 'unary-minus')
 unit_meta.__idiv = common.notsupported('units', 'int-division')
 unit_meta.__len = common.notsupported('units', 'length')
