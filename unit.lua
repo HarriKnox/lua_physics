@@ -47,4 +47,40 @@ unit.equals = function(first, second)
 	common.typeerror('unit', 'equation', type(first), type(second))
 end
 
+unit_meta.__tostring = function(this)
+	local str = "unit:"
+	local numerator = ""
+	local denominator = ""
+	local units = {
+		{func = 'getkilogram', str = 'kg'},
+		{func = 'getmeter', str = 'm'},
+		{func = 'getsecond', str = 's'},
+		{func = 'getampere', str = 'A'},
+		{func = 'getkelvin', str = 'K'},
+		{func = 'getmole', str = 'mol'},
+		{func = 'getcandela', str = 'cd'}
+	}
+	for ord, un in pairs(units) do
+		local x = this[un.func](this)
+		if x > 0 then
+			numerator = numerator .. ' ' .. un.str
+			if x > 1 then
+				numerator = numerator .. '^' .. tostring(x)
+			end
+		elseif x < 0 then
+			denominator = denominator .. ' ' .. un.str
+			if x < -1 then
+				denominator = denominator .. '^' .. tostring(-x)
+			end
+		end
+	end
+	if #numerator == 0 then
+		numerator = ' 1'
+	end
+	if #denominator > 0 then
+		return str .. numerator .. ' /' .. denominator
+	end
+	return str .. numerator
+end
+
 return unit
