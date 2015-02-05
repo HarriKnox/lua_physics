@@ -48,39 +48,40 @@ unit.equals = function(first, second)
 end
 
 unit_meta.__tostring = function(this)
-	local str = "unit:"
-	local numerator = ""
-	local denominator = ""
+	local numerator = {}
+	local denominator = {}
 	local units = {
-		{func = 'getkilogram', str = 'kg'},
-		{func = 'getmeter', str = 'm'},
-		{func = 'getsecond', str = 's'},
-		{func = 'getampere', str = 'A'},
-		{func = 'getkelvin', str = 'K'},
-		{func = 'getmole', str = 'mol'},
-		{func = 'getcandela', str = 'cd'}
+		{x = this:getkilogram(), str = 'kg'},
+		{x = this:getmeter(), str = 'm'},
+		{x = this:getsecond(), str = 's'},
+		{x = this:getampere(), str = 'A'},
+		{x = this:getkelvin(), str = 'K'},
+		{x = this:getmole(), str = 'mol'},
+		{x = this:getcandela(), str = 'cd'}
 	}
-	for ord, un in pairs(units) do
-		local x = this[un.func](this)
-		if x > 0 then
-			numerator = numerator .. ' ' .. un.str
-			if x > 1 then
-				numerator = numerator .. '^' .. tostring(x)
+	for _, unt in pairs(units) do
+		if unt.x > 0 then
+			local num = unt.str
+			if unt.x > 1 then
+				num = num .. '^' .. tostring(unt.x)
 			end
-		elseif x < 0 then
-			denominator = denominator .. ' ' .. un.str
-			if x < -1 then
-				denominator = denominator .. '^' .. tostring(-x)
+			table.insert(numerator, num)
+		elseif unt.x < 0 then
+			local den = unt.str
+			if unt.x < -1 then
+				den = den .. '^' .. tostring(-unt.x)
 			end
+			table.insert(denominator, den)
 		end
 	end
 	if #numerator == 0 then
-		numerator = ' 1'
+		table.insert(numerator, '1')
 	end
+	local numer = table.concat(numerator, ' ')
 	if #denominator > 0 then
-		return str .. numerator .. ' /' .. denominator
+		return numer .. " / " .. table.concat(denominator, ' ')
 	end
-	return str .. numerator
+	return numer
 end
 
 unit_meta.getkilogram = function(this) return this.kilogram end
@@ -90,5 +91,13 @@ unit_meta.getampere = function(this) return this.ampere end
 unit_meta.getkelvin = function(this) return this.kelvin end
 unit_meta.getmole = function(this) return this.mole end
 unit_meta.getcandela = function(this) return this.candela end
+
+unit_meta.setkilogram = function(this, num) this.kilogram = num end
+unit_meta.setmeter = function(this, num) this.meter = num end
+unit_meta.setsecond = function(this, num) this.second = num end
+unit_meta.setampere = function(this, num) this.ampere = num end
+unit_meta.setkelvin = function(this, num) this.kelvin = num end
+unit_meta.setmole = function(this, num) this.mole = num end
+unit_meta.setcandela = function(this, num) this.candela = num end
 
 return unit
