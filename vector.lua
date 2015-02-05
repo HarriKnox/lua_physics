@@ -12,16 +12,7 @@ vector.new = function(parx, pary, parz)
 	common.typeerror('vector', 'creation', type(parx), type(pary), type(parz))
 end
 
-setmetatable(vector, {
-		__call = function(_, ...)
-			local ok, vect = pcall(vector.new, ...)
-			if not ok then
-				error(vect, 2)
-			end
-			return vect
-		end
-	}
-)
+setmetatable(vector, common.getcall(vector.new))
 
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta

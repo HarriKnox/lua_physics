@@ -13,16 +13,7 @@ point.new = function(parx, pary, parz)
 	common.typeerror('point', 'creation', type(parx), type(pary), type(parz))
 end
 
-setmetatable(point, {
-		__call = function(_, ...)
-			local ok, pnt = pcall(point.new, ...)
-			if not ok then
-				error(pnt, 2)
-			end
-			return pnt
-		end
-	}
-)
+setmetatable(point, common.getcall(point.new))
 
 point.ispoint = function(pnt)
 	return getmetatable(pnt) == point_meta
