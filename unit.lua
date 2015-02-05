@@ -61,6 +61,20 @@ unit.divide = function(first, second)
 	common.typeerror('unit', 'division', type(first), type(second))
 end
 
+unit.power = function(unt, num)
+	if unit.isunit(unt) and type(num) == 'number' then
+		local kg = first:getkilogram() * num
+		local m = first:getmeter() * num
+		local s = first:getsecond() * num
+		local a = first:getampere() * num
+		local k = first:getkelvin() * num
+		local mol = first:getmole() * num
+		local cd = first:getcandela() * num
+		return unit.new(kg, m, s, a, k, mol, cd)
+	end
+	common.typeerror('unit', 'power', type(unt), type(num))
+end
+
 unit.equals = function(first, second)
 	if unit.isunit(first) and unit.isunit(second) then
 		local kg = first:getkilogram() == second:getkilogram()
@@ -78,6 +92,7 @@ end
 
 unit_meta.__mul = unit.multiply
 unit_meta.__div = unit.divide
+unit_meta.__pow = unit.power
 unit_meta.__eq = unit.equals
 
 unit_meta.__add = common.notsupported('units', 'addition')
@@ -86,7 +101,6 @@ unit_meta.__unm = common.notsupported('units', 'unary-minus')
 unit_meta.__idiv = common.notsupported('units', 'int-division')
 unit_meta.__len = common.notsupported('units', 'length')
 unit_meta.__mod = common.notsupported('units', 'modulo')
-unit_meta.__pow = common.notsupported('units', 'powers')
 unit_meta.__concat = common.notsupported('units', 'concatination')
 unit_meta.__lt = common.notsupported('units', 'less-than')
 unit_meta.__le = common.notsupported('units', 'less-than-or-equal-to')
