@@ -28,6 +28,20 @@ scalar.clone = function(sca)
 	common.typeerror('cloning', sca, 'scalar')
 end
 
+scalar.multiply = function(first, second)
+	if scalar.isscalar(first) and scalar.isscalar(second) then
+		local value = first:getvalue() * second:getvalue()
+		local units = first:getunits() * second:getunits()
+		return scalar.new(value, units)
+	end
+	if scalar.isscalar(first) and type(second) == 'number' then
+		local value = first:getvalue() * second
+		local units = first:getunits()
+		return scalar.new(value, units)
+	end
+	common.typeerror('multiplication', first, second, 'scalar')
+end
+
 scalar.equals = function(first, second)
 	if scalar.isscalar(first) and scalar.isscalar(second) then
 		local value = first:getvalue() == second:getvalue()
