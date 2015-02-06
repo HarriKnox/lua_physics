@@ -28,4 +28,13 @@ scalar.clone = function(sca)
 	common.typeerror('cloning', sca, 'scalar')
 end
 
+scalar.equals = function(first, second)
+	if scalar.isscalar(first) and scalar.isscalar(second) then
+		local value = first:getvalue() == second:getvalue()
+		local units = first:getunits() == second:getunits()
+		return value and units
+	end
+	common.typeerror('equation', first, second, 'scalar')
+end
+
 return scalar
