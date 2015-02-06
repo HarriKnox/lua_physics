@@ -149,6 +149,9 @@ unit_meta.__tostring = function(this)
 		end
 	end
 	if #numerator == 0 then
+		if #denominator == 0 then
+			return ''
+		end
 		table.insert(numerator, '1')
 	end
 	local str = table.concat(numerator, ' ')
