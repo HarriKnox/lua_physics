@@ -126,13 +126,13 @@ unit_meta.__tostring = function(this)
 	for _, unt in pairs(units) do
 		if unt.x > 0 then
 			local num = unt.str
-			if unt.x > 1 then
+			if unt.x ~= 1 then
 				num = num .. '^' .. tostring(unt.x)
 			end
 			table.insert(numerator, num)
 		elseif unt.x < 0 then
 			local den = unt.str
-			if unt.x < -1 then
+			if unt.x ~= -1 then
 				den = den .. '^' .. tostring(-unt.x)
 			end
 			table.insert(denominator, den)
