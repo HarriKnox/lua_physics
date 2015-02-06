@@ -4,10 +4,12 @@ local _type = type
 local types = {}
 type = function(thing)
 	local t = _type(thing)
-	for check, name in pairs(types) do
-		if check(thing) then
-			t = name
-			break
+	if t == 'table' then
+		for check, name in pairs(types) do
+			if check(thing) then
+				t = name
+				break
+			end
 		end
 	end
 	return t
