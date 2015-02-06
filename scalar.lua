@@ -99,6 +99,11 @@ scalar_meta.__bnot = scalar_meta.__band
 scalar_meta.__shl = scalar_meta.__band
 scalar_meta.__shr = scalar_meta.__band
 
+scalar_meta.__tostring = function(this)
+	local units = tostring(this:getunits())
+	return string.format("scalar: %g%s", this:getvalue(), #units > 0 and ' ' .. units or '')
+end
+
 scalar_meta.getvalue = function(this) return this.value end
 scalar_meta.getunits = function(this) return this.units end
 
