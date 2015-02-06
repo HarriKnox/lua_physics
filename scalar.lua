@@ -101,7 +101,7 @@ scalar_meta.__shr = scalar_meta.__band
 
 scalar_meta.__tostring = function(this)
 	local units = tostring(this:getunits())
-	return string.format("scalar: %g%s", this:getvalue(), #units > 0 and ' ' .. units or '')
+	return string.format("%g%s", this:getvalue(), #units > 0 and ' ' .. units or '')
 end
 
 scalar_meta.getvalue = function(this) return this.value end
