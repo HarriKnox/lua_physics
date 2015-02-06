@@ -14,10 +14,18 @@ end
 
 common.setmetacall(scalar)
 
-scalar.isscalar = function(sclr)
-	return getmetatable(sclr) == scalar_meta
+scalar.isscalar = function(sca)
+	return getmetatable(sca) == scalar_meta
 end
 common.registertype(scalar.isscalar, 'scalar')
 
+scalar.clone = function(sca)
+	if scalar.isscalar(sca) then
+		local value = sca:getvalue()
+		local units = sca:getunits()
+		return scalar.new(value, units)
+	end
+	common.typeerror('cloning', sca, 'scalar')
+end
 
 return scalar
