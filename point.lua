@@ -96,6 +96,7 @@ point_meta.sety = function(this, num) this.y = num end
 point_meta.setz = function(this, num) this.z = num end
 
 point_meta.clone = point.clone
+point_meta.equals = point.equals
 point_meta.translate = point.translate
 point_meta.difference = point.difference
 

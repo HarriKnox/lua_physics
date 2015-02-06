@@ -178,5 +178,9 @@ unit_meta.setmole = function(this, num) this.mole = num end
 unit_meta.setcandela = function(this, num) this.candela = num end
 
 unit_meta.clone = unit.clone
+unit_meta.multiply = unit.multiply
+unit_meta.divide = unit.divide
+unit_meta.power = unit.power
+unit_meta.equals = unit.equals
 
 return unit
