@@ -10,7 +10,7 @@ point.new = function(parx, pary, parz)
 	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
 		return setmetatable({x = parx, y = pary, z = parz}, point_meta)
 	end
-	common.typeerror('creation', type(parx), type(pary), type(parz), 'point')
+	common.typeerror('creation', parx, pary, parz, 'point')
 end
 
 common.setcallmeta(point)
@@ -27,7 +27,7 @@ point.clone = function(pnt)
 		local z = pnt:getz()
 		return point.new(x, y, z)
 	end
-	common.typeerror('cloning', type(pnt), 'point')
+	common.typeerror('cloning', pnt, 'point')
 end
 
 point.equals = function(first, second)
@@ -37,7 +37,7 @@ point.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	common.typeerror('equation', type(first), type(second), 'point')
+	common.typeerror('equation', first, second, 'point')
 end
 
 point.translate = function(pnt, vect)
@@ -47,7 +47,7 @@ point.translate = function(pnt, vect)
 		local z = pnt:getz() + vect:getz()
 		return point.new(x, y, z)
 	end
-	common.typeerror('translation', type(pnt), type(vect), 'point')
+	common.typeerror('translation', pnt, vect, 'point')
 end
 
 point.difference = function(this, that)
@@ -57,7 +57,7 @@ point.difference = function(this, that)
 		local z = that:getz() - this:getz()
 		return vector.new(x, y, z)
 	end
-	common.typeerror('difference', type(this), type(that), 'point')
+	common.typeerror('difference', this, that, 'point')
 end
 
 

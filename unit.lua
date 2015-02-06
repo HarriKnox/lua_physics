@@ -9,7 +9,7 @@ unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
 	if type(parkg) == 'number' and type(parm) == 'number' and type(pars) == 'number' and type(para) == 'number' and type(park) == 'number' and type(parmol) == 'number' and type(parcd) == 'number' then
 		return setmetatable({kilogram = parkg, meter = parm, second = pars, ampere = para, kelvin = park, mole = parmol, candela = parcd}, unit_meta)
 	end
-	common.typeerror('creation', type(parkg), type(parm), type(pars), type(para), type(park), type(parmol), type(parcd), 'unit')
+	common.typeerror('creation', parkg, parm, pars, para, park, parmol, parcd, 'unit')
 end
 
 common.setcallmeta(unit)
@@ -30,7 +30,7 @@ unit.clone = function(un)
 		local cd = un:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	common.typeerror('cloning', type(un), 'unit')
+	common.typeerror('cloning', un, 'unit')
 end
 
 unit.multiply = function(first, second)
@@ -44,7 +44,7 @@ unit.multiply = function(first, second)
 		local cd = first:getcandela() + second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	common.typeerror('multiplication', type(first), type(second), 'unit')
+	common.typeerror('multiplication', first, second, 'unit')
 end
 
 unit.divide = function(first, second)
@@ -58,7 +58,7 @@ unit.divide = function(first, second)
 		local cd = first:getcandela() - second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	common.typeerror('division', type(first), type(second), 'unit')
+	common.typeerror('division', first, second, 'unit')
 end
 
 unit.power = function(unt, num)
@@ -72,7 +72,7 @@ unit.power = function(unt, num)
 		local cd = unt:getcandela() * num
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	common.typeerror('power', type(unt), type(num), 'unit')
+	common.typeerror('power', unt, num, 'unit')
 end
 
 unit.equals = function(first, second)
@@ -86,7 +86,7 @@ unit.equals = function(first, second)
 		local cd = first:getcandela() == second:getcandela()
 		return kg and m and s and a and k and mol and cd
 	end
-	common.typeerror('equation', type(first), type(second), 'unit')
+	common.typeerror('equation', first, second, 'unit')
 end
 
 

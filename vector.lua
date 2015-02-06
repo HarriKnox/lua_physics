@@ -9,7 +9,7 @@ vector.new = function(parx, pary, parz)
 	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
 		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
 	end
-	common.typeerror('creation', type(parx), type(pary), type(parz), 'vector')
+	common.typeerror('creation', parx, pary, parz, 'vector')
 end
 
 common.setcallmeta(vector)
@@ -26,7 +26,7 @@ vector.clone = function(vect)
 		local z = vect:getz()
 		return vector.new(x, y, z)
 	end
-	common.typeerror('cloning', type(vect), 'vector')
+	common.typeerror('cloning', vect, 'vector')
 end
 
 vector.add = function(first, second)
@@ -36,7 +36,7 @@ vector.add = function(first, second)
 		local z = first:getz() + second:getz()
 		return vector.new(x, y, z)
 	end
-	common.typeerror('addition', type(first), type(second), 'vector')
+	common.typeerror('addition', first, second, 'vector')
 end
 
 vector.subtract = function(first, second)
@@ -46,7 +46,7 @@ vector.subtract = function(first, second)
 		local z = first:getz() - second:getz()
 		return vector.new(x, y, z)
 	end
-	common.typeerror('subtraction', type(first), type(second), 'vector')
+	common.typeerror('subtraction', first, second, 'vector')
 end
 
 vector.multiply = function(first, second)
@@ -62,7 +62,7 @@ vector.multiply = function(first, second)
 		local z = second:getz() * first
 		return vector.new(x, y, z)
 	end
-	common.typeerror('multiplication', type(first), type(second), 'vector')
+	common.typeerror('multiplication', first, second, 'vector')
 end
 
 vector.divide = function(first, second)
@@ -72,7 +72,7 @@ vector.divide = function(first, second)
 		local z = first:getz() / second
 		return vector.new(x, y, z)
 	end
-	common.typeerror('division', type(first), type(second), 'vector')
+	common.typeerror('division', first, second, 'vector')
 end
 
 vector.intdivide = function(first, second)
@@ -83,7 +83,7 @@ vector.intdivide = function(first, second)
 		vect:setz(math.floor(vect:getz()))
 		return vect
 	end
-	common.typeerror('division', type(first), type(second), 'vector')
+	common.typeerror('division', first, second, 'vector')
 end
 
 vector.negate = function(vect)
@@ -93,7 +93,7 @@ vector.negate = function(vect)
 		local z = vect:getz()
 		return vector.new(-x, -y, -z)
 	end
-	common.typeerror('negation', type(vect), 'vector')
+	common.typeerror('negation', vect, 'vector')
 end
 
 vector.equals = function(first, second)
@@ -103,7 +103,7 @@ vector.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	common.typeerror('equation', type(first), type(second), 'vector')
+	common.typeerror('equation', first, second, 'vector')
 end
 
 vector.magnitude = function(vect)
@@ -113,7 +113,7 @@ vector.magnitude = function(vect)
 		local z = vect:getz() ^ 2
 		return math.sqrt(x + y + z)
 	end
-	common.typeerror('magnitude', type(vect), 'vector')
+	common.typeerror('magnitude', vect, 'vector')
 end
 
 vector.normalize = function(vect)
@@ -124,7 +124,7 @@ vector.normalize = function(vect)
 		local z = vect:getz() / mag
 		return vector.new(x, y, z)
 	end
-	common.typeerror('normalize', type(vect), 'vector')
+	common.typeerror('normalize', vect, 'vector')
 end
 
 vector.dotproduct = function(first, second)
@@ -134,7 +134,7 @@ vector.dotproduct = function(first, second)
 		local z = first:getz() * second:getz()
 		return x + y + z
 	end
-	common.typeerror('vector', 'dot-product', type(first), type(second))
+	common.typeerror('dot-product', first, second, 'vector')
 end
 
 vector.crossproduct = function(first, second)
@@ -144,7 +144,7 @@ vector.crossproduct = function(first, second)
 		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
 		return vector.new(x, y, z)
 	end
-	common.typeerror('vector', 'cross-product', type(first), type(second))
+	common.typeerror('cross-product', first, second, 'vector')
 end
 
 vector.azimuth = function(vect)
@@ -157,7 +157,7 @@ vector.azimuth = function(vect)
 		end
 		return arctan(vect:gety(), vect:getx())
 	end
-	common.typeerror('azimuth', type(vect), 'vector')
+	common.typeerror('azimuth', vect, 'vector')
 end
 
 vector.altitude = function(vect)
@@ -172,7 +172,7 @@ vector.altitude = function(vect)
 		local y = vect:gety() ^ 2
 		return arctan(vect:getz(), math.sqrt(x + y))
 	end
-	common.typeerror('altitude', type(vect), 'vector')
+	common.typeerror('altitude', vect, 'vector')
 end
 
 
