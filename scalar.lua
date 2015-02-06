@@ -12,7 +12,7 @@ scalar.new = function(parvalue, parunits)
 	common.typeerror('creation', parvalue, parunits, 'scalar')
 end
 
-common.setmetacall(scalar)
+common.setcallmeta(scalar)
 
 scalar.isscalar = function(sca)
 	return getmetatable(sca) == scalar_meta

@@ -209,18 +209,6 @@ vector_meta.setx = function(this, num) this.x = num end
 vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
 
-vector_meta.add = vector.add
-vector_meta.subtract = vector.subtract
-vector_meta.multiply = vector.multiply
-vector_meta.divide = vector.divide
-vector_meta.intdivide = vector.intdivide
-vector_meta.equals = vector.equals
-vector_meta.getmagnitude = vector.magnitude
-vector_meta.getnormal = vector.normalize
-vector_meta.getazimuth = vector.azimuth
-vector_meta.getaltitude = vector.altitude
-vector_meta.clone = vector.clone
-vector_meta.dot = vector.dotproduct
-vector_meta.cross = vector.crossproduct
+common.getmethods(vector, vector_meta)
 
 return vector

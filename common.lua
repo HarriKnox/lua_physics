@@ -53,4 +53,15 @@ common.notsupported = function(typename, operation)
 	end
 end
 
+common.getmethods = function(parmodule, parmetatable)
+	for key, value in pairs(parmodule) do
+		if key ~= 'new' then
+			parmetatable[key] = value
+		end
+	end
+	for check, typename in pairs(types) do
+		parmetatable['is' .. typename] = nil
+	end
+end
+
 return common
