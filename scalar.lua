@@ -37,4 +37,34 @@ scalar.equals = function(first, second)
 	common.typeerror('equation', first, second, 'scalar')
 end
 
+
+scalar_meta.__eq = scalar.equals
+
+scalar_meta.__add = common.notsupported('scalars', 'addition')
+scalar_meta.__sub = common.notsupported('scalars', 'subtraction')
+scalar_meta.__mul = common.notsupported('scalars', 'multiplication')
+scalar_meta.__div = common.notsupported('scalars', 'division')
+scalar_meta.__unm = common.notsupported('scalars', 'unary-minus')
+scalar_meta.__idiv = common.notsupported('scalars', 'int-division')
+scalar_meta.__len = common.notsupported('scalars', 'length')
+scalar_meta.__mod = common.notsupported('scalars', 'modulo')
+scalar_meta.__pow = common.notsupported('scalars', 'powers')
+scalar_meta.__concat = common.notsupported('scalars', 'concatination')
+scalar_meta.__lt = common.notsupported('scalars', 'less-than')
+scalar_meta.__le = common.notsupported('scalars', 'less-than-or-equal-to')
+scalar_meta.__band = common.notsupported('scalars', 'bitwise')
+scalar_meta.__bor = scalar_meta.__band
+scalar_meta.__bxor = scalar_meta.__band
+scalar_meta.__bnot = scalar_meta.__band
+scalar_meta.__shl = scalar_meta.__band
+scalar_meta.__shr = scalar_meta.__band
+
+scalar_meta.getvalue = function(this) return this.value end
+scalar_meta.getunits = function(this) return this.units end
+
+scalar_meta.setvalue = function(this, num) this.value = num end
+scalar_meta.setunits = function(this, unt) this.units = unt end
+
+scalar_meta.equals = scalar.equals
+
 return scalar
