@@ -176,6 +176,8 @@ vector.altitude = function(vect)
 end
 
 
+common.getmethods(vector, vector_meta)
+
 vector_meta.__add = vector.add
 vector_meta.__sub = vector.subtract
 vector_meta.__mul = vector.multiply
@@ -208,7 +210,5 @@ vector_meta.getz = function(this) return this.z end
 vector_meta.setx = function(this, num) this.x = num end
 vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
-
-common.getmethods(vector, vector_meta)
 
 return vector

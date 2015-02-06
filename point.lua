@@ -61,6 +61,7 @@ point.difference = function(this, that)
 end
 
 
+common.getmethods(point, point_meta)
 
 point_meta.__eq = point.equals
 
@@ -94,10 +95,5 @@ point_meta.getz = function(this) return this.z end
 point_meta.setx = function(this, num) this.x = num end
 point_meta.sety = function(this, num) this.y = num end
 point_meta.setz = function(this, num) this.z = num end
-
-point_meta.clone = point.clone
-point_meta.equals = point.equals
-point_meta.translate = point.translate
-point_meta.difference = point.difference
 
 return point

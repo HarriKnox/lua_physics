@@ -38,6 +38,8 @@ scalar.equals = function(first, second)
 end
 
 
+common.getmethods(scalar, scalar_meta)
+
 scalar_meta.__eq = scalar.equals
 
 scalar_meta.__add = common.notsupported('scalars', 'addition')
@@ -64,7 +66,5 @@ scalar_meta.getunits = function(this) return this.units end
 
 scalar_meta.setvalue = function(this, num) this.value = num end
 scalar_meta.setunits = function(this, unt) this.units = unt end
-
-scalar_meta.equals = scalar.equals
 
 return scalar

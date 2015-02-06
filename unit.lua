@@ -100,6 +100,8 @@ unit.equals = function(first, second)
 end
 
 
+common.getmethods(unit, unit_meta)
+
 unit_meta.__mul = unit.multiply
 unit_meta.__div = unit.divide
 unit_meta.__pow = unit.power
@@ -177,10 +179,5 @@ unit_meta.setkelvin = function(this, num) this.kelvin = num end
 unit_meta.setmole = function(this, num) this.mole = num end
 unit_meta.setcandela = function(this, num) this.candela = num end
 
-unit_meta.clone = unit.clone
-unit_meta.multiply = unit.multiply
-unit_meta.divide = unit.divide
-unit_meta.power = unit.power
-unit_meta.equals = unit.equals
 
 return unit
