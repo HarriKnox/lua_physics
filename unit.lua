@@ -3,6 +3,7 @@ local unit_meta = {}
 unit_meta.__index = unit_meta
 
 local common = require('common')
+local scalar = require('scalar')
 
 
 unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
@@ -43,6 +44,17 @@ unit.multiply = function(first, second)
 		local mol = first:getmole() + second:getmole()
 		local cd = first:getcandela() + second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
+	end
+	if unit.isunit(first) and type(second) == 'scalar' then
+		local units = second:getunits()
+		local kg = first:getkilogram() + units:getkilogram()
+		local m = first:getmeter() + units:getmeter()
+		local s = first:getsecond() + units:getsecond()
+		local a = first:getampere() + units:getampere()
+		local k = first:getkelvin() + units:getkelvin()
+		local mol = first:getmole() + units:getmole()
+		local cd = first:getcandela() + units:getcandela()
+		return scalar.new(second:getvalue(), unit.new(kg, m, s, a, k, mol, cd))
 	end
 	common.typeerror('multiplication', first, second, 'unit')
 end
