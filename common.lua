@@ -28,8 +28,10 @@ common.registertype = function(checkfunction, typename)
 	types[checkfunction] = typename
 end
 
-common.typeerror = function(typename, operation, ...)
-	local types = {...}
+common.typeerror = function(...)
+	local args = {...}
+	local operation = table.remove(args, 1)
+	local typename = table.remove(args)
 	local message = string.format("incompatible type%s for %s %s: ", #types == 1 and "" or "s", typename, operation)
 	if #types < 2 then
 		message = message .. types[1]
