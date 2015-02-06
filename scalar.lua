@@ -39,6 +39,11 @@ scalar.multiply = function(first, second)
 		local units = first:getunits()
 		return scalar.new(value, units)
 	end
+	if scalar.isscalar(second) and type(first) == 'number' then
+		local value = second:getvalue() * first
+		local units = second:getunits()
+		return scalar.new(value, units)
+	end
 	common.typeerror('multiplication', first, second, 'scalar')
 end
 
