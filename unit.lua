@@ -58,6 +58,16 @@ unit.divide = function(first, second)
 		local cd = first:getcandela() - second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
+	if type(first) == 'number' and unit.isunit(second) then
+		local kg = -second:getkilogram()
+		local m = -second:getmeter()
+		local s = -second:getsecond()
+		local a = -second:getampere()
+		local k = -second:getkelvin()
+		local mol = -second:getmole()
+		local cd = -second:getcandela()
+		return unit.new(kg, m, s, a, k, mol, cd)
+	end
 	common.typeerror('division', first, second, 'unit')
 end
 
