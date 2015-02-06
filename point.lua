@@ -50,6 +50,16 @@ point.translate = function(pnt, vect)
 	common.typeerror('point', 'translation', type(pnt), type(vect))
 end
 
+point.difference = function(this, that)
+	if point.ispoint(this) and point.ispoint(that) then
+		local x = that:getx() - this:getx()
+		local y = that:gety() - this:gety()
+		local z = that:getz() - this:getz()
+		return vector.new(x, y, z)
+	end
+	common.typeerror('point', 'difference', type(this), type(that))
+end
+
 
 
 point_meta.__eq = point.equals
@@ -86,5 +96,7 @@ point_meta.sety = function(this, num) this.y = num end
 point_meta.setz = function(this, num) this.z = num end
 
 point_meta.clone = point.clone
+point_meta.translate = point.translate
+point_meta.difference = point.difference
 
 return point
