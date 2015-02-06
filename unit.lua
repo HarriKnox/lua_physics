@@ -68,6 +68,9 @@ unit.divide = function(first, second)
 		local cd = -second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
+	if unit.isunit(first) and type(second) == 'number' then
+		return unit.clone(first)
+	end
 	common.typeerror('division', first, second, 'unit')
 end
 
