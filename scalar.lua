@@ -59,8 +59,8 @@ scalar.divide = function(first, second)
 		return scalar.new(value, units)
 	end
 	if scalar.isscalar(second) and type(first) == 'number' then
-		local value = second / first:getvalue()
-		local units = first:getunits() ^ -1
+		local value = first / second:getvalue()
+		local units = second:getunits() ^ -1
 		return scalar.new(value, units)
 	end
 	common.typeerror('division', first, second, 'scalar')
