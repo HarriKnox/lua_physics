@@ -1,7 +1,6 @@
 local vector = {}
 local vector_meta = {}
 vector_meta.__index = vector_meta
-
 local common = require('common')
 
 
@@ -13,14 +12,10 @@ vector.new = function(parx, pary, parz)
 end
 
 common.setcallmeta(vector)
-
-vector.isvector = function(vect)
-	return getmetatable(vect) == vector_meta
-end
 common.registertype(vector_meta, 'vector')
 
 vector.clone = function(vect)
-	if vector.isvector(vect) then
+	if type(vect) == 'vector' then
 		local x = vect:getx()
 		local y = vect:gety()
 		local z = vect:getz()
@@ -30,7 +25,7 @@ vector.clone = function(vect)
 end
 
 vector.add = function(first, second)
-	if vector.isvector(first) and vector.isvector(second) then
+	if type(first) == 'vector' and type(second) == 'vector' then
 		local x = first:getx() + second:getx()
 		local y = first:gety() + second:gety()
 		local z = first:getz() + second:getz()
@@ -40,7 +35,7 @@ vector.add = function(first, second)
 end
 
 vector.subtract = function(first, second)
-	if vector.isvector(first) and vector.isvector(second) then
+	if type(first) == 'vector' and type(second) == 'vector' then
 		local x = first:getx() - second:getx()
 		local y = first:gety() - second:gety()
 		local z = first:getz() - second:getz()
@@ -50,13 +45,13 @@ vector.subtract = function(first, second)
 end
 
 vector.multiply = function(first, second)
-	if vector.isvector(first) and type(second) == 'number' then
+	if type(first) == 'vector' and type(second) == 'number' then
 		local x = first:getx() * second
 		local y = first:gety() * second
 		local z = first:getz() * second
 		return vector.new(x, y, z)
 	end
-	if vector.isvector(second) and type(first) == 'number' then
+	if type(second) == 'vector' and type(first) == 'number' then
 		local x = second:getx() * first
 		local y = second:gety() * first
 		local z = second:getz() * first
@@ -66,7 +61,7 @@ vector.multiply = function(first, second)
 end
 
 vector.divide = function(first, second)
-	if vector.isvector(first) and type(second) == 'number' then
+	if type(first) == 'vector' and type(second) == 'number' then
 		local x = first:getx() / second
 		local y = first:gety() / second
 		local z = first:getz() / second
@@ -76,7 +71,7 @@ vector.divide = function(first, second)
 end
 
 vector.intdivide = function(first, second)
-	if vector.isvector(first) and type(second) == 'number' then
+	if type(first) == 'vector' and type(second) == 'number' then
 		local vect = vector.divide(first, second)
 		vect:setx(math.floor(vect:getx()))
 		vect:sety(math.floor(vect:gety()))
@@ -87,7 +82,7 @@ vector.intdivide = function(first, second)
 end
 
 vector.negate = function(vect)
-	if vector.isvector(vect) then
+	if type(vect) == 'vector' then
 		local x = vect:getx()
 		local y = vect:gety()
 		local z = vect:getz()
@@ -97,7 +92,7 @@ vector.negate = function(vect)
 end
 
 vector.equals = function(first, second)
-	if vector.isvector(first) and vector.isvector(second) then
+	if type(first) == 'vector' and type(second) == 'vector' then
 		local x = first:getx() == second:getx()
 		local y = first:gety() == second:gety()
 		local z = first:getz() == second:getz()
@@ -107,7 +102,7 @@ vector.equals = function(first, second)
 end
 
 vector.magnitude = function(vect)
-	if vector.isvector(vect) then
+	if type(vect) == 'vector' then
 		local x = vect:getx() ^ 2
 		local y = vect:gety() ^ 2
 		local z = vect:getz() ^ 2
@@ -117,7 +112,7 @@ vector.magnitude = function(vect)
 end
 
 vector.normalize = function(vect)
-	if vector.isvector(vect) then
+	if type(vect) == 'vector' then
 		local mag = vector.magnitude(vect)
 		local x = vect:getx() / mag
 		local y = vect:gety() / mag
@@ -128,7 +123,7 @@ vector.normalize = function(vect)
 end
 
 vector.dotproduct = function(first, second)
-	if vector.isvector(first) and vector.isvector(second) then
+	if type(first) == 'vector' and type(second) == 'vector' then
 		local x = first:getx() * second:getx()
 		local y = first:gety() * second:gety()
 		local z = first:getz() * second:getz()
@@ -138,7 +133,7 @@ vector.dotproduct = function(first, second)
 end
 
 vector.crossproduct = function(first, second)
-	if vector.isvector(first) and vector.isvector(second) then
+	if type(first) == 'vector' and type(second) == 'vector' then
 		local x = (first:gety() * second:getz()) - (first:getz() * second:gety())
 		local y = (first:getz() * second:getx()) - (first:getx() * second:getz())
 		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
@@ -148,7 +143,7 @@ vector.crossproduct = function(first, second)
 end
 
 vector.azimuth = function(vect)
-	if vector.isvector(vect) then
+	if type(vect) == 'vector' then
 		local arctan
 		if math.atan == math.atan2 or math.atan2 == nil then
 			arctan = math.atan
@@ -161,7 +156,7 @@ vector.azimuth = function(vect)
 end
 
 vector.altitude = function(vect)
-	if vector.isvector(vect) then
+	if type(vect) == 'vector' then
 		local arctan
 		if math.atan == math.atan2 or math.atan2 == nil then
 			arctan = math.atan

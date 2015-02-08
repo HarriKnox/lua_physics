@@ -1,7 +1,6 @@
 local unit = {}
 local unit_meta = {}
 unit_meta.__index = unit_meta
-
 local common = require('common')
 
 
@@ -13,14 +12,10 @@ unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
 end
 
 common.setcallmeta(unit)
-
-unit.isunit = function(un)
-	return getmetatable(un) == unit_meta
-end
 common.registertype(unit_meta, 'unit')
 
 unit.clone = function(un)
-	if unit.isunit(un) then
+	if type(un) == 'unit' then
 		local kg = un:getkilogram()
 		local m = un:getmeter()
 		local s = un:getsecond()
@@ -34,7 +29,7 @@ unit.clone = function(un)
 end
 
 unit.multiply = function(first, second)
-	if unit.isunit(first) and unit.isunit(second) then
+	if type(first) == 'unit' and type(second) == 'unit' then
 		local kg = first:getkilogram() + second:getkilogram()
 		local m = first:getmeter() + second:getmeter()
 		local s = first:getsecond() + second:getsecond()
@@ -44,7 +39,7 @@ unit.multiply = function(first, second)
 		local cd = first:getcandela() + second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	if unit.isunit(first) and type(second) == 'scalar' then
+	if type(first) == 'unit' and type(second) == 'scalar' then
 		local units = second:getunits()
 		local kg = first:getkilogram() + units:getkilogram()
 		local m = first:getmeter() + units:getmeter()
@@ -59,7 +54,7 @@ unit.multiply = function(first, second)
 end
 
 unit.divide = function(first, second)
-	if unit.isunit(first) and unit.isunit(second) then
+	if type(first) == 'unit' and type(second) == 'unit' then
 		local kg = first:getkilogram() - second:getkilogram()
 		local m = first:getmeter() - second:getmeter()
 		local s = first:getsecond() - second:getsecond()
@@ -69,7 +64,7 @@ unit.divide = function(first, second)
 		local cd = first:getcandela() - second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	if type(first) == 'number' and unit.isunit(second) then
+	if type(first) == 'number' and type(second) == 'unit' then
 		local kg = -second:getkilogram()
 		local m = -second:getmeter()
 		local s = -second:getsecond()
@@ -79,14 +74,14 @@ unit.divide = function(first, second)
 		local cd = -second:getcandela()
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
-	if unit.isunit(first) and type(second) == 'number' then
+	if type(first) == 'unit' and type(second) == 'number' then
 		return unit.clone(first)
 	end
 	common.typeerror('division', first, second, 'unit')
 end
 
 unit.power = function(unt, num)
-	if unit.isunit(unt) and type(num) == 'number' then
+	if type(unt) == 'unit' and type(num) == 'number' then
 		local kg = unt:getkilogram() * num
 		local m = unt:getmeter() * num
 		local s = unt:getsecond() * num
@@ -100,7 +95,7 @@ unit.power = function(unt, num)
 end
 
 unit.equals = function(first, second)
-	if unit.isunit(first) and unit.isunit(second) then
+	if type(first) == 'unit' and type(second) == 'unit' then
 		local kg = first:getkilogram() == second:getkilogram()
 		local m = first:getmeter() == second:getmeter()
 		local s = first:getsecond() == second:getsecond()
@@ -114,7 +109,7 @@ unit.equals = function(first, second)
 end
 
 unit.isempty = function(unt)
-	if unit.isunit(unt) then
+	if type(unt) == 'unit' then
 		local kg = unt:getkilogram() == 0
 		local m = unt:getmeter() == 0
 		local s = unt:getsecond() == 0

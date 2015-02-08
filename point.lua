@@ -1,8 +1,6 @@
 local point = {}
 local point_meta = {}
 point_meta.__index = point_meta
-
-local vector = require('vector')
 local common = require('common')
 
 
@@ -14,14 +12,10 @@ point.new = function(parx, pary, parz)
 end
 
 common.setcallmeta(point)
-
-point.ispoint = function(pnt)
-	return getmetatable(pnt) == point_meta
-end
 common.registertype(point_meta, 'point')
 
 point.clone = function(pnt)
-	if point.ispoint(pnt) then
+	if type(pnt) == 'point' then
 		local x = pnt:getx()
 		local y = pnt:gety()
 		local z = pnt:getz()
@@ -31,7 +25,7 @@ point.clone = function(pnt)
 end
 
 point.equals = function(first, second)
-	if point.ispoint(first) and point.ispoint(second) then
+	if type(first) == 'point' and type(second) == 'point' then
 		local x = first:getx() == second:getx()
 		local y = first:gety() == second:gety()
 		local z = first:getz() == second:getz()
@@ -41,7 +35,7 @@ point.equals = function(first, second)
 end
 
 point.translate = function(pnt, vect)
-	if point.ispoint(pnt) and vector.isvector(vect) then
+	if type(pnt) == 'point' and type(vect) == 'vector' then
 		local x = pnt:getx() + vect:getx()
 		local y = pnt:gety() + vect:gety()
 		local z = pnt:getz() + vect:getz()
@@ -51,11 +45,11 @@ point.translate = function(pnt, vect)
 end
 
 point.difference = function(this, that)
-	if point.ispoint(this) and point.ispoint(that) then
+	if type(this) == 'point' and type(that) == 'point' then
 		local x = that:getx() - this:getx()
 		local y = that:gety() - this:gety()
 		local z = that:getz() - this:getz()
-		return vector.new(x, y, z)
+		return require('vector').new(x, y, z)
 	end
 	common.typeerror('difference', this, that, 'point')
 end

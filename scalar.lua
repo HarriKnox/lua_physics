@@ -1,7 +1,6 @@
 local scalar = {}
 local scalar_meta = {}
 scalar_meta.__index = scalar_meta
-
 local common = require('common')
 
 
@@ -16,14 +15,10 @@ scalar.new = function(parvalue, parunits)
 end
 
 common.setcallmeta(scalar)
-
-scalar.isscalar = function(sca)
-	return getmetatable(sca) == scalar_meta
-end
 common.registertype(scalar_meta, 'scalar')
 
 scalar.clone = function(sca)
-	if scalar.isscalar(sca) then
+	if type(sca) == 'scalar' then
 		local value = sca:getvalue()
 		local units = sca:getunits()
 		return scalar.new(value, units)
@@ -32,17 +27,17 @@ scalar.clone = function(sca)
 end
 
 scalar.multiply = function(first, second)
-	if scalar.isscalar(first) and scalar.isscalar(second) then
+	if type(first) == 'scalar' and type(second) == 'scalar' then
 		local value = first:getvalue() * second:getvalue()
 		local units = first:getunits() * second:getunits()
 		return scalar.new(value, units)
 	end
-	if scalar.isscalar(first) and type(second) == 'number' then
+	if type(first) == 'scalar' and type(second) == 'number' then
 		local value = first:getvalue() * second
 		local units = first:getunits()
 		return scalar.new(value, units)
 	end
-	if scalar.isscalar(second) and type(first) == 'number' then
+	if type(second) == 'scalar' and type(first) == 'number' then
 		local value = second:getvalue() * first
 		local units = second:getunits()
 		return scalar.new(value, units)
@@ -51,17 +46,17 @@ scalar.multiply = function(first, second)
 end
 
 scalar.divide = function(first, second)
-	if scalar.isscalar(first) and scalar.isscalar(second) then
+	if type(first) == 'scalar' and type(second) == 'scalar' then
 		local value = first:getvalue() / second:getvalue()
 		local units = first:getunits() / second:getunits()
 		return scalar.new(value, units)
 	end
-	if scalar.isscalar(first) and type(second) == 'number' then
+	if type(first) == 'scalar' and type(second) == 'number' then
 		local value = first:getvalue() / second
 		local units = first:getunits()
 		return scalar.new(value, units)
 	end
-	if scalar.isscalar(second) and type(first) == 'number' then
+	if type(second) == 'scalar' and type(first) == 'number' then
 		local value = first / second:getvalue()
 		local units = second:getunits() ^ -1
 		return scalar.new(value, units)
@@ -70,7 +65,7 @@ scalar.divide = function(first, second)
 end
 
 scalar.equals = function(first, second)
-	if scalar.isscalar(first) and scalar.isscalar(second) then
+	if type(first) == 'scalar' and type(second) == 'scalar' then
 		local value = first:getvalue() == second:getvalue()
 		local units = first:getunits() == second:getunits()
 		return value and units
