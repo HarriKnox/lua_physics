@@ -3,10 +3,14 @@ local scalar_meta = {}
 scalar_meta.__index = scalar_meta
 
 local common = require('common')
+local unit = require('unit')
 
 
 scalar.new = function(parvalue, parunits)
 	if type(parvalue) == 'number' and type(parunits) == 'unit' then
+		if unit.isempty(parunits) then
+			return parvalue
+		end
 		return setmetatable({value = parvalue, units = parunits}, scalar_meta)
 	end
 	common.typeerror('creation', parvalue, parunits, 'scalar')
