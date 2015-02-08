@@ -21,7 +21,7 @@ common.setcallmeta(scalar)
 scalar.isscalar = function(sca)
 	return getmetatable(sca) == scalar_meta
 end
-common.registertype(scalar.isscalar, 'scalar')
+common.registertype(scalar_meta, 'scalar')
 
 scalar.clone = function(sca)
 	if scalar.isscalar(sca) then

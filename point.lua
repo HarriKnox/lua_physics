@@ -18,7 +18,7 @@ common.setcallmeta(point)
 point.ispoint = function(pnt)
 	return getmetatable(pnt) == point_meta
 end
-common.registertype(point.ispoint, 'point')
+common.registertype(point_meta, 'point')
 
 point.clone = function(pnt)
 	if point.ispoint(pnt) then

@@ -18,7 +18,7 @@ common.setcallmeta(unit)
 unit.isunit = function(un)
 	return getmetatable(un) == unit_meta
 end
-common.registertype(unit.isunit, 'unit')
+common.registertype(unit_meta, 'unit')
 
 unit.clone = function(un)
 	if unit.isunit(un) then

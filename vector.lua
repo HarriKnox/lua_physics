@@ -17,7 +17,7 @@ common.setcallmeta(vector)
 vector.isvector = function(vect)
 	return getmetatable(vect) == vector_meta
 end
-common.registertype(vector.isvector, 'vector')
+common.registertype(vector_meta, 'vector')
 
 vector.clone = function(vect)
 	if vector.isvector(vect) then

@@ -5,8 +5,8 @@ local types = {}
 type = function(thing)
 	local t = _type(thing)
 	if t == 'table' then
-		for check, name in pairs(types) do
-			if check(thing) then
+		for meta, name in pairs(types) do
+			if getmetatable(thing) == meta then
 				t = name
 				break
 			end
@@ -26,8 +26,8 @@ common.setcallmeta = function(parmodule)
 			end})
 end
 
-common.registertype = function(checkfunction, typename)
-	types[checkfunction] = typename
+common.registertype = function(typemeta, typename)
+	types[typemeta] = typename
 end
 
 common.typeerror = function(...)
