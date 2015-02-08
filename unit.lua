@@ -114,6 +114,20 @@ unit.equals = function(first, second)
 	common.typeerror('equation', first, second, 'unit')
 end
 
+unit.isempty = function(unt)
+	if unit.isunit(unt) then
+		local kg = unt:getkilogram() == 0
+		local m = unt:getmeter() == 0
+		local s = unt:getsecond() == 0
+		local a = unt:getampere() == 0
+		local k = unt:getkelvin() == 0
+		local mol = unt:getmole() == 0
+		local cd = unt:getcandela() == 0
+		return kg and m and s and a and k and mol and cd
+	end
+	common.typeerror('empty check', unt, 'unit')
+end
+
 
 common.getmethods(unit, unit_meta)
 
