@@ -49,6 +49,16 @@ common.typeerror = function(...)
 	error(message, 3)
 end
 
+common.istype = function(thing, types)
+	local t = type(thing)
+	for key, value in pairs(type) do
+		if t == value then
+			return true
+		end
+	end
+	return false
+end
+
 common.notsupported = function(typename, operation)
 	return function(this, that)
 		error(operation .. " not supported with " .. typename, 2)
