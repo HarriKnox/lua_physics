@@ -28,8 +28,9 @@ end
 
 scalar.multiply = function(first, second)
 	if common.istype(first, {"scalar", "unit", "number"}) and common.istype(second, {"scalar", "unit", "number"}) then
+		local physics = require('physics')
 		local firstvalue = 1
-		local firstunits = require('physics').units.empty
+		local firstunits = physics.units.empty
 		if type(first) == 'scalar' then
 			firstvalue = first:getvalue()
 			firstunits = first:getunits()
@@ -39,7 +40,7 @@ scalar.multiply = function(first, second)
 			firstvalue = first
 		end
 		local secondvalue = 1
-		local secondunits = require('physics').units.empty
+		local secondunits = physics.units.empty
 		if type(second) == 'scalar' then
 			secondvalue = second:getvalue()
 			secondunits = second:getunits()
