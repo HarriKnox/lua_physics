@@ -57,19 +57,30 @@ scalar.multiply = function(first, second)
 end
 
 scalar.divide = function(first, second)
-	if type(first) == 'scalar' and type(second) == 'scalar' then
-		local value = first:getvalue() / second:getvalue()
-		local units = first:getunits() / second:getunits()
-		return scalar.new(value, units)
-	end
-	if type(first) == 'scalar' and type(second) == 'number' then
-		local value = first:getvalue() / second
-		local units = first:getunits()
-		return scalar.new(value, units)
-	end
-	if type(second) == 'scalar' and type(first) == 'number' then
-		local value = first / second:getvalue()
-		local units = second:getunits() ^ -1
+	if common.istype(first, {'scalar', 'unit', 'number'}) and common.istype(second, {'scalar', 'unit', 'number'}) then
+		local physics = require('physics')
+		local firstvalue = 1
+		local firstunits = physics.units.empty
+		if type(first) == 'scalar' then
+			firstvalue = first:getvalue()
+			firstunits = first:getunits()
+		elseif type(first) == 'unit' then
+			firstunits = first
+		else
+			firstvalue = first
+		end
+		local secondvalue = 1
+		local secondunits = physics.units.empty
+		if type(second) == 'scalar' then
+			secondvalue = second:getvalue()
+			secondunits = second:getunits()
+		elseif type(second) = 'unit' then
+			secondunits = second
+		else
+			secondvalue = second
+		end
+		local value = firstvalue / secondvalue
+		local units = firstunits / secondunits
 		return scalar.new(value, units)
 	end
 	common.typeerror('division', first, second, 'scalar')
