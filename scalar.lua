@@ -17,6 +17,8 @@ end
 common.setcallmeta(scalar)
 common.registertype(scalar_meta, 'scalar')
 
+local suntypes = {'scalar', 'unit', 'number'}
+
 scalar.clone = function(sca)
 	if type(sca) == 'scalar' then
 		local value = sca:getvalue()
@@ -27,7 +29,7 @@ scalar.clone = function(sca)
 end
 
 scalar.multiply = function(first, second)
-	if common.istype(first, {"scalar", "unit", "number"}) and common.istype(second, {"scalar", "unit", "number"}) then
+	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local physics = require('physics')
 		local firstvalue = 1
 		local firstunits = physics.units.empty
@@ -57,7 +59,7 @@ scalar.multiply = function(first, second)
 end
 
 scalar.divide = function(first, second)
-	if common.istype(first, {'scalar', 'unit', 'number'}) and common.istype(second, {'scalar', 'unit', 'number'}) then
+	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local physics = require('physics')
 		local firstvalue = 1
 		local firstunits = physics.units.empty
@@ -87,7 +89,7 @@ scalar.divide = function(first, second)
 end
 
 scalar.equals = function(first, second)
-	if common.istype(first, {'scalar', 'unit', 'number'}) and common.istype(second, {'scalar', 'unit', 'number'}) then
+	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local physics = require('physics')
 		local firstvalue = 1
 		local firstunits = physics.units.empty
