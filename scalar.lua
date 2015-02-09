@@ -27,20 +27,22 @@ scalar.clone = function(sca)
 end
 
 scalar.multiply = function(first, second)
-	if type(first) == 'scalar' and type(second) == 'scalar' then
-		local value = first:getvalue() * second:getvalue()
-		local units = first:getunits() * second:getunits()
-		return scalar.new(value, units)
-	end
-	if type(first) == 'scalar' and type(second) == 'number' then
-		local value = first:getvalue() * second
-		local units = first:getunits()
-		return scalar.new(value, units)
-	end
-	if type(second) == 'scalar' and type(first) == 'number' then
-		local value = second:getvalue() * first
-		local units = second:getunits()
-		return scalar.new(value, units)
+	if common.istype(first, {"scalar", "unit", "number"}) and common.istype(second, {"scalar", "unit", "number"}) then
+		if type(first) == 'scalar' and type(second) == 'scalar' then
+			local value = first:getvalue() * second:getvalue()
+			local units = first:getunits() * second:getunits()
+			return scalar.new(value, units)
+		end
+		if type(first) == 'scalar' and type(second) == 'number' then
+			local value = first:getvalue() * second
+			local units = first:getunits()
+			return scalar.new(value, units)
+		end
+		if type(second) == 'scalar' and type(first) == 'number' then
+			local value = second:getvalue() * first
+			local units = second:getunits()
+			return scalar.new(value, units)
+		end
 	end
 	common.typeerror('multiplication', first, second, 'scalar')
 end
