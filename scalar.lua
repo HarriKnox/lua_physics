@@ -40,10 +40,10 @@ scalar.multiply = function(first, second)
 		end
 		local secondvalue = 1
 		local secondunits = units.new(0, 0, 0, 0, 0, 0, 0)
-		if type(second) = 'scalar' then
+		if type(second) == 'scalar' then
 			secondvalue = second:getvalue()
 			secondunits = second:getunits()
-		elseif type(second) = 'unit' then
+		elseif type(second) == 'unit' then
 			secondunits = second
 		else
 			secondvalue = second
