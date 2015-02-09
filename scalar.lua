@@ -28,21 +28,29 @@ end
 
 scalar.multiply = function(first, second)
 	if common.istype(first, {"scalar", "unit", "number"}) and common.istype(second, {"scalar", "unit", "number"}) then
-		if type(first) == 'scalar' and type(second) == 'scalar' then
-			local value = first:getvalue() * second:getvalue()
-			local units = first:getunits() * second:getunits()
-			return scalar.new(value, units)
+		local firstvalue = 1
+		local firstunits = units.new(0, 0, 0, 0, 0, 0, 0)
+		if type(first) == 'scalar' then
+			firstvalue = first:getvalue()
+			firstunits = first:getunits()
+		elseif type(first) == 'unit' then
+			firstunits = first
+		else
+			firstvalue = first
 		end
-		if type(first) == 'scalar' and type(second) == 'number' then
-			local value = first:getvalue() * second
-			local units = first:getunits()
-			return scalar.new(value, units)
+		local secondvalue = 1
+		local secondunits = units.new(0, 0, 0, 0, 0, 0, 0)
+		if type(second) = 'scalar' then
+			secondvalue = second:getvalue()
+			secondunits = second:getunits()
+		elseif type(second) = 'unit' then
+			secondunits = second
+		else
+			secondvalue = second
 		end
-		if type(second) == 'scalar' and type(first) == 'number' then
-			local value = second:getvalue() * first
-			local units = second:getunits()
-			return scalar.new(value, units)
-		end
+		local value = firstvalue * secondvalue
+		local units = firstunits * secondunits
+		return scalar.new(firstvalue, secondvalue)
 	end
 	common.typeerror('multiplication', first, second, 'scalar')
 end
