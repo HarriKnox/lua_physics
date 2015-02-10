@@ -33,8 +33,8 @@ end
 common.typeerror = function(...)
 	local args = {...}
 	local len = #args - 2
-	local operation = table.remove(args, 1)
 	local typename = table.remove(args)
+	local operation = table.remove(args, 1)
 	local message = string.format("incompatible type%s for %s %s: ", len == 1 and "" or "s", typename, operation)
 	if len < 2 then
 		message = message .. type(args[1])
