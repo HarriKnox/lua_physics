@@ -32,19 +32,23 @@ end
 
 common.typeerror = function(...)
 	local args = {...}
-	local len = #args - 2
-	local typename = table.remove(args)
-	local operation = table.remove(args, 1)
+	local types = {}
+	for i = 2, #args - 1 do
+		table.insert(types, type(args[i]))
+	end
+	local len = #types
+	local typename = args[#args]
+	local operation = args[1]
 	local message = string.format("incompatible type%s for %s %s: ", len == 1 and "" or "s", typename, operation)
 	if len < 2 then
-		message = message .. type(args[1])
+		message = message .. types[1]
 	elseif len == 2 then
-		message = message .. type(args[1]) .. " and " .. type(args[2])
+		message = message .. types[1] .. " and " .. types[2]
 	else
 		for i = 1, len - 1 do
-			message = message .. type(args[i]) .. ", "
+			message = message .. types[i] .. ", "
 		end
-		message = message .. "and " .. type(args[len])
+		message = message .. "and " .. types[len]
 	end
 	error(message, 3)
 end
