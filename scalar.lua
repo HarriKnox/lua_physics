@@ -88,6 +88,15 @@ scalar.divide = function(first, second)
 	common.typeerror('division', first, second, 'scalar')
 end
 
+scalar.intdivide = function(first, second)
+	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+		local sca = scalar.divide(first, second)
+		sca:setvalue(math.floor(sca:getvalue()))
+		return sca
+	end
+	common.typeerror('division', first, second, 'scalar')
+end
+
 scalar.equals = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local physics = require('physics')
