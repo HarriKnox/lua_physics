@@ -76,7 +76,7 @@ scalar.divide = function(first, second)
 		if type(second) == 'scalar' then
 			secondvalue = second:getvalue()
 			secondunits = second:getunits()
-		elseif type(second) = 'unit' then
+		elseif type(second) == 'unit' then
 			secondunits = second
 		else
 			secondvalue = second
@@ -115,7 +115,7 @@ scalar.equals = function(first, second)
 		if type(second) == 'scalar' then
 			secondvalue = second:getvalue()
 			secondunits = second:getunits()
-		elseif type(second) = 'unit' then
+		elseif type(second) == 'unit' then
 			secondunits = second
 		else
 			secondvalue = second

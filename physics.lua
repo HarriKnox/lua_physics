@@ -24,6 +24,6 @@ physics.units.kelvin = k
 physics.units.mole = mol
 physics.units.candela = cd
 
-physics.units.empty = units.new(0, 0, 0, 0, 0, 0, 0)
+physics.units.empty = unit.new(0, 0, 0, 0, 0, 0, 0)
 
 return physics
