@@ -29,9 +29,9 @@ end
 
 scalar.multiply = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
-		local physics = require('physics')
+		local units = require('units')
 		local firstvalue = 1
-		local firstunits = physics.units.empty
+		local firstunits = units.empty
 		if type(first) == 'scalar' then
 			firstvalue = first.value
 			firstunits = first.units
@@ -41,7 +41,7 @@ scalar.multiply = function(first, second)
 			firstvalue = first
 		end
 		local secondvalue = 1
-		local secondunits = physics.units.empty
+		local secondunits = units.empty
 		if type(second) == 'scalar' then
 			secondvalue = second.value
 			secondunits = second.units
@@ -59,9 +59,9 @@ end
 
 scalar.divide = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
-		local physics = require('physics')
+		local units = require('units')
 		local firstvalue = 1
-		local firstunits = physics.units.empty
+		local firstunits = units.empty
 		if type(first) == 'scalar' then
 			firstvalue = first.value
 			firstunits = first.units
@@ -71,7 +71,7 @@ scalar.divide = function(first, second)
 			firstvalue = first
 		end
 		local secondvalue = 1
-		local secondunits = physics.units.empty
+		local secondunits = units.empty
 		if type(second) == 'scalar' then
 			secondvalue = second.value
 			secondunits = second.units
@@ -98,9 +98,9 @@ end
 
 scalar.equals = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
-		local physics = require('physics')
+		local units = require('units')
 		local firstvalue = 1
-		local firstunits = physics.units.empty
+		local firstunits = units.empty
 		if type(first) == 'scalar' then
 			firstvalue = first.value
 			firstunits = first.units
@@ -110,7 +110,7 @@ scalar.equals = function(first, second)
 			firstvalue = first
 		end
 		local secondvalue = 1
-		local secondunits = physics.units.empty
+		local secondunits = units.empty
 		if type(second) == 'scalar' then
 			secondvalue = second.value
 			secondunits = second.units
