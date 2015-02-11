@@ -63,6 +63,18 @@ common.istype = function(thing, types)
 	return false
 end
 
+common.anyoftype = function(...)
+	local args = {...}
+	local len = #args - 1
+	local typename = table.remove(args)
+	for i = 1, len do
+		if type(args[i]) == typename then
+			return true
+		end
+	end
+	return false
+end
+
 common.notsupported = function(typename, operation)
 	return function(this, that)
 		error(operation .. " not supported with " .. typename, 2)
