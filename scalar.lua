@@ -2,6 +2,7 @@ local scalar = {}
 local scalar_meta = {}
 scalar_meta.__index = scalar_meta
 local common = require('common')
+local suntypes = {'scalar', 'unit', 'number'}
 
 
 scalar.new = function(parvalue, parunits)
@@ -16,8 +17,6 @@ end
 
 common.setcallmeta(scalar)
 common.registertype(scalar_meta, 'scalar')
-
-local suntypes = {'scalar', 'unit', 'number'}
 
 scalar.clone = function(sca)
 	if type(sca) == 'scalar' then
