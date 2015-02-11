@@ -60,7 +60,6 @@ unit.multiply = function(first, second)
 		else
 			firstvalue = first
 		end
-		
 		local secondvalue = 1
 		local secondkg = 0
 		local secondm = 0
@@ -90,7 +89,6 @@ unit.multiply = function(first, second)
 		else
 			secondvalue = second
 		end
-		
 		local value = firstvalue * secondvalue
 		local kg = firstkg + secondkg
 		local m = firstm + secondm
@@ -108,54 +106,85 @@ unit.multiply = function(first, second)
 			return scalar.new(value, unt)
 		end
 	end
---[[
-	if type(first) == 'unit' and type(second) == 'unit' then
-		local kg = first:getkilogram() + second:getkilogram()
-		local m = first:getmeter() + second:getmeter()
-		local s = first:getsecond() + second:getsecond()
-		local a = first:getampere() + second:getampere()
-		local k = first:getkelvin() + second:getkelvin()
-		local mol = first:getmole() + second:getmole()
-		local cd = first:getcandela() + second:getcandela()
-		return unit.new(kg, m, s, a, k, mol, cd)
-	end
-	if type(first) == 'unit' and type(second) == 'scalar' then
-		local units = second:getunits()
-		local kg = first:getkilogram() + units:getkilogram()
-		local m = first:getmeter() + units:getmeter()
-		local s = first:getsecond() + units:getsecond()
-		local a = first:getampere() + units:getampere()
-		local k = first:getkelvin() + units:getkelvin()
-		local mol = first:getmole() + units:getmole()
-		local cd = first:getcandela() + units:getcandela()
-		return require('scalar').new(second:getvalue(), unit.new(kg, m, s, a, k, mol, cd))
-	end--]]
 	common.typeerror('multiplication', first, second, 'unit')
 end
 
 unit.divide = function(first, second)
-	if type(first) == 'unit' and type(second) == 'unit' then
-		local kg = first:getkilogram() - second:getkilogram()
-		local m = first:getmeter() - second:getmeter()
-		local s = first:getsecond() - second:getsecond()
-		local a = first:getampere() - second:getampere()
-		local k = first:getkelvin() - second:getkelvin()
-		local mol = first:getmole() - second:getmole()
-		local cd = first:getcandela() - second:getcandela()
-		return unit.new(kg, m, s, a, k, mol, cd)
-	end
-	if type(first) == 'number' and type(second) == 'unit' then
-		local kg = -second:getkilogram()
-		local m = -second:getmeter()
-		local s = -second:getsecond()
-		local a = -second:getampere()
-		local k = -second:getkelvin()
-		local mol = -second:getmole()
-		local cd = -second:getcandela()
-		return unit.new(kg, m, s, a, k, mol, cd)
-	end
-	if type(first) == 'unit' and type(second) == 'number' then
-		return unit.clone(first)
+	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+		local firstvalue = 1
+		local firstkg = 0
+		local firstm = 0
+		local firsts = 0
+		local firsta = 0
+		local firstk = 0
+		local firstmol = 0
+		local firstcd = 0
+		if type(first) == 'scalar' then
+			firstvalue = first:getvalue()
+			local units = first:getunits()
+			firstkg = units:getkilogram()
+			firstm = units:getmeter()
+			firsts = units:getsecond()
+			firsta = units:getampere()
+			firstk = units:getkelvin()
+			firstmol = units:getmole()
+			firstcd = units:getcandela()
+		elseif type(first) == 'unit' then
+			firstkg = first:getkilogram()
+			firstm = first:getmeter()
+			firsts = first:getsecond()
+			firsta = first:getampere()
+			firstk = first:getkelvin()
+			firstmol = first:getmole()
+			firstcd = first:getcandela()
+		else
+			firstvalue = first
+		end
+		local secondvalue = 1
+		local secondkg = 0
+		local secondm = 0
+		local seconds = 0
+		local seconda = 0
+		local secondk = 0
+		local secondmol = 0
+		local secondcd = 0
+		if type(second) == 'scalar' then
+			secondvalue = second:getvalue()
+			local units = second:getunits()
+			secondkg = units:getkilogram()
+			secondm = units:getmeter()
+			seconds = units:getsecond()
+			seconda = units:getampere()
+			secondk = units:getkelvin()
+			secondmol = units:getmole()
+			secondcd = units:getcandela()
+		elseif type(second) == 'unit' then
+			secondkg = second:getkilogram()
+			secondm = second:getmeter()
+			seconds = second:getsecond()
+			seconda = second:getampere()
+			secondk = second:getkelvin()
+			secondmol = second:getmole()
+			secondcd = second:getcandela()
+		else
+			secondvalue = second
+		end
+		local value = firstvalue / secondvalue
+		local kg = firstkg - secondkg
+		local m = firstm - secondm
+		local s = firsts - seconds
+		local a = firsta - seconda
+		local k = firstk - secondk
+		local mol = firstmol - secondmol
+		local cd = firstcd - secondcd
+		local unt = unit.new(kg, m, s, a, k, mol, cd)
+		if unt:isempty() then
+			return value
+		elseif value == 1 and type(first) ~= 'number' and type(second) ~= 'number' then
+			return unt
+		else
+			return scalar.new(value, unt)
+		end
 	end
 	common.typeerror('division', first, second, 'unit')
 end

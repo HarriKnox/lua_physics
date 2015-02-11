@@ -8,13 +8,13 @@ local physics = {}
 physics.constants = {}
 physics.units = {}
 
-local kg = unit.new(1, 0, 0, 0, 0, 0, 0)
-local m = unit.new(0, 1, 0, 0, 0, 0, 0)
-local s = unit.new(0, 0, 1, 0, 0, 0, 0)
-local a = unit.new(0, 0, 0, 1, 0, 0, 0)
-local k = unit.new(0, 0, 0, 0, 1, 0, 0)
-local mol = unit.new(0, 0, 0, 0, 0, 1, 0)
-local cd = unit.new(0, 0, 0, 0, 0, 0, 1)
+--[[local ]]kg = unit.new(1, 0, 0, 0, 0, 0, 0)
+--[[local ]]m = unit.new(0, 1, 0, 0, 0, 0, 0)
+--[[local ]]s = unit.new(0, 0, 1, 0, 0, 0, 0)
+--[[local ]]a = unit.new(0, 0, 0, 1, 0, 0, 0)
+--[[local ]]k = unit.new(0, 0, 0, 0, 1, 0, 0)
+--[[local ]]mol = unit.new(0, 0, 0, 0, 0, 1, 0)
+--[[local ]]cd = unit.new(0, 0, 0, 0, 0, 0, 1)
 
 physics.units.kilogram = kg
 physics.units.meter = m

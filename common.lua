@@ -55,7 +55,7 @@ end
 
 common.istype = function(thing, types)
 	local t = type(thing)
-	for key, value in pairs(type) do
+	for key, value in pairs(types) do
 		if t == value then
 			return true
 		end
