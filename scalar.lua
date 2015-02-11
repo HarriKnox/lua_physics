@@ -133,11 +133,11 @@ common.getmethods(scalar, scalar_meta)
 scalar_meta.__eq = scalar.equals
 scalar_meta.__mul = scalar.multiply
 scalar_meta.__div = scalar.divide
+scalar_meta.__idiv = scalar.intdivide
 
 scalar_meta.__add = common.notsupported('scalars', 'addition')
 scalar_meta.__sub = common.notsupported('scalars', 'subtraction')
 scalar_meta.__unm = common.notsupported('scalars', 'unary-minus')
-scalar_meta.__idiv = common.notsupported('scalars', 'int-division')
 scalar_meta.__len = common.notsupported('scalars', 'length')
 scalar_meta.__mod = common.notsupported('scalars', 'modulo')
 scalar_meta.__pow = common.notsupported('scalars', 'powers')
