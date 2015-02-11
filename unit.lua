@@ -17,13 +17,13 @@ common.registertype(unit_meta, 'unit')
 
 unit.clone = function(un)
 	if type(un) == 'unit' then
-		local kg = un:getkilogram()
-		local m = un:getmeter()
-		local s = un:getsecond()
-		local a = un:getampere()
-		local k = un:getkelvin()
-		local mol = un:getmole()
-		local cd = un:getcandela()
+		local kg = un.kilogram
+		local m = un.meter
+		local s = un.second
+		local a = un.ampere
+		local k = un.kelvin
+		local mol = un.mole
+		local cd = un.candela
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
 	common.typeerror('cloning', un, 'unit')
@@ -40,23 +40,23 @@ unit.multiply = function(first, second)
 		local firstmol = 0
 		local firstcd = 0
 		if type(first) == 'scalar' then
-			firstvalue = first:getvalue()
-			local units = first:getunits()
-			firstkg = units:getkilogram()
-			firstm = units:getmeter()
-			firsts = units:getsecond()
-			firsta = units:getampere()
-			firstk = units:getkelvin()
-			firstmol = units:getmole()
-			firstcd = units:getcandela()
+			firstvalue = first.value
+			local units = first.units
+			firstkg = units.kilogram
+			firstm = units.meter
+			firsts = units.second
+			firsta = units.ampere
+			firstk = units.kelvin
+			firstmol = units.mole
+			firstcd = units.candela
 		elseif type(first) == 'unit' then
-			firstkg = first:getkilogram()
-			firstm = first:getmeter()
-			firsts = first:getsecond()
-			firsta = first:getampere()
-			firstk = first:getkelvin()
-			firstmol = first:getmole()
-			firstcd = first:getcandela()
+			firstkg = first.kilogram
+			firstm = first.meter
+			firsts = first.second
+			firsta = first.ampere
+			firstk = first.kelvin
+			firstmol = first.mole
+			firstcd = first.candela
 		else
 			firstvalue = first
 		end
@@ -69,23 +69,23 @@ unit.multiply = function(first, second)
 		local secondmol = 0
 		local secondcd = 0
 		if type(second) == 'scalar' then
-			secondvalue = second:getvalue()
-			local units = second:getunits()
-			secondkg = units:getkilogram()
-			secondm = units:getmeter()
-			seconds = units:getsecond()
-			seconda = units:getampere()
-			secondk = units:getkelvin()
-			secondmol = units:getmole()
-			secondcd = units:getcandela()
+			secondvalue = second.value
+			local units = second.units
+			secondkg = units.kilogram
+			secondm = units.meter
+			seconds = units.second
+			seconda = units.ampere
+			secondk = units.kelvin
+			secondmol = units.mole
+			secondcd = units.candela
 		elseif type(second) == 'unit' then
-			secondkg = second:getkilogram()
-			secondm = second:getmeter()
-			seconds = second:getsecond()
-			seconda = second:getampere()
-			secondk = second:getkelvin()
-			secondmol = second:getmole()
-			secondcd = second:getcandela()
+			secondkg = second.kilogram
+			secondm = second.meter
+			seconds = second.second
+			seconda = second.ampere
+			secondk = second.kelvin
+			secondmol = second.mole
+			secondcd = second.candela
 		else
 			secondvalue = second
 		end
@@ -120,23 +120,23 @@ unit.divide = function(first, second)
 		local firstmol = 0
 		local firstcd = 0
 		if type(first) == 'scalar' then
-			firstvalue = first:getvalue()
-			local units = first:getunits()
-			firstkg = units:getkilogram()
-			firstm = units:getmeter()
-			firsts = units:getsecond()
-			firsta = units:getampere()
-			firstk = units:getkelvin()
-			firstmol = units:getmole()
-			firstcd = units:getcandela()
+			firstvalue = first.value
+			local units = first.units
+			firstkg = units.kilogram
+			firstm = units.meter
+			firsts = units.second
+			firsta = units.ampere
+			firstk = units.kelvin
+			firstmol = units.mole
+			firstcd = units.candela
 		elseif type(first) == 'unit' then
-			firstkg = first:getkilogram()
-			firstm = first:getmeter()
-			firsts = first:getsecond()
-			firsta = first:getampere()
-			firstk = first:getkelvin()
-			firstmol = first:getmole()
-			firstcd = first:getcandela()
+			firstkg = first.kilogram
+			firstm = first.meter
+			firsts = first.second
+			firsta = first.ampere
+			firstk = first.kelvin
+			firstmol = first.mole
+			firstcd = first.candela
 		else
 			firstvalue = first
 		end
@@ -149,23 +149,23 @@ unit.divide = function(first, second)
 		local secondmol = 0
 		local secondcd = 0
 		if type(second) == 'scalar' then
-			secondvalue = second:getvalue()
-			local units = second:getunits()
-			secondkg = units:getkilogram()
-			secondm = units:getmeter()
-			seconds = units:getsecond()
-			seconda = units:getampere()
-			secondk = units:getkelvin()
-			secondmol = units:getmole()
-			secondcd = units:getcandela()
+			secondvalue = second.value
+			local units = second.units
+			secondkg = units.kilogram
+			secondm = units.meter
+			seconds = units.second
+			seconda = units.ampere
+			secondk = units.kelvin
+			secondmol = units.mole
+			secondcd = units.candela
 		elseif type(second) == 'unit' then
-			secondkg = second:getkilogram()
-			secondm = second:getmeter()
-			seconds = second:getsecond()
-			seconda = second:getampere()
-			secondk = second:getkelvin()
-			secondmol = second:getmole()
-			secondcd = second:getcandela()
+			secondkg = second.kilogram
+			secondm = second.meter
+			seconds = second.second
+			seconda = second.ampere
+			secondk = second.kelvin
+			secondmol = second.mole
+			secondcd = second.candela
 		else
 			secondvalue = second
 		end
@@ -191,13 +191,13 @@ end
 
 unit.power = function(unt, num)
 	if type(unt) == 'unit' and type(num) == 'number' then
-		local kg = unt:getkilogram() * num
-		local m = unt:getmeter() * num
-		local s = unt:getsecond() * num
-		local a = unt:getampere() * num
-		local k = unt:getkelvin() * num
-		local mol = unt:getmole() * num
-		local cd = unt:getcandela() * num
+		local kg = unt.kilogram * num
+		local m = unt.meter * num
+		local s = unt.second * num
+		local a = unt.ampere * num
+		local k = unt.kelvin * num
+		local mol = unt.mole * num
+		local cd = unt.candela * num
 		return unit.new(kg, m, s, a, k, mol, cd)
 	end
 	common.typeerror('power', unt, num, 'unit')
@@ -205,13 +205,13 @@ end
 
 unit.equals = function(first, second)
 	if type(first) == 'unit' and type(second) == 'unit' then
-		local kg = first:getkilogram() == second:getkilogram()
-		local m = first:getmeter() == second:getmeter()
-		local s = first:getsecond() == second:getsecond()
-		local a = first:getampere() == second:getampere()
-		local k = first:getkelvin() == second:getkelvin()
-		local mol = first:getmole() == second:getmole()
-		local cd = first:getcandela() == second:getcandela()
+		local kg = first.kilogram == second.kilogram
+		local m = first.meter == second.meter
+		local s = first.second == second.second
+		local a = first.ampere == second.ampere
+		local k = first.kelvin == second.kelvin
+		local mol = first.mole == second.mole
+		local cd = first.candela == second.candela
 		return kg and m and s and a and k and mol and cd
 	end
 	return false
@@ -219,13 +219,13 @@ end
 
 unit.isempty = function(unt)
 	if type(unt) == 'unit' then
-		local kg = unt:getkilogram() == 0
-		local m = unt:getmeter() == 0
-		local s = unt:getsecond() == 0
-		local a = unt:getampere() == 0
-		local k = unt:getkelvin() == 0
-		local mol = unt:getmole() == 0
-		local cd = unt:getcandela() == 0
+		local kg = unt.kilogram == 0
+		local m = unt.meter == 0
+		local s = unt.second == 0
+		local a = unt.ampere == 0
+		local k = unt.kelvin == 0
+		local mol = unt.mole == 0
+		local cd = unt.candela == 0
 		return kg and m and s and a and k and mol and cd
 	end
 	common.typeerror('empty check', unt, 'unit')
@@ -259,13 +259,13 @@ unit_meta.__tostring = function(this)
 	local numerator = {}
 	local denominator = {}
 	local units = {
-		{x = this:getkilogram(), str = 'kg'},
-		{x = this:getmeter(), str = 'm'},
-		{x = this:getsecond(), str = 's'},
-		{x = this:getampere(), str = 'A'},
-		{x = this:getkelvin(), str = 'K'},
-		{x = this:getmole(), str = 'mol'},
-		{x = this:getcandela(), str = 'cd'}
+		{x = this.kilogram, str = 'kg'},
+		{x = this.meter, str = 'm'},
+		{x = this.second, str = 's'},
+		{x = this.ampere, str = 'A'},
+		{x = this.kelvin, str = 'K'},
+		{x = this.mole, str = 'mol'},
+		{x = this.candela, str = 'cd'}
 	}
 	for _, unt in pairs(units) do
 		if unt.x > 0 then
@@ -294,22 +294,6 @@ unit_meta.__tostring = function(this)
 	end
 	return str
 end
-
-unit_meta.getkilogram = function(this) return this.kilogram end
-unit_meta.getmeter = function(this) return this.meter end
-unit_meta.getsecond = function(this) return this.second end
-unit_meta.getampere = function(this) return this.ampere end
-unit_meta.getkelvin = function(this) return this.kelvin end
-unit_meta.getmole = function(this) return this.mole end
-unit_meta.getcandela = function(this) return this.candela end
-
-unit_meta.setkilogram = function(this, num) this.kilogram = num end
-unit_meta.setmeter = function(this, num) this.meter = num end
-unit_meta.setsecond = function(this, num) this.second = num end
-unit_meta.setampere = function(this, num) this.ampere = num end
-unit_meta.setkelvin = function(this, num) this.kelvin = num end
-unit_meta.setmole = function(this, num) this.mole = num end
-unit_meta.setcandela = function(this, num) this.candela = num end
 
 
 return unit

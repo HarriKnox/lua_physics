@@ -16,9 +16,9 @@ common.registertype(point_meta, 'point')
 
 point.clone = function(pnt)
 	if type(pnt) == 'point' then
-		local x = pnt:getx()
-		local y = pnt:gety()
-		local z = pnt:getz()
+		local x = pnt.x
+		local y = pnt.y
+		local z = pnt.z
 		return point.new(x, y, z)
 	end
 	common.typeerror('cloning', pnt, 'point')
@@ -26,9 +26,9 @@ end
 
 point.equals = function(first, second)
 	if type(first) == 'point' and type(second) == 'point' then
-		local x = first:getx() == second:getx()
-		local y = first:gety() == second:gety()
-		local z = first:getz() == second:getz()
+		local x = first.x == second.x
+		local y = first.y == second.y
+		local z = first.z == second.z
 		return x and y and z
 	end
 	return false
@@ -36,9 +36,9 @@ end
 
 point.translate = function(pnt, vect)
 	if type(pnt) == 'point' and type(vect) == 'vector' then
-		local x = pnt:getx() + vect:getx()
-		local y = pnt:gety() + vect:gety()
-		local z = pnt:getz() + vect:getz()
+		local x = pnt.x + vect.x
+		local y = pnt.y + vect.y
+		local z = pnt.z + vect.z
 		return point.new(x, y, z)
 	end
 	common.typeerror('translation', pnt, vect, 'point')
@@ -46,9 +46,9 @@ end
 
 point.difference = function(this, that)
 	if type(this) == 'point' and type(that) == 'point' then
-		local x = that:getx() - this:getx()
-		local y = that:gety() - this:gety()
-		local z = that:getz() - this:getz()
+		local x = that.x - this.x
+		local y = that.y - this.y
+		local z = that.z - this.z
 		return require('vector').new(x, y, z)
 	end
 	common.typeerror('difference', this, that, 'point')
@@ -79,15 +79,7 @@ point_meta.__shl = point_meta.__band
 point_meta.__shr = point_meta.__band
 
 point_meta.__tostring = function(this)
-	return string.format("point: (%g, %g, %g)", this:getx(), this:gety(), this:getz())
+	return string.format("point: (%g, %g, %g)", this.x, this.y, this.z)
 end
-
-point_meta.getx = function(this) return this.x end
-point_meta.gety = function(this) return this.y end
-point_meta.getz = function(this) return this.z end
-
-point_meta.setx = function(this, num) this.x = num end
-point_meta.sety = function(this, num) this.y = num end
-point_meta.setz = function(this, num) this.z = num end
 
 return point

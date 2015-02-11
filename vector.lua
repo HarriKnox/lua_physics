@@ -16,9 +16,9 @@ common.registertype(vector_meta, 'vector')
 
 vector.clone = function(vect)
 	if type(vect) == 'vector' then
-		local x = vect:getx()
-		local y = vect:gety()
-		local z = vect:getz()
+		local x = vect.x
+		local y = vect.y
+		local z = vect.z
 		return vector.new(x, y, z)
 	end
 	common.typeerror('cloning', vect, 'vector')
@@ -26,9 +26,9 @@ end
 
 vector.add = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = first:getx() + second:getx()
-		local y = first:gety() + second:gety()
-		local z = first:getz() + second:getz()
+		local x = first.x + second.x
+		local y = first.y + second.y
+		local z = first.z + second.z
 		return vector.new(x, y, z)
 	end
 	common.typeerror('addition', first, second, 'vector')
@@ -36,9 +36,9 @@ end
 
 vector.subtract = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = first:getx() - second:getx()
-		local y = first:gety() - second:gety()
-		local z = first:getz() - second:getz()
+		local x = first.x - second.x
+		local y = first.y - second.y
+		local z = first.z - second.z
 		return vector.new(x, y, z)
 	end
 	common.typeerror('subtraction', first, second, 'vector')
@@ -46,15 +46,15 @@ end
 
 vector.multiply = function(first, second)
 	if type(first) == 'vector' and type(second) == 'number' then
-		local x = first:getx() * second
-		local y = first:gety() * second
-		local z = first:getz() * second
+		local x = first.x * second
+		local y = first.y * second
+		local z = first.z * second
 		return vector.new(x, y, z)
 	end
 	if type(second) == 'vector' and type(first) == 'number' then
-		local x = second:getx() * first
-		local y = second:gety() * first
-		local z = second:getz() * first
+		local x = second.x * first
+		local y = second.y * first
+		local z = second.z * first
 		return vector.new(x, y, z)
 	end
 	common.typeerror('multiplication', first, second, 'vector')
@@ -62,9 +62,9 @@ end
 
 vector.divide = function(first, second)
 	if type(first) == 'vector' and type(second) == 'number' then
-		local x = first:getx() / second
-		local y = first:gety() / second
-		local z = first:getz() / second
+		local x = first.x / second
+		local y = first.y / second
+		local z = first.z / second
 		return vector.new(x, y, z)
 	end
 	common.typeerror('division', first, second, 'vector')
@@ -73,9 +73,9 @@ end
 vector.intdivide = function(first, second)
 	if type(first) == 'vector' and type(second) == 'number' then
 		local vect = vector.divide(first, second)
-		vect:setx(math.floor(vect:getx()))
-		vect:sety(math.floor(vect:gety()))
-		vect:setz(math.floor(vect:getz()))
+		vect.x = math.floor(vect.x)
+		vect.y = math.floor(vect.y)
+		vect.z = math.floor(vect.z)
 		return vect
 	end
 	common.typeerror('division', first, second, 'vector')
@@ -83,9 +83,9 @@ end
 
 vector.negate = function(vect)
 	if type(vect) == 'vector' then
-		local x = vect:getx()
-		local y = vect:gety()
-		local z = vect:getz()
+		local x = vect.x
+		local y = vect.y
+		local z = vect.z
 		return vector.new(-x, -y, -z)
 	end
 	common.typeerror('negation', vect, 'vector')
@@ -93,9 +93,9 @@ end
 
 vector.equals = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = first:getx() == second:getx()
-		local y = first:gety() == second:gety()
-		local z = first:getz() == second:getz()
+		local x = first.x == second.x
+		local y = first.y == second.y
+		local z = first.z == second.z
 		return x and y and z
 	end
 	return false
@@ -103,9 +103,9 @@ end
 
 vector.magnitude = function(vect)
 	if type(vect) == 'vector' then
-		local x = vect:getx() ^ 2
-		local y = vect:gety() ^ 2
-		local z = vect:getz() ^ 2
+		local x = vect.x ^ 2
+		local y = vect.y ^ 2
+		local z = vect.z ^ 2
 		return math.sqrt(x + y + z)
 	end
 	common.typeerror('magnitude', vect, 'vector')
@@ -114,9 +114,9 @@ end
 vector.normalize = function(vect)
 	if type(vect) == 'vector' then
 		local mag = vector.magnitude(vect)
-		local x = vect:getx() / mag
-		local y = vect:gety() / mag
-		local z = vect:getz() / mag
+		local x = vect.x / mag
+		local y = vect.y / mag
+		local z = vect.z / mag
 		return vector.new(x, y, z)
 	end
 	common.typeerror('normalize', vect, 'vector')
@@ -124,9 +124,9 @@ end
 
 vector.dotproduct = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = first:getx() * second:getx()
-		local y = first:gety() * second:gety()
-		local z = first:getz() * second:getz()
+		local x = first.x * second.x
+		local y = first.y * second.y
+		local z = first.z * second.z
 		return x + y + z
 	end
 	common.typeerror('dot-product', first, second, 'vector')
@@ -134,9 +134,9 @@ end
 
 vector.crossproduct = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = (first:gety() * second:getz()) - (first:getz() * second:gety())
-		local y = (first:getz() * second:getx()) - (first:getx() * second:getz())
-		local z = (first:gety() * second:getx()) - (first:getx() * second:gety())
+		local x = (first.y * second.z) - (first.z * second.y)
+		local y = (first.z * second.x) - (first.x * second.z)
+		local z = (first.y * second.x) - (first.x * second.y)
 		return vector.new(x, y, z)
 	end
 	common.typeerror('cross-product', first, second, 'vector')
@@ -150,7 +150,7 @@ vector.azimuth = function(vect)
 		else
 			arctan = math.atan2
 		end
-		return arctan(vect:gety(), vect:getx())
+		return arctan(vect.y, vect.x)
 	end
 	common.typeerror('azimuth', vect, 'vector')
 end
@@ -163,9 +163,9 @@ vector.altitude = function(vect)
 		else
 			arctan = math.atan2
 		end
-		local x = vect:getx() ^ 2
-		local y = vect:gety() ^ 2
-		return arctan(vect:getz(), math.sqrt(x + y))
+		local x = vect.x ^ 2
+		local y = vect.y ^ 2
+		return arctan(vect.z, math.sqrt(x + y))
 	end
 	common.typeerror('altitude', vect, 'vector')
 end
@@ -195,15 +195,7 @@ vector_meta.__shl = vector_meta.__band
 vector_meta.__shr = vector_meta.__band
 
 vector_meta.__tostring = function(this)
-	return string.format("vector: (%g, %g, %g)", this:getx(), this:gety(), this:getz())
+	return string.format("vector: (%g, %g, %g)", this.x, this.y, this.z)
 end
-
-vector_meta.getx = function(this) return this.x end
-vector_meta.gety = function(this) return this.y end
-vector_meta.getz = function(this) return this.z end
-
-vector_meta.setx = function(this, num) this.x = num end
-vector_meta.sety = function(this, num) this.y = num end
-vector_meta.setz = function(this, num) this.z = num end
 
 return vector
