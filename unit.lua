@@ -214,7 +214,7 @@ unit.equals = function(first, second)
 		local cd = first:getcandela() == second:getcandela()
 		return kg and m and s and a and k and mol and cd
 	end
-	common.typeerror('equation', first, second, 'unit')
+	return false
 end
 
 unit.isempty = function(unt)

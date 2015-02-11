@@ -123,7 +123,7 @@ scalar.equals = function(first, second)
 		local units = firstunits == secondunits
 		return value and units
 	end
-	common.typeerror('equation', first, second, 'scalar')
+	return false
 end
 
 

@@ -31,7 +31,7 @@ point.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	common.typeerror('equation', first, second, 'point')
+	return false
 end
 
 point.translate = function(pnt, vect)

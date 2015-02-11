@@ -98,7 +98,7 @@ vector.equals = function(first, second)
 		local z = first:getz() == second:getz()
 		return x and y and z
 	end
-	common.typeerror('equation', first, second, 'vector')
+	return false
 end
 
 vector.magnitude = function(vect)
