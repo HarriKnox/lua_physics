@@ -4,9 +4,9 @@ vector_meta.__index = vector_meta
 local common = require('common')
 
 
-vector.new = function(parx, pary, parz)
-	if type(parx) == 'number' and type(pary) == 'number' and type(parz) == 'number' then
-		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
+vector.new = function(parx, pary, parz, paru)
+	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' and common.istype(paru, {'unit', 'nil'}) then
+		return setmetatable({x = parx, y = pary, z = parz, units = paru}, vector_meta)
 	end
 	common.typeerror('creation', parx, pary, parz, 'vector')
 end
