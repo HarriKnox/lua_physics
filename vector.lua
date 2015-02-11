@@ -5,8 +5,8 @@ local common = require('common')
 
 
 vector.new = function(parx, pary, parz, paru)
-	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' and common.istype(paru, {'unit', 'nil'}) then
-		return setmetatable({x = parx, y = pary, z = parz, units = paru}, vector_meta)
+	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' then
+		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
 	end
 	common.typeerror('creation', parx, pary, parz, 'vector')
 end
@@ -201,11 +201,9 @@ end
 vector_meta.getx = function(this) return this.x end
 vector_meta.gety = function(this) return this.y end
 vector_meta.getz = function(this) return this.z end
-vector_meta.getunits = function(this) return this.units end
 
 vector_meta.setx = function(this, num) this.x = num end
 vector_meta.sety = function(this, num) this.y = num end
 vector_meta.setz = function(this, num) this.z = num end
-vector_meta.setunits = function(this, unt) this.units = unt end
 
 return vector
