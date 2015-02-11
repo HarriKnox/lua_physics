@@ -103,7 +103,7 @@ unit.multiply = function(first, second)
 		elseif value == 1 and type(first) ~= 'number' and type(second) ~= 'number' then
 			return unt
 		else
-			return scalar.new(value, unt)
+			return require('scalar').new(value, unt)
 		end
 	end
 	common.typeerror('multiplication', first, second, 'unit')
@@ -183,7 +183,7 @@ unit.divide = function(first, second)
 		elseif value == 1 and type(first) ~= 'number' and type(second) ~= 'number' then
 			return unt
 		else
-			return scalar.new(value, unt)
+			return require('scalar').new(value, unt)
 		end
 	end
 	common.typeerror('division', first, second, 'unit')
