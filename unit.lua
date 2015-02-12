@@ -102,9 +102,8 @@ unit.multiply = function(first, second)
 			return value
 		elseif value == 1 then
 			return unt
-		else
-			return require('scalar').new(value, unt)
 		end
+		return require('scalar').new(value, unt)
 	end
 	common.typeerror('multiplication', first, second, 'unit')
 end
@@ -182,9 +181,8 @@ unit.divide = function(first, second)
 			return value
 		elseif value == 1 then
 			return unt
-		else
-			return require('scalar').new(value, unt)
 		end
+		return require('scalar').new(value, unt)
 	end
 	common.typeerror('division', first, second, 'unit')
 end

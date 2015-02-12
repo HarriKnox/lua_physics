@@ -49,6 +49,11 @@ scalar.multiply = function(first, second)
 		end
 		local value = firstvalue * secondvalue
 		local units = firstunits * secondunits
+		if units:isempty() then
+			return value
+		elseif value == 1 then
+			return units
+		end
 		return scalar.new(firstvalue, secondvalue)
 	end
 	common.typeerror('multiplication', first, second, 'scalar')
@@ -79,6 +84,11 @@ scalar.divide = function(first, second)
 		end
 		local value = firstvalue / secondvalue
 		local units = firstunits / secondunits
+		if units:isempty() then
+			return value
+		elseif value == 1 then
+			return units
+		end
 		return scalar.new(value, units)
 	end
 	common.typeerror('division', first, second, 'scalar')
