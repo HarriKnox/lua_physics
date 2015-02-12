@@ -1,0 +1,140 @@
+local common = require('common')
+local vector = require('vector')
+local point = require('point')
+local unit = require('unit')
+local units = require('units')
+local scalar = require('scalar')
+
+-- Defining testing values and testing module.new functions. The components
+-- for the vectors and points were based on Pythagorean Quadruples.
+local v0 = vector.new(-2, 3, -6)
+local v1 = vector.new(12, 15, 16)
+local p0 = point.new(8, -9, -12)
+local p1 = point.new(9, -12, 20)
+local u0 = unit.new(1, 0, 0, 0, 0, 0, 0)
+local u1 = unit.new(0, 1, 0, 0, 0, 0, 0)
+local u2 = unit.new(0, 0, 1, 0, 0, 0, 0)
+local u3 = unit.new(0, 0, 0, 1, 0, 0, 0)
+local s0 = scalar.new(20, unit.new(1, 1, -2, 0, 0, 0, 0))
+local s1 = scalar.new(10, unit.new(0, 1, -2, 0, 0, 0, 0))
+
+local kg = u0
+local m = u1
+local s = u2
+local a = u3
+
+
+do -- Test __call metamethod for the modules.
+	assert(v0 == vector(-2, 3, -6))
+	assert(p0 == point(8, -9, -12))
+	assert(u0 == unit(1, 0, 0, 0, 0, 0, 0))
+	assert(s0 == scalar(20, unit.new(1, 1, -2, 0, 0, 0, 0)))
+end
+
+do -- Test type registration
+	assert(type(v0) == 'vector')
+	assert(type(p0) == 'point')
+	assert(type(u0) == 'unit')
+	assert(type(s0) == 'scalar')
+end
+
+do -- Test clone function
+	assert(vector.clone(v0) == v0
+	assert(v0:clone() == v0)
+	
+	assert(point.clone(p0) == p0)
+	assert(p0:clone() == p0)
+	
+	assert(unit.clone(u0) == u0)
+	assert(u0:clone() == u0)
+	
+	assert(scalar.clone(s0) == s0)
+	assert(s0:clone() == s0)
+end
+
+do -- Test Vector functions
+	-- Vector addition, and commutative property
+	local v2 = vector.new(10, 18, 10)
+	assert(vector.add(v0, v1) == v2)
+	assert(v0:add(v1) == v2)
+	assert(v0 + v1 == v2)
+	assert(vector.add(v1, v0) == v2)
+	assert(v1:add(v0) == v2)
+	assert(v1 + v0 == v2)
+	
+	-- Vector subtraction
+	local v3 = vector.new(-14, -12, -22)
+	assert(vector.subtract(v0, v1) == v3)
+	assert(v0:subtract(v1) == v3)
+	assert(v0 - v1 == v3)
+	
+	-- Vector subtraction part 2, note there is no commutative property
+	local v4 = vector.new(14, 12, 22)
+	assert(vector.subtract(v1, v0) == v4)
+	assert(v1:subtract(v0) == v4)
+	assert(v1 - v0 == v4)
+	
+	-- Vector multiplication, and commutative property
+	local v5 = vector.new(-8, 12, -24)
+	assert(vector.multiply(v0, 4) == v5)
+	assert(v0:multiply(4) == v5)
+	assert(v0 * 4 == v5)
+	assert(vector.multiply(4, v0) == v5)
+	assert(4 * v0 == v5)
+	
+	-- Vector division, note no commutative property
+	local v6 = vector.new(-0.5, 0.75, -1.5)
+	assert(vector.divide(v0, 4) == v6)
+	assert(v0:divide(4) == v6)
+	assert(v0 / 4 == v6)
+	
+	-- Vector int division, also no commutativity
+	local v7 = vector.new(-1, 0, -2)
+	assert(vector.intdivide(v0, 4) == v7)
+	assert(v0:intdivide(4) == v7)
+	assert(v0 // 4 == v7)
+	
+	-- Vector negation
+	local v8 = vector.new(2, -3, 6)
+	assert(vector.negate(v0) == v8)
+	assert(v0:negate() == v8)
+	assert(-v0 == v8)
+	
+	-- Vector magnitude (the reason why I made the components part of a Pythagorean Quadruple)
+	local n0 = 7 -- A whole number *glee*
+	assert(vector.magnitude(v0) == n0)
+	assert(v0:magnitude() == n0)
+	assert(#v0 == n0)
+	
+	-- Vector normalize
+	local v9 = vector.new(-2 / 7, 3 / 7, -6 / 7)
+	assert(vector.normalize(v0) == v9)
+	assert(v0:normalize() == v9)
+	
+	-- Vector dotproduct, commutative
+	local n1 = -75
+	assert(vector.dotproduct(v0, v1) == n1)
+	assert(vector.dotproduct(v1, v0) == n1)
+	assert(v0:dotproduct(v1) == n1)
+	assert(v1:dotproduct(v0) == n1)
+	
+	-- Vector crossproduct, not commutative, but the opposite order is the negative of the resulting cross vector
+	local vA = vector.new(138, -40, 66)
+	assert(vector.crossproduct(v0, v1) == vA, vector.crossproduct(v0, v1))
+	assert(v0:crossproduct(v1) == vA)
+	assert(vector.crossproduct(v1, v0) == -vA)
+	assert(v1:crossproduct(v0) == -vA)
+	
+	-- Vector azimuth angle
+	local n2 = math.atan(3, -2)
+	assert(vector.azimuth(v0) == n2)
+	assert(v0:azimuth() == n2)
+	
+	--Vector altitude angle
+	local n3 = math.atan(-6, 13 ^ 0.5)
+	assert(vector.altitude(v0) == n3)
+	assert(v0:altitude() == n3)
+	
+	-- Vector to string
+	assert(tostring(v0) == "vector: (-2, 3, -6)")
+end
