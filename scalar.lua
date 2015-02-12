@@ -7,9 +7,6 @@ local suntypes = {'scalar', 'unit', 'number'}
 
 scalar.new = function(parvalue, parunits)
 	if type(parvalue) == 'number' and type(parunits) == 'unit' then
-		if parunits:isempty() then
-			return parvalue
-		end
 		return setmetatable({value = parvalue, units = parunits}, scalar_meta)
 	end
 	common.typeerror('creation', parvalue, parunits, 'scalar')
