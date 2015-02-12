@@ -7,7 +7,7 @@ local suntypes = {'scalar', 'unit', 'number'}
 
 scalar.new = function(parvalue, parunits)
 	if type(parvalue) == 'number' and type(parunits) == 'unit' then
-		return setmetatable({value = parvalue, units = parunits}, scalar_meta)
+		return setmetatable({value = parvalue, units = parunits:clone()}, scalar_meta)
 	end
 	common.typeerror('creation', parvalue, parunits, 'scalar')
 end
