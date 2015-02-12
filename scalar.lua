@@ -137,8 +137,8 @@ scalar.equals = function(first, second)
 	return false
 end
 
-scalar.tostring = function(sca)
-	return string.format("%g%s", sca.value, sca.units:isempty() and '' or ' ' .. sca.units:tostring())
+scalar.tostring = function(sca, sci)
+	return string.format("%g%s", sca.value, sca.units:isempty() and '' or ' ' .. sca.units:tostring(sci))
 end
 
 
