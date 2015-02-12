@@ -231,6 +231,49 @@ unit.isempty = function(unt)
 	common.typeerror('empty check', unt, 'unit')
 end
 
+unit.tostring = function(unt)
+	if type(unt) == 'unit' then
+		local numerator = {}
+		local denominator = {}
+		local units = {
+			{x = this.kilogram, str = 'kg'},
+			{x = this.meter, str = 'm'},
+			{x = this.second, str = 's'},
+			{x = this.ampere, str = 'A'},
+			{x = this.kelvin, str = 'K'},
+			{x = this.mole, str = 'mol'},
+			{x = this.candela, str = 'cd'}
+		}
+		for _, unt in pairs(units) do
+			if unt.x > 0 then
+				local num = unt.str
+				if unt.x ~= 1 then
+					num = num .. '^' .. tostring(unt.x)
+				end
+				table.insert(numerator, num)
+			elseif unt.x < 0 then
+				local den = unt.str
+				if unt.x ~= -1 then
+					den = den .. '^' .. tostring(-unt.x)
+				end
+				table.insert(denominator, den)
+			end
+		end
+		if #numerator == 0 then
+			if #denominator == 0 then
+				return ''
+			end
+			table.insert(numerator, '1')
+		end
+		local str = table.concat(numerator, ' ')
+		if #denominator > 0 then
+			return str .. " / " .. table.concat(denominator, ' ')
+		end
+		return str
+	end
+	common.typeerror('string representation', unt, 'unit')
+end
+
 
 common.getmethods(unit, unit_meta)
 
@@ -255,45 +298,7 @@ unit_meta.__bnot = unit_meta.__band
 unit_meta.__shl = unit_meta.__band
 unit_meta.__shr = unit_meta.__band
 
-unit_meta.__tostring = function(this)
-	local numerator = {}
-	local denominator = {}
-	local units = {
-		{x = this.kilogram, str = 'kg'},
-		{x = this.meter, str = 'm'},
-		{x = this.second, str = 's'},
-		{x = this.ampere, str = 'A'},
-		{x = this.kelvin, str = 'K'},
-		{x = this.mole, str = 'mol'},
-		{x = this.candela, str = 'cd'}
-	}
-	for _, unt in pairs(units) do
-		if unt.x > 0 then
-			local num = unt.str
-			if unt.x ~= 1 then
-				num = num .. '^' .. tostring(unt.x)
-			end
-			table.insert(numerator, num)
-		elseif unt.x < 0 then
-			local den = unt.str
-			if unt.x ~= -1 then
-				den = den .. '^' .. tostring(-unt.x)
-			end
-			table.insert(denominator, den)
-		end
-	end
-	if #numerator == 0 then
-		if #denominator == 0 then
-			return ''
-		end
-		table.insert(numerator, '1')
-	end
-	local str = table.concat(numerator, ' ')
-	if #denominator > 0 then
-		return str .. " / " .. table.concat(denominator, ' ')
-	end
-	return str
-end
+unit_meta.__tostring = unit.tostring
 
 
 return unit
