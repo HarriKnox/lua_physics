@@ -97,7 +97,11 @@ end
 scalar.intdivide = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local sca = scalar.divide(first, second)
-		sca.value = math.floor(sca.value)
+		if type(sca) == 'scalar' then
+			sca.value = math.floor(sca.value)
+		elseif type(sca) == 'number' then
+			sca = math.floor(sca)
+		end
 		return sca
 	end
 	common.typeerror('division', first, second, 'scalar')
