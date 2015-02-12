@@ -49,7 +49,7 @@ scalar.multiply = function(first, second)
 		end
 		local value = firstvalue * secondvalue
 		local units = firstunits * secondunits
-		if units:isempty() then
+		if type(units) == 'unit' and units:isempty() or type(units) == 'number' then
 			return value
 		elseif value == 1 then
 			return units
@@ -84,7 +84,7 @@ scalar.divide = function(first, second)
 		end
 		local value = firstvalue / secondvalue
 		local units = firstunits / secondunits
-		if units:isempty() then
+		if type(units) == 'unit' and units:isempty() or type(units) == 'number' then
 			return value
 		elseif value == 1 then
 			return units
@@ -162,8 +162,7 @@ scalar_meta.__shl = scalar_meta.__band
 scalar_meta.__shr = scalar_meta.__band
 
 scalar_meta.__tostring = function(this)
-	local units = tostring(this.units)
-	return string.format("%g%s", this.value, #units > 0 and ' ' .. units or '')
+	return string.format("%g%s", this.value, this.units:isempty() and '' or ' ' .. this.units:tostring())
 end
 
 return scalar
