@@ -290,6 +290,7 @@ common.getmethods(unit, unit_meta)
 
 unit_meta.__mul = unit.multiply
 unit_meta.__div = unit.divide
+unit_meta.__idiv = unit.intdivide
 unit_meta.__pow = unit.power
 unit_meta.__eq = unit.equals
 unit_meta.__tostring = unit.tostring
@@ -297,7 +298,6 @@ unit_meta.__tostring = unit.tostring
 unit_meta.__add = common.notsupported('units', 'addition')
 unit_meta.__sub = common.notsupported('units', 'subtraction')
 unit_meta.__unm = common.notsupported('units', 'unary-minus')
-unit_meta.__idiv = common.notsupported('units', 'int-division')
 unit_meta.__len = common.notsupported('units', 'length')
 unit_meta.__mod = common.notsupported('units', 'modulo')
 unit_meta.__concat = common.notsupported('units', 'concatination')
