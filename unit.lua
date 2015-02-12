@@ -231,21 +231,21 @@ unit.isempty = function(unt)
 	common.typeerror('empty check', unt, 'unit')
 end
 
-unit.tostring = function(unt)
+unit.tostring = function(unt, sci)
 	if type(unt) == 'unit' then
 		local numerator = {}
 		local denominator = {}
 		local units = {
-			{x = this.kilogram, str = 'kg'},
-			{x = this.meter, str = 'm'},
-			{x = this.second, str = 's'},
-			{x = this.ampere, str = 'A'},
-			{x = this.kelvin, str = 'K'},
-			{x = this.mole, str = 'mol'},
-			{x = this.candela, str = 'cd'}
+			{x = unt.kilogram, str = 'kg'},
+			{x = unt.meter, str = 'm'},
+			{x = unt.second, str = 's'},
+			{x = unt.ampere, str = 'A'},
+			{x = unt.kelvin, str = 'K'},
+			{x = unt.mole, str = 'mol'},
+			{x = unt.candela, str = 'cd'}
 		}
 		for _, unt in pairs(units) do
-			if unt.x > 0 then
+			if unt.x > 0 or (sci and unt.x ~= 0) then
 				local num = unt.str
 				if unt.x ~= 1 then
 					num = num .. '^' .. tostring(unt.x)
@@ -281,6 +281,7 @@ unit_meta.__mul = unit.multiply
 unit_meta.__div = unit.divide
 unit_meta.__pow = unit.power
 unit_meta.__eq = unit.equals
+unit_meta.__tostring = unit.tostring
 
 unit_meta.__add = common.notsupported('units', 'addition')
 unit_meta.__sub = common.notsupported('units', 'subtraction')
@@ -297,8 +298,6 @@ unit_meta.__bxor = unit_meta.__band
 unit_meta.__bnot = unit_meta.__band
 unit_meta.__shl = unit_meta.__band
 unit_meta.__shr = unit_meta.__band
-
-unit_meta.__tostring = unit.tostring
 
 
 return unit
