@@ -187,6 +187,19 @@ unit.divide = function(first, second)
 	common.typeerror('division', first, second, 'unit')
 end
 
+unit.intdivide = function(first, second)
+	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+		local unt = unit.divide(first, second)
+		if type(unt) == 'scalar' then
+			unt.value = math.floor(unt.value)
+		elseif type(unt) == 'number' then
+			unt = math.floor(unt)
+		end
+		return unt
+	end
+	common.typeerror('division', first, second, 'scalar')
+end
+
 unit.power = function(unt, num)
 	if type(unt) == 'unit' and type(num) == 'number' then
 		local kg = unt.kilogram * num
