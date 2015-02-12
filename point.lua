@@ -54,10 +54,15 @@ point.difference = function(this, that)
 	common.typeerror('difference', this, that, 'point')
 end
 
+point.tostring = function(pnt)
+	return string.format("point: (%g, %g, %g)", pnt.x, pnt.y, pnt.z)
+end
+
 
 common.getmethods(point, point_meta)
 
 point_meta.__eq = point.equals
+point_meta.__tostring = point.tostring
 
 point_meta.__add = common.notsupported('points', 'addition')
 point_meta.__sub = common.notsupported('points', 'subtraction')
@@ -78,8 +83,5 @@ point_meta.__bnot = point_meta.__band
 point_meta.__shl = point_meta.__band
 point_meta.__shr = point_meta.__band
 
-point_meta.__tostring = function(this)
-	return string.format("point: (%g, %g, %g)", this.x, this.y, this.z)
-end
 
 return point

@@ -137,6 +137,10 @@ scalar.equals = function(first, second)
 	return false
 end
 
+scalar.tostring = function(sca)
+	return string.format("%g%s", sca.value, sca.units:isempty() and '' or ' ' .. sca.units:tostring())
+end
+
 
 common.getmethods(scalar, scalar_meta)
 
@@ -144,6 +148,7 @@ scalar_meta.__eq = scalar.equals
 scalar_meta.__mul = scalar.multiply
 scalar_meta.__div = scalar.divide
 scalar_meta.__idiv = scalar.intdivide
+scalar_meta.__tostring = scalar.tostring
 
 scalar_meta.__add = common.notsupported('scalars', 'addition')
 scalar_meta.__sub = common.notsupported('scalars', 'subtraction')
@@ -161,8 +166,5 @@ scalar_meta.__bnot = scalar_meta.__band
 scalar_meta.__shl = scalar_meta.__band
 scalar_meta.__shr = scalar_meta.__band
 
-scalar_meta.__tostring = function(this)
-	return string.format("%g%s", this.value, this.units:isempty() and '' or ' ' .. this.units:tostring())
-end
 
 return scalar

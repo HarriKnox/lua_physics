@@ -170,6 +170,10 @@ vector.altitude = function(vect)
 	common.typeerror('altitude', vect, 'vector')
 end
 
+vector.tostring = function(vect)
+	return string.format("vector: (%g, %g, %g)", vect.x, vect.y, vect.z)
+end
+
 
 common.getmethods(vector, vector_meta)
 
@@ -181,6 +185,7 @@ vector_meta.__unm = vector.negate
 vector_meta.__idiv = vector.intdivide
 vector_meta.__eq = vector.equals
 vector_meta.__len = vector.magnitude
+vector_meta.__tostring = vector.tostring
 
 vector_meta.__mod = common.notsupported('vectors', 'modulo')
 vector_meta.__pow = common.notsupported('vectors', 'powers')
@@ -194,8 +199,5 @@ vector_meta.__bnot = vector_meta.__band
 vector_meta.__shl = vector_meta.__band
 vector_meta.__shr = vector_meta.__band
 
-vector_meta.__tostring = function(this)
-	return string.format("vector: (%g, %g, %g)", this.x, this.y, this.z)
-end
 
 return vector
