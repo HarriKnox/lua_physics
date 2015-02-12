@@ -100,7 +100,7 @@ unit.multiply = function(first, second)
 		local unt = unit.new(kg, m, s, a, k, mol, cd)
 		if unt:isempty() then
 			return value
-		elseif value == 1 and type(first) ~= 'number' and type(second) ~= 'number' then
+		elseif value == 1 then
 			return unt
 		else
 			return require('scalar').new(value, unt)
@@ -180,7 +180,7 @@ unit.divide = function(first, second)
 		local unt = unit.new(kg, m, s, a, k, mol, cd)
 		if unt:isempty() then
 			return value
-		elseif value == 1 and type(first) ~= 'number' and type(second) ~= 'number' then
+		elseif value == 1 then
 			return unt
 		else
 			return require('scalar').new(value, unt)
