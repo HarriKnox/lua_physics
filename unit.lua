@@ -98,7 +98,9 @@ unit.multiply = function(first, second)
 		local mol = firstmol + secondmol
 		local cd = firstcd + secondcd
 		local unt = unit.new(kg, m, s, a, k, mol, cd)
-		if value == 1 then
+		if unt:isempty() then
+			return value
+		elseif value == 1 then
 			return unt
 		else
 			return require('scalar').new(value, unt)
@@ -176,7 +178,9 @@ unit.divide = function(first, second)
 		local mol = firstmol - secondmol
 		local cd = firstcd - secondcd
 		local unt = unit.new(kg, m, s, a, k, mol, cd)
-		if value == 1 then
+		if unt:isempty() then
+			return value
+		elseif value == 1 then
 			return unt
 		else
 			return require('scalar').new(value, unt)
