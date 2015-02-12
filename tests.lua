@@ -38,8 +38,8 @@ do -- Test type registration
 	assert(type(s0) == 'scalar')
 end
 
-do -- Test clone function
-	assert(vector.clone(v0) == v0
+do -- Test clone function and ==
+	assert(vector.clone(v0) == v0)
 	assert(v0:clone() == v0)
 	
 	assert(point.clone(p0) == p0)
@@ -138,3 +138,22 @@ do -- Test Vector functions
 	-- Vector to string
 	assert(tostring(v0) == "vector: (-2, 3, -6)")
 end
+
+do -- Test Point functions
+	-- Point translation
+	local p2 = point.new(6, -6, -18)
+	assert(point.translate(p0, v0) == p2)
+	assert(p0:translate(v0) == p2)
+	
+	-- Point difference
+	local vB = vector.new(1, -3, 32)
+	assert(point.difference(p0, p1) == vB)
+	assert(p0:difference(p1) == vB)
+	assert(point.difference(p1, p0) == -vB)
+	assert(p1:difference(p0) == -vB)
+	
+	-- Point tostring
+	assert(tostring(p0) == "point: (8, -9, -12)")
+end
+
+print("All tests passed with no issues.")
