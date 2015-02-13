@@ -6,16 +6,15 @@ local units = require('units')
 local scalar = require('scalar')
 
 -- Defining testing values and testing module.new functions. The components
--- for the vectors and points were based on Pythagorean Quadruples.
+-- for the vectors and points were based on Pythagorean Quadruples. The values
+-- for the units were random numbers
 local v0 = vector.new(-2, 3, -6)
 local v1 = vector.new(12, 15, 16)
 local p0 = point.new(8, -9, -12)
 local p1 = point.new(9, -12, 20)
-local u0 = unit.new(1, 0, 0, 0, 0, 0, 0)
-local u1 = unit.new(0, 1, 0, 0, 0, 0, 0)
-local u2 = unit.new(0, 0, 1, 0, 0, 0, 0)
-local u3 = unit.new(0, 0, 0, 1, 0, 0, 0)
-local s0 = scalar.new(20, unit.new(1, 1, -2, 0, 0, 0, 0))
+local u0 = unit.new(-1, -2, 0, 3, -2, 2, -3)
+local u1 = unit.new(0, 3, 0, 3, -3, 2, 0)
+local s0 = scalar.new(20, unit.new(1, 1, -2, -1, 0, 0, 0))
 local s1 = scalar.new(10, unit.new(0, 1, -2, 0, 0, 0, 0))
 
 local kg = u0
@@ -27,8 +26,8 @@ local a = u3
 do -- Test __call metamethod for the modules.
 	assert(v0 == vector(-2, 3, -6))
 	assert(p0 == point(8, -9, -12))
-	assert(u0 == unit(1, 0, 0, 0, 0, 0, 0))
-	assert(s0 == scalar(20, unit.new(1, 1, -2, 0, 0, 0, 0)))
+	assert(u0 == unit(-1, -2, 0, 3, -2, 2, -3))
+	assert(s0 == scalar(20, unit.new(1, 1, -2, -1, 0, 0, 0)))
 end
 
 do -- Test type registration
@@ -50,6 +49,36 @@ do -- Test clone function and ==
 	
 	assert(scalar.clone(s0) == s0)
 	assert(s0:clone() == s0)
+end
+
+do -- Test tostring metamethod for modules
+	local str0 = "vector: (-2, 3, -6)"
+	assert(vector.tostring(v0) == str0)
+	assert(v0:tostring() == str0)
+	assert(tostring(v0) == str0)
+	
+	local str1 = "point: (8, -9, -12)"
+	assert(point.tostring(p0) == str1)
+	assert(p0:tostring() == str1)
+	assert(tostring(p0) == str1)
+	
+	local str2 = "A^3 mol^2 / kg m^2 K^2 cd^3"
+	assert(unit.tostring(u0) == str2)
+	assert(u0:tostring() == str2)
+	assert(tostring(u0) == str2)
+	
+	local str3 = "kg^-1 m^-2 A^3 K^-2 mol^2 cd^-3"
+	assert(unit.tostring(u0, true) == str3)
+	assert(u0:tostring(true) == str3)
+	
+	local str4 = "20 kg m / s^2 A"
+	assert(scalar.tostring(s0) == str4)
+	assert(s0:tostring() == str4)
+	assert(tostring(s0) == str4)
+	
+	local str5 = "20 kg m s^-2 A^-1"
+	assert(scalar.tostring(s0, true) == str5)
+	assert(s0:tostring(true) == str5)
 end
 
 do -- Test Vector functions
@@ -134,9 +163,6 @@ do -- Test Vector functions
 	local n3 = math.atan(-6, 13 ^ 0.5)
 	assert(vector.altitude(v0) == n3)
 	assert(v0:altitude() == n3)
-	
-	-- Vector to string
-	assert(tostring(v0) == "vector: (-2, 3, -6)")
 end
 
 do -- Test Point functions
@@ -151,9 +177,6 @@ do -- Test Point functions
 	assert(p0:difference(p1) == vB)
 	assert(point.difference(p1, p0) == -vB)
 	assert(p1:difference(p0) == -vB)
-	
-	-- Point tostring
-	assert(tostring(p0) == "point: (8, -9, -12)")
 end
 
 print("All tests passed with no issues.")
