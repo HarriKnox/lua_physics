@@ -1,4 +1,4 @@
-add vectors to scalar
+add vectors to scalar or units to vector
 create Grouping to group scalars that cannot be added together so they stick together (basically a parentheses system)
 create Unknowns
 Documentation

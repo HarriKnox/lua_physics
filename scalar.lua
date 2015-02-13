@@ -36,6 +36,18 @@ scalar.add = function(first, second)
 	common.typeerror('addition', first, second, 'scalar')
 end
 
+scalar.subtract = function(first, second)
+	if type(first) == 'scalar' and type(second) == 'scalar' then
+		if first.units == second.units then
+			local value = first.value - second.value
+			local units = first.units
+			return scalar.new(value, units)
+		end
+		error("Incompatable units", 2)
+	end
+	common.typeerror('addition', first, second, 'scalar')
+end
+
 scalar.multiply = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local units = require('units')
@@ -119,6 +131,13 @@ scalar.intdivide = function(first, second)
 	common.typeerror('division', first, second, 'scalar')
 end
 
+scalar.negate = function(sca)
+	if type(sca) == 'scalar' then
+		return scalar.new(-sca.value, sca.units)
+	end
+	common.typeerror('negation', sca, 'scalar')
+end
+
 scalar.equals = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local units = require('units')
@@ -162,9 +181,9 @@ scalar_meta.__div = scalar.divide
 scalar_meta.__idiv = scalar.intdivide
 scalar_meta.__tostring = scalar.tostring
 
-scalar_meta.__add = scalar.add
-scalar_meta.__sub = common.notsupported('scalars', 'subtraction')
-scalar_meta.__unm = common.notsupported('scalars', 'unary-minus')
+scalar_meta.__add = scalar.add -- common.notsupported('scalars', 'addition')
+scalar_meta.__sub = scalar.subtract -- common.notsupported('scalars', 'subtraction')
+scalar_meta.__unm = scalar.negate -- common.notsupported('scalars', 'unary-minus')
 scalar_meta.__len = common.notsupported('scalars', 'length')
 scalar_meta.__mod = common.notsupported('scalars', 'modulo')
 scalar_meta.__pow = common.notsupported('scalars', 'powers')
