@@ -1,3 +1,4 @@
+#!/usr/bin/env lua
 local common = require('common')
 local vector = require('vector')
 local point = require('point')
