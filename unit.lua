@@ -98,7 +98,7 @@ unit.multiply = function(first, second)
 		local mol = firstmol + secondmol
 		local cd = firstcd + secondcd
 		local unt = unit.new(kg, m, s, a, k, mol, cd)
-		if unt:isempty() then
+		if (type(unt) == 'unit' and unt:isempty()) or type(unt) == 'number' then
 			return value
 		elseif value == 1 then
 			return unt
@@ -177,7 +177,7 @@ unit.divide = function(first, second)
 		local mol = firstmol - secondmol
 		local cd = firstcd - secondcd
 		local unt = unit.new(kg, m, s, a, k, mol, cd)
-		if unt:isempty() then
+		if (type(unt) == 'units' and unt:isempty()) or type(unt) == 'number' then
 			return value
 		elseif value == 1 then
 			return unt

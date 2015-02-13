@@ -61,12 +61,12 @@ scalar.multiply = function(first, second)
 		end
 		local value = firstvalue * secondvalue
 		local units = firstunits * secondunits
-		if type(units) == 'unit' and units:isempty() or type(units) == 'number' then
+		if (type(units) == 'unit' and units:isempty()) or type(units) == 'number' then
 			return value
 		elseif value == 1 then
 			return units
 		end
-		return scalar.new(firstvalue, secondvalue)
+		return scalar.new(value, units)
 	end
 	common.typeerror('multiplication', first, second, 'scalar')
 end
@@ -96,7 +96,7 @@ scalar.divide = function(first, second)
 		end
 		local value = firstvalue / secondvalue
 		local units = firstunits / secondunits
-		if type(units) == 'unit' and units:isempty() or type(units) == 'number' then
+		if (type(units) == 'unit' and units:isempty()) or type(units) == 'number' then
 			return value
 		elseif value == 1 then
 			return units
