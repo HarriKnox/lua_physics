@@ -17,11 +17,6 @@ local u1 = unit.new(0, 3, 0, 3, -3, 2, 0)
 local s0 = scalar.new(20, unit.new(1, 1, -2, -1, 0, 0, 0))
 local s1 = scalar.new(10, unit.new(0, 1, -2, 0, 0, 0, 0))
 
-local kg = u0
-local m = u1
-local s = u2
-local a = u3
-
 
 do -- Test __call metamethod for the modules.
 	assert(v0 == vector(-2, 3, -6))
@@ -117,11 +112,10 @@ do -- Test Vector functions
 	assert(v0:divide(4) == v6)
 	assert(v0 / 4 == v6)
 	
-	-- Vector int division, also no commutativity
+	-- Vector int division, also no commutativity (in Lua 5.3 you can do v0 // 4, but to make this script backward compatible, the `//´ operator isn't included)
 	local v7 = vector.new(-1, 0, -2)
 	assert(vector.intdivide(v0, 4) == v7)
 	assert(v0:intdivide(4) == v7)
-	assert(v0 // 4 == v7)
 	
 	-- Vector negation
 	local v8 = vector.new(2, -3, 6)
@@ -177,6 +171,57 @@ do -- Test Point functions
 	assert(p0:difference(p1) == vB)
 	assert(point.difference(p1, p0) == -vB)
 	assert(p1:difference(p0) == -vB)
+end
+
+do -- Test Unit function
+	-- Unit multiplication, note the beautiful commutative nature of unit multiplication
+	local u2 = unit.new(-1, 1, 0, 6, -5, 4, -3)
+	assert(unit.multiply(u0, u1) == u2)
+	assert(u0:multiply(u1) == u2)
+	assert(u0 * u1 == u2)
+	assert(unit.multiply(u1, u0) == u2)
+	assert(u1:multiply(u0) == u2)
+	assert(u1 * u0 == u2)
+	
+	-- Unit multiplication with unit and number to return scalar
+	local s2 = scalar.new(2, unit.new(-1, -2, 0, 3, -2, 2, -3))
+	assert(unit.multiply(u0, 2) == s2)
+	assert(u0:multiply(2) == s2)
+	assert(u0 * 2 == s2)
+	assert(unit.multiply(2, u0) == s2)
+	assert(2 * u0 == s2)
+	
+	-- Unit multiplication with unit and scalar to return number, note no `s3 * u0` since that calls scalar.multiply
+	local n4 = 4
+	local s3 = scalar.new(4, unit.new(1, 2, 0, -3, 2, -2, 3))
+	assert(unit.multiply(u0, s3) == n4)
+	assert(u0:multiply(s3) == n4)
+	assert(u0 * s3 == n4)
+	assert(unit.multiply(s3, u0) == n4)
+	
+	-- Unit multiplication with unit and scalar to return scalar
+	local s4 = scalar.new(4, unit.new(2, 3, 1, -2, 3, -1, 4))
+	local s5 = scalar.new(4, unit.new(1, 1, 1, 1, 1, 1, 1))
+	assert(unit.multiply(u0, s4) == s5)
+	assert(u0:multiply(s4) == s5)
+	assert(u0 * s4 == s5)
+	assert(unit.multiply(s4, u0) == s5)
+	
+	-- Unit division (as well as intdivision), note the disgusting non-commutative nature of unit division, as well as the lack of a `//´ for compatibility
+	local u3 = unit.new(-1, -5, 0, 0, 1, 0, -3)
+	assert(unit.divide(u0, u1) == u3)
+	assert(u0:divide(u1) == u3)
+	assert(u0 / u1 == u3)
+	assert(unit.intdivide(u0, u1) == u3)
+	assert(u0:intdivide(u1) == u3)
+	
+	-- Unit division part 2, emphasizing the grotesque non-commutativity
+	local u4 = unit.new(1, 5, 0, 0, -1, 0, 3)
+	assert(unit.divide(u1, u0) == u4)
+	assert(u1:divide(u0) == u4)
+	assert(u1 / u0 == u4)
+	assert(unit.intdivide(u1, u0) == u4)
+	assert(u1:intdivide(u0) == u4)
 end
 
 print("All tests passed with no issues.")
