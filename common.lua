@@ -63,7 +63,7 @@ common.istype = function(thing, types)
 	return false
 end
 
-common.anyoftype = function(...)
+common.anyoftype = function(...) -- pass type name as last argument
 	local args = {...}
 	local len = #args - 1
 	local typename = table.remove(args)
@@ -73,6 +73,18 @@ common.anyoftype = function(...)
 		end
 	end
 	return false
+end
+
+common.alloftype = function(...) -- pass type name as last argument
+	local args = {...}
+	local len = #args - 1
+	local typename = table.remove(args)
+	for i = 1, len do
+		if type(args[1]) ~= typename then
+			return false
+		end
+	end
+	return true
 end
 
 common.notsupported = function(typename, operation)
