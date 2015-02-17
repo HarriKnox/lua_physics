@@ -3,3 +3,4 @@ create Grouping to group scalars that cannot be added together so they stick tog
 create Unknowns
 Documentation
 rigorous tests
+add system/world emulation to simulate all forces acting on an object (basically a way to do my physics homework for me)
