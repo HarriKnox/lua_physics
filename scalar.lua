@@ -138,6 +138,15 @@ scalar.negate = function(sca)
 	common.typeerror('negation', sca, 'scalar')
 end
 
+scalar.power = function(sca, num)
+	if type(sca) == 'scalar' and type(num) == 'number' then
+		local value = sca.value ^ num
+		local units = sca.units ^ num
+		return scalar.new(value, units)
+	end
+	common.typeerror('power', sca, num, 'scalar')
+end
+
 scalar.equals = function(first, second)
 	if common.istype(first, suntypes) and common.istype(second, suntypes) then
 		local units = require('units')
@@ -186,7 +195,7 @@ scalar_meta.__sub = scalar.subtract -- common.notsupported('scalars', 'subtracti
 scalar_meta.__unm = scalar.negate -- common.notsupported('scalars', 'unary-minus')
 scalar_meta.__len = common.notsupported('scalars', 'length')
 scalar_meta.__mod = common.notsupported('scalars', 'modulo')
-scalar_meta.__pow = common.notsupported('scalars', 'powers')
+scalar_meta.__pow = scalar.power -- common.notsupported('scalars', 'powers')
 scalar_meta.__concat = common.notsupported('scalars', 'concatination')
 scalar_meta.__lt = common.notsupported('scalars', 'less-than')
 scalar_meta.__le = common.notsupported('scalars', 'less-than-or-equal-to')
