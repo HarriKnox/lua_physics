@@ -4,7 +4,7 @@ local vector = require('vector')
 local point = require('point')
 local unit = require('unit')
 local units = require('units')
-local scalar = require('scalar')
+local quantity = require('quantity')
 
 -- Defining testing values and testing module.new functions. The components
 -- for the vectors and points were based on Pythagorean Quadruples. The values
@@ -15,22 +15,22 @@ local p0 = point.new(8, -9, -12)
 local p1 = point.new(9, -12, 20)
 local u0 = unit.new(-1, -2, 0, 3, -2, 2, -3)
 local u1 = unit.new(0, 3, 0, 3, -3, 2, 0)
-local s0 = scalar.new(20, unit.new(1, 1, -2, -1, 0, 0, 0))
-local s1 = scalar.new(10, unit.new(0, 1, -2, 0, 0, 0, 0))
+local s0 = quantity.new(20, unit.new(1, 1, -2, -1, 0, 0, 0))
+local s1 = quantity.new(10, unit.new(0, 1, -2, 0, 0, 0, 0))
 
 
 do -- Test __call metamethod for the modules.
 	assert(v0 == vector(-2, 3, -6))
 	assert(p0 == point(8, -9, -12))
 	assert(u0 == unit(-1, -2, 0, 3, -2, 2, -3))
-	assert(s0 == scalar(20, unit.new(1, 1, -2, -1, 0, 0, 0)))
+	assert(s0 == quantity(20, unit.new(1, 1, -2, -1, 0, 0, 0)))
 end
 
 do -- Test type registration
 	assert(type(v0) == 'vector')
 	assert(type(p0) == 'point')
 	assert(type(u0) == 'unit')
-	assert(type(s0) == 'scalar')
+	assert(type(s0) == 'quantity')
 end
 
 do -- Test clone function and ==
@@ -43,7 +43,7 @@ do -- Test clone function and ==
 	assert(unit.clone(u0) == u0)
 	assert(u0:clone() == u0)
 	
-	assert(scalar.clone(s0) == s0)
+	assert(quantity.clone(s0) == s0)
 	assert(s0:clone() == s0)
 end
 
@@ -68,12 +68,12 @@ do -- Test tostring metamethod for modules
 	assert(u0:tostring(true) == str3)
 	
 	local str4 = "20 kg m / s^2 A"
-	assert(scalar.tostring(s0) == str4)
+	assert(quantity.tostring(s0) == str4)
 	assert(s0:tostring() == str4)
 	assert(tostring(s0) == str4)
 	
 	local str5 = "20 kg m s^-2 A^-1"
-	assert(scalar.tostring(s0, true) == str5)
+	assert(quantity.tostring(s0, true) == str5)
 	assert(s0:tostring(true) == str5)
 end
 
@@ -184,25 +184,25 @@ do -- Test Unit function
 	assert(u1:multiply(u0) == u2)
 	assert(u1 * u0 == u2)
 	
-	-- Unit multiplication with unit and number to return scalar
-	local s2 = scalar.new(2, unit.new(-1, -2, 0, 3, -2, 2, -3))
+	-- Unit multiplication with unit and number to return quantity
+	local s2 = quantity.new(2, unit.new(-1, -2, 0, 3, -2, 2, -3))
 	assert(unit.multiply(u0, 2) == s2)
 	assert(u0:multiply(2) == s2)
 	assert(u0 * 2 == s2)
 	assert(unit.multiply(2, u0) == s2)
 	assert(2 * u0 == s2)
 	
-	-- Unit multiplication with unit and scalar to return number, note no `s3 * u0` since that calls scalar.multiply
+	-- Unit multiplication with unit and quantity to return number, note no `s3 * u0` since that calls quantity.multiply
 	local n4 = 4
-	local s3 = scalar.new(4, unit.new(1, 2, 0, -3, 2, -2, 3))
+	local s3 = quantity.new(4, unit.new(1, 2, 0, -3, 2, -2, 3))
 	assert(unit.multiply(u0, s3) == n4)
 	assert(u0:multiply(s3) == n4)
 	assert(u0 * s3 == n4)
 	assert(unit.multiply(s3, u0) == n4)
 	
-	-- Unit multiplication with unit and scalar to return scalar
-	local s4 = scalar.new(4, unit.new(2, 3, 1, -2, 3, -1, 4))
-	local s5 = scalar.new(4, unit.new(1, 1, 1, 1, 1, 1, 1))
+	-- Unit multiplication with unit and quantity to return quantity
+	local s4 = quantity.new(4, unit.new(2, 3, 1, -2, 3, -1, 4))
+	local s5 = quantity.new(4, unit.new(1, 1, 1, 1, 1, 1, 1))
 	assert(unit.multiply(u0, s4) == s5)
 	assert(u0:multiply(s4) == s5)
 	assert(u0 * s4 == s5)

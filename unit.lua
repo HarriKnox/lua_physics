@@ -2,7 +2,7 @@ local unit = {}
 local unit_meta = {}
 unit_meta.__index = unit_meta
 local common = require('common')
-local suntypes = {'scalar', 'unit', 'number'}
+local quntypes = {'quantity', 'unit', 'number'}
 
 
 unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
@@ -30,7 +30,7 @@ unit.clone = function(un)
 end
 
 unit.multiply = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
 		local firstvalue = 1
 		local firstkg = 0
 		local firstm = 0
@@ -39,7 +39,7 @@ unit.multiply = function(first, second)
 		local firstk = 0
 		local firstmol = 0
 		local firstcd = 0
-		if type(first) == 'scalar' then
+		if type(first) == 'quantity' then
 			firstvalue = first.value
 			local units = first.units
 			firstkg = units.kilogram
@@ -68,7 +68,7 @@ unit.multiply = function(first, second)
 		local secondk = 0
 		local secondmol = 0
 		local secondcd = 0
-		if type(second) == 'scalar' then
+		if type(second) == 'quantity' then
 			secondvalue = second.value
 			local units = second.units
 			secondkg = units.kilogram
@@ -103,13 +103,13 @@ unit.multiply = function(first, second)
 		elseif value == 1 then
 			return unt
 		end
-		return require('scalar').new(value, unt)
+		return require('quantity').new(value, unt)
 	end
 	common.typeerror('multiplication', first, second, 'unit')
 end
 
 unit.divide = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
 		local firstvalue = 1
 		local firstkg = 0
 		local firstm = 0
@@ -118,7 +118,7 @@ unit.divide = function(first, second)
 		local firstk = 0
 		local firstmol = 0
 		local firstcd = 0
-		if type(first) == 'scalar' then
+		if type(first) == 'quantity' then
 			firstvalue = first.value
 			local units = first.units
 			firstkg = units.kilogram
@@ -147,7 +147,7 @@ unit.divide = function(first, second)
 		local secondk = 0
 		local secondmol = 0
 		local secondcd = 0
-		if type(second) == 'scalar' then
+		if type(second) == 'quantity' then
 			secondvalue = second.value
 			local units = second.units
 			secondkg = units.kilogram
@@ -182,22 +182,22 @@ unit.divide = function(first, second)
 		elseif value == 1 then
 			return unt
 		end
-		return require('scalar').new(value, unt)
+		return require('quantity').new(value, unt)
 	end
 	common.typeerror('division', first, second, 'unit')
 end
 
 unit.intdivide = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
 		local unt = unit.divide(first, second)
-		if type(unt) == 'scalar' then
+		if type(unt) == 'quantity' then
 			unt.value = math.floor(unt.value)
 		elseif type(unt) == 'number' then
 			unt = math.floor(unt)
 		end
 		return unt
 	end
-	common.typeerror('division', first, second, 'scalar')
+	common.typeerror('division', first, second, 'quantity')
 end
 
 unit.power = function(unt, num)

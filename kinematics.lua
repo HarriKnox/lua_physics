@@ -2,7 +2,7 @@ local kinematics = {}
 local common = require('common')
 
 kinematics.position = function(initialposition, initialvelocity, acceleration, timeelapsed)
-	if common.alloftype(initialposition, initialvelocity, acceleration, timeelapsed, 'scalar') then
+	if common.alloftype(initialposition, initialvelocity, acceleration, timeelapsed, 'quantity') then
 		local units = require('units')
 		local meter = units.meter
 		local speed = meter / units.second

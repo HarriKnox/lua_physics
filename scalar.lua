@@ -1,59 +1,59 @@
-local scalar = {}
-local scalar_meta = {}
-scalar_meta.__index = scalar_meta
+local quantity = {}
+local quantity_meta = {}
+quantity_meta.__index = quantity_meta
 local common = require('common')
-local suntypes = {'scalar', 'unit', 'number'}
+local quntypes = {'quantity', 'unit', 'number'}
 
 
-scalar.new = function(parvalue, parunits)
+quantity.new = function(parvalue, parunits)
 	if type(parvalue) == 'number' and type(parunits) == 'unit' then
-		return setmetatable({value = parvalue, units = parunits:clone()}, scalar_meta)
+		return setmetatable({value = parvalue, units = parunits:clone()}, quantity_meta)
 	end
-	common.typeerror('creation', parvalue, parunits, 'scalar')
+	common.typeerror('creation', parvalue, parunits, 'quantity')
 end
 
-common.setcallmeta(scalar)
-common.registertype(scalar_meta, 'scalar')
+common.setcallmeta(quantity)
+common.registertype(quantity_meta, 'quantity')
 
-scalar.clone = function(sca)
-	if type(sca) == 'scalar' then
-		local value = sca.value
-		local units = sca.units
-		return scalar.new(value, units)
+quantity.clone = function(qua)
+	if type(qua) == 'quantity' then
+		local value = qua.value
+		local units = qua.units
+		return quantity.new(value, units)
 	end
-	common.typeerror('cloning', sca, 'scalar')
+	common.typeerror('cloning', qua, 'quantity')
 end
 
-scalar.add = function(first, second)
-	if type(first) == 'scalar' and type(second) == 'scalar' then
+quantity.add = function(first, second)
+	if type(first) == 'quantity' and type(second) == 'quantity' then
 		if first.units == second.units then
 			local value = first.value + second.value
 			local units = first.units
-			return scalar.new(value, units)
+			return quantity.new(value, units)
 		end
 		error("Incompatable units", 2)
 	end
-	common.typeerror('addition', first, second, 'scalar')
+	common.typeerror('addition', first, second, 'quantity')
 end
 
-scalar.subtract = function(first, second)
-	if type(first) == 'scalar' and type(second) == 'scalar' then
+quantity.subtract = function(first, second)
+	if type(first) == 'quantity' and type(second) == 'quantity' then
 		if first.units == second.units then
 			local value = first.value - second.value
 			local units = first.units
-			return scalar.new(value, units)
+			return quantity.new(value, units)
 		end
 		error("Incompatable units", 2)
 	end
-	common.typeerror('addition', first, second, 'scalar')
+	common.typeerror('addition', first, second, 'quantity')
 end
 
-scalar.multiply = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+quantity.multiply = function(first, second)
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
 		local units = require('units')
 		local firstvalue = 1
 		local firstunits = units.empty
-		if type(first) == 'scalar' then
+		if type(first) == 'quantity' then
 			firstvalue = first.value
 			firstunits = first.units
 		elseif type(first) == 'unit' then
@@ -63,7 +63,7 @@ scalar.multiply = function(first, second)
 		end
 		local secondvalue = 1
 		local secondunits = units.empty
-		if type(second) == 'scalar' then
+		if type(second) == 'quantity' then
 			secondvalue = second.value
 			secondunits = second.units
 		elseif type(second) == 'unit' then
@@ -78,17 +78,17 @@ scalar.multiply = function(first, second)
 		elseif value == 1 then
 			return units
 		end
-		return scalar.new(value, units)
+		return quantity.new(value, units)
 	end
-	common.typeerror('multiplication', first, second, 'scalar')
+	common.typeerror('multiplication', first, second, 'quantity')
 end
 
-scalar.divide = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+quantity.divide = function(first, second)
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
 		local units = require('units')
 		local firstvalue = 1
 		local firstunits = units.empty
-		if type(first) == 'scalar' then
+		if type(first) == 'quantity' then
 			firstvalue = first.value
 			firstunits = first.units
 		elseif type(first) == 'unit' then
@@ -98,7 +98,7 @@ scalar.divide = function(first, second)
 		end
 		local secondvalue = 1
 		local secondunits = units.empty
-		if type(second) == 'scalar' then
+		if type(second) == 'quantity' then
 			secondvalue = second.value
 			secondunits = second.units
 		elseif type(second) == 'unit' then
@@ -113,46 +113,46 @@ scalar.divide = function(first, second)
 		elseif value == 1 then
 			return units
 		end
-		return scalar.new(value, units)
+		return quantity.new(value, units)
 	end
-	common.typeerror('division', first, second, 'scalar')
+	common.typeerror('division', first, second, 'quantity')
 end
 
-scalar.intdivide = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
-		local sca = scalar.divide(first, second)
-		if type(sca) == 'scalar' then
-			sca.value = math.floor(sca.value)
-		elseif type(sca) == 'number' then
-			sca = math.floor(sca)
+quantity.intdivide = function(first, second)
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
+		local qua = quantity.divide(first, second)
+		if type(qua) == 'quantity' then
+			qua.value = math.floor(qua.value)
+		elseif type(qua) == 'number' then
+			qua = math.floor(qua)
 		end
-		return sca
+		return qua
 	end
-	common.typeerror('division', first, second, 'scalar')
+	common.typeerror('division', first, second, 'quantity')
 end
 
-scalar.negate = function(sca)
-	if type(sca) == 'scalar' then
-		return scalar.new(-sca.value, sca.units)
+quantity.negate = function(qua)
+	if type(qua) == 'quantity' then
+		return quantity.new(-qua.value, qua.units)
 	end
-	common.typeerror('negation', sca, 'scalar')
+	common.typeerror('negation', qua, 'quantity')
 end
 
-scalar.power = function(sca, num)
-	if type(sca) == 'scalar' and type(num) == 'number' then
-		local value = sca.value ^ num
-		local units = sca.units ^ num
-		return scalar.new(value, units)
+quantity.power = function(qua, num)
+	if type(qua) == 'quantity' and type(num) == 'number' then
+		local value = qua.value ^ num
+		local units = qua.units ^ num
+		return quantity.new(value, units)
 	end
-	common.typeerror('power', sca, num, 'scalar')
+	common.typeerror('power', qua, num, 'quantity')
 end
 
-scalar.equals = function(first, second)
-	if common.istype(first, suntypes) and common.istype(second, suntypes) then
+quantity.equals = function(first, second)
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
 		local units = require('units')
 		local firstvalue = 1
 		local firstunits = units.empty
-		if type(first) == 'scalar' then
+		if type(first) == 'quantity' then
 			firstvalue = first.value
 			firstunits = first.units
 		elseif type(first) == 'unit' then
@@ -162,7 +162,7 @@ scalar.equals = function(first, second)
 		end
 		local secondvalue = 1
 		local secondunits = units.empty
-		if type(second) == 'scalar' then
+		if type(second) == 'quantity' then
 			secondvalue = second.value
 			secondunits = second.units
 		elseif type(second) == 'unit' then
@@ -177,34 +177,34 @@ scalar.equals = function(first, second)
 	return false
 end
 
-scalar.tostring = function(sca, sci)
-	return string.format("%g%s", sca.value, sca.units:isempty() and '' or ' ' .. sca.units:tostring(sci))
+quantity.tostring = function(qua, sci)
+	return string.format("%g%s", qua.value, qua.units:isempty() and '' or ' ' .. qua.units:tostring(sci))
 end
 
 
-common.getmethods(scalar, scalar_meta)
+common.getmethods(quantity, quantity_meta)
 
-scalar_meta.__eq = scalar.equals
-scalar_meta.__mul = scalar.multiply
-scalar_meta.__div = scalar.divide
-scalar_meta.__idiv = scalar.intdivide
-scalar_meta.__tostring = scalar.tostring
+quantity_meta.__eq = quantity.equals
+quantity_meta.__mul = quantity.multiply
+quantity_meta.__div = quantity.divide
+quantity_meta.__idiv = quantity.intdivide
+quantity_meta.__tostring = quantity.tostring
 
-scalar_meta.__add = scalar.add -- common.notsupported('scalars', 'addition')
-scalar_meta.__sub = scalar.subtract -- common.notsupported('scalars', 'subtraction')
-scalar_meta.__unm = scalar.negate -- common.notsupported('scalars', 'unary-minus')
-scalar_meta.__len = common.notsupported('scalars', 'length')
-scalar_meta.__mod = common.notsupported('scalars', 'modulo')
-scalar_meta.__pow = scalar.power -- common.notsupported('scalars', 'powers')
-scalar_meta.__concat = common.notsupported('scalars', 'concatination')
-scalar_meta.__lt = common.notsupported('scalars', 'less-than')
-scalar_meta.__le = common.notsupported('scalars', 'less-than-or-equal-to')
-scalar_meta.__band = common.notsupported('scalars', 'bitwise')
-scalar_meta.__bor = scalar_meta.__band
-scalar_meta.__bxor = scalar_meta.__band
-scalar_meta.__bnot = scalar_meta.__band
-scalar_meta.__shl = scalar_meta.__band
-scalar_meta.__shr = scalar_meta.__band
+quantity_meta.__add = quantity.add -- common.notsupported('quantities', 'addition')
+quantity_meta.__sub = quantity.subtract -- common.notsupported('quantities', 'subtraction')
+quantity_meta.__unm = quantity.negate -- common.notsupported('quantities', 'unary-minus')
+quantity_meta.__len = common.notsupported('quantities', 'length')
+quantity_meta.__mod = common.notsupported('quantities', 'modulo')
+quantity_meta.__pow = quantity.power -- common.notsupported('quantities', 'powers')
+quantity_meta.__concat = common.notsupported('quantities', 'concatination')
+quantity_meta.__lt = common.notsupported('quantities', 'less-than')
+quantity_meta.__le = common.notsupported('quantities', 'less-than-or-equal-to')
+quantity_meta.__band = common.notsupported('quantities', 'bitwise')
+quantity_meta.__bor = quantity_meta.__band
+quantity_meta.__bxor = quantity_meta.__band
+quantity_meta.__bnot = quantity_meta.__band
+quantity_meta.__shl = quantity_meta.__band
+quantity_meta.__shr = quantity_meta.__band
 
 
-return scalar
+return quantity
