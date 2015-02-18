@@ -1,18 +1,15 @@
 #!/usr/bin/env lua
 local common = require('common')
 local vector = require('vector')
-local point = require('point')
 local unit = require('unit')
 local units = require('units')
 local quantity = require('quantity')
 
 -- Defining testing values and testing module.new functions. The components
--- for the vectors and points were based on Pythagorean Quadruples. The values
+-- for the vectors were based on Pythagorean Quadruples. The values
 -- for the units were random numbers
 local v0 = vector.new(-2, 3, -6)
 local v1 = vector.new(12, 15, 16)
-local p0 = point.new(8, -9, -12)
-local p1 = point.new(9, -12, 20)
 local u0 = unit.new(-1, -2, 0, 3, -2, 2, -3)
 local u1 = unit.new(0, 3, 0, 3, -3, 2, 0)
 local s0 = quantity.new(20, unit.new(1, 1, -2, -1, 0, 0, 0))
@@ -21,14 +18,12 @@ local s1 = quantity.new(10, unit.new(0, 1, -2, 0, 0, 0, 0))
 
 do -- Test __call metamethod for the modules.
 	assert(v0 == vector(-2, 3, -6))
-	assert(p0 == point(8, -9, -12))
 	assert(u0 == unit(-1, -2, 0, 3, -2, 2, -3))
 	assert(s0 == quantity(20, unit.new(1, 1, -2, -1, 0, 0, 0)))
 end
 
 do -- Test type registration
 	assert(type(v0) == 'vector')
-	assert(type(p0) == 'point')
 	assert(type(u0) == 'unit')
 	assert(type(s0) == 'quantity')
 end
@@ -36,9 +31,6 @@ end
 do -- Test clone function and ==
 	assert(vector.clone(v0) == v0)
 	assert(v0:clone() == v0)
-	
-	assert(point.clone(p0) == p0)
-	assert(p0:clone() == p0)
 	
 	assert(unit.clone(u0) == u0)
 	assert(u0:clone() == u0)
@@ -52,11 +44,6 @@ do -- Test tostring metamethod for modules
 	assert(vector.tostring(v0) == str0)
 	assert(v0:tostring() == str0)
 	assert(tostring(v0) == str0)
-	
-	local str1 = "point: (8, -9, -12)"
-	assert(point.tostring(p0) == str1)
-	assert(p0:tostring() == str1)
-	assert(tostring(p0) == str1)
 	
 	local str2 = "A^3 mol^2 / kg m^2 K^2 cd^3"
 	assert(unit.tostring(u0) == str2)
@@ -158,20 +145,6 @@ do -- Test Vector functions
 	local n3 = math.atan(-6, 13 ^ 0.5)
 	assert(vector.altitude(v0) == n3)
 	assert(v0:altitude() == n3)
-end
-
-do -- Test Point functions
-	-- Point translation
-	local p2 = point.new(6, -6, -18)
-	assert(point.translate(p0, v0) == p2)
-	assert(p0:translate(v0) == p2)
-	
-	-- Point difference
-	local vB = vector.new(1, -3, 32)
-	assert(point.difference(p0, p1) == vB)
-	assert(p0:difference(p1) == vB)
-	assert(point.difference(p1, p0) == -vB)
-	assert(p1:difference(p0) == -vB)
 end
 
 do -- Test Unit function
