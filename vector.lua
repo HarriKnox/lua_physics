@@ -186,10 +186,13 @@ end
 vector.normalize = function(vect)
 	if type(vect) == 'vector' then
 		local mag = vector.magnitude(vect)
-		local x = vect.x / mag
-		local y = vect.y / mag
-		local z = vect.z / mag
-		return vector.new(x, y, z)
+		if mag > 0 then
+			local x = vect.x / mag
+			local y = vect.y / mag
+			local z = vect.z / mag
+			return vector.new(x, y, z)
+		end
+		error("zero-length vector")
 	end
 	common.typeerror('normalize', vect, 'vector')
 end
