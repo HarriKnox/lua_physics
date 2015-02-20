@@ -7,9 +7,9 @@ local quntypes = {'quantity', 'unit', 'number'}
 
 vector.new = function(parx, pary, parz, paru)
 	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' and common.istype(paru, {'unit', 'nil'}) then
-		return setmetatable({x = parx, y = pary, z = parz, units = paru or require('units').empty}, vector_meta)
+		return setmetatable({x = parx, y = pary, z = parz, units = type(paru) == 'units' and paru:clone() or require('units').empty}, vector_meta)
 	end
-	common.typeerror('creation', parx, pary, parz, 'vector')
+	common.typeerror('creation', parx, pary, parz, paru, 'vector')
 end
 
 common.setcallmeta(vector)
@@ -103,7 +103,10 @@ vector.multiply = function(first, second)
 		local y = firsty * secondy
 		local z = firstz * secondz
 		local units = firstunits * secondunits
-		return vector.new(x, y, z, units)
+		if type(units) == 'unit' then
+			return vector.new(x, y, z, units)
+		end
+		return vector.new(x, y, z)
 	end
 	common.typeerror('multiplication', first, second, 'vector')
 end
@@ -136,7 +139,10 @@ vector.divide = function(first, second)
 		local y = first.y / secondy
 		local z = first.z / secondz
 		local units = first.units / secondunits
-		return vector.new(x, y, z, units)
+		if type(units) == 'unit' then
+			return vector.new(x, y, z, units)
+		end
+		return vector.new(x, y, z)
 	end
 	common.typeerror('division', first, second, 'vector')
 end
