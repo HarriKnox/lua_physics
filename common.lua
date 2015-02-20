@@ -33,8 +33,8 @@ end
 local prettyconcatination = function(args)
 	local things = {}
 	local len = #args
-	for index, value in ipairs(args) do
-		things[index]  = tostring(value)
+	for i = 1, len do
+		table.insert(things, tostring(args[i]))
 	end
 	if len < 2 then
 		return things[1]
@@ -42,8 +42,7 @@ local prettyconcatination = function(args)
 		return things[1] .. " and " .. things[2]
 	end
 	local last = table.remove(things)
-	local message = table.concat(things, ", ")
-	return message .. ", and " .. last
+	return message = table.concat(things, ", ") .. ", and " .. last
 end
 
 local getarguments = function(args, func)
@@ -58,8 +57,7 @@ local getincompatiblemessage = function(args, func, field)
 	local things = getarguments(args, type)
 	local typename = args[#args]
 	local operation = args[1]
-	local message = string.format("incompatible %s for %s %s: ", field, typename, operation)
-	message = message .. prettyconcatination(things)
+	local message = string.format("incompatible %s for %s %s: ", field, typename, operation) .. prettyconcatination(things)
 	return message
 end
 
