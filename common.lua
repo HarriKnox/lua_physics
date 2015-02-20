@@ -46,16 +46,26 @@ local prettyconcatination = function(args)
 	return message .. ", and " .. last
 end
 
-common.typeerror = function(...)
-	local args = {...}
-	local types = {}
+local getarguments = function(args, func)
+	local things = {}
 	for i = 2, #args - 1 do
-		table.insert(types, type(args[i]))
+		table.insert(things, func(args[i]))
 	end
+	return things
+end
+
+local getincompatiblemessage = function(args, func, field)
+	local things = getarguments(args, type)
 	local typename = args[#args]
 	local operation = args[1]
-	local message = string.format("incompatible type%s for %s %s: ", len == 1 and "" or "s", typename, operation)
-	message = message .. prettyconcatination(types)
+	local message = string.format("incompatible %s for %s %s: ", field, typename, operation)
+	message = message .. prettyconcatination(things)
+	return message
+end
+
+common.typeerror = function(...)
+	local args = {...}
+	local message = getincompatiblemessage(args, type, 'types')
 	error(message, 3)
 end
 
