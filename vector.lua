@@ -245,6 +245,20 @@ vector.altitude = function(vect)
 	common.typeerror('altitude', vect, 'vector')
 end
 
+vector.anglebetween = function(first, second)
+	if type(first) == 'vector' and type(second) == 'vector' then
+		local firstmag = vector.magnitude(first)
+		local secondmag = vector.magnitude(second)
+		local mags = firstmag * secondmag
+		if mags > 0 then
+			local dot = vector.dotproduct(first, second)
+			return math.acos(dot / mags)
+		end
+		error("zero-length vector")
+	end
+	common.typeerror('angle', first, second, 'vector')
+end
+
 vector.tostring = function(vect, sci)
 	return string.format("vector: (%g, %g, %g)%s", vect.x, vect.y, vect.z, vect.units:isempty() and '' or ' ' .. vect.units:tostring(sci))
 end
