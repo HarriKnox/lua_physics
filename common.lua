@@ -30,26 +30,32 @@ common.registertype = function(typemeta, typename)
 	types[typemeta] = typename
 end
 
+local prettyconcatination = function(args)
+	local things = {}
+	local len = #args
+	for index, value in ipairs(args) do
+		things[index]  = tostring(value)
+	end
+	if len < 2 then
+		return things[1]
+	elseif len == 2 then
+		return things[1] .. " and " .. things[2]
+	end
+	local last = table.remove(things)
+	local message = table.concat(things, ", ")
+	return message .. ", and " .. last
+end
+
 common.typeerror = function(...)
 	local args = {...}
 	local types = {}
 	for i = 2, #args - 1 do
 		table.insert(types, type(args[i]))
 	end
-	local len = #types
 	local typename = args[#args]
 	local operation = args[1]
 	local message = string.format("incompatible type%s for %s %s: ", len == 1 and "" or "s", typename, operation)
-	if len < 2 then
-		message = message .. types[1]
-	elseif len == 2 then
-		message = message .. types[1] .. " and " .. types[2]
-	else
-		for i = 1, len - 1 do
-			message = message .. types[i] .. ", "
-		end
-		message = message .. "and " .. types[len]
-	end
+	message = message .. prettyconcatination(types)
 	error(message, 3)
 end
 
