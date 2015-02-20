@@ -2,11 +2,12 @@ local vector = {}
 local vector_meta = {}
 vector_meta.__index = vector_meta
 local common = require('common')
+local quntypes = {'quantity', 'unit', 'number'}
 
 
 vector.new = function(parx, pary, parz, paru)
-	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' then
-		return setmetatable({x = parx, y = pary, z = parz}, vector_meta)
+	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' and common.istype(paru, {'unit', 'nil'}) then
+		return setmetatable({x = parx, y = pary, z = parz, units = paru or require('units').empty}, vector_meta)
 	end
 	common.typeerror('creation', parx, pary, parz, 'vector')
 end
@@ -19,59 +20,129 @@ vector.clone = function(vect)
 		local x = vect.x
 		local y = vect.y
 		local z = vect.z
-		return vector.new(x, y, z)
+		local units = vect.units
+		return vector.new(x, y, z, units)
 	end
 	common.typeerror('cloning', vect, 'vector')
 end
 
 vector.add = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = first.x + second.x
-		local y = first.y + second.y
-		local z = first.z + second.z
-		return vector.new(x, y, z)
+		if first.units == second.units then
+			local x = first.x + second.x
+			local y = first.y + second.y
+			local z = first.z + second.z
+			local units = first.units
+			return vector.new(x, y, z, units)
+		end
+		common.uniterror('addition', first.units, second.units, 'vector')
 	end
 	common.typeerror('addition', first, second, 'vector')
 end
 
 vector.subtract = function(first, second)
 	if type(first) == 'vector' and type(second) == 'vector' then
-		local x = first.x - second.x
-		local y = first.y - second.y
-		local z = first.z - second.z
-		return vector.new(x, y, z)
+		if first.units == second.units then
+			local x = first.x - second.x
+			local y = first.y - second.y
+			local z = first.z - second.z
+			local units = first.units
+			return vector.new(x, y, z, units)
+		end
+		common.uniterror('subtraction', first.units, second.units, 'vector')
 	end
 	common.typeerror('subtraction', first, second, 'vector')
 end
 
 vector.multiply = function(first, second)
-	if type(first) == 'vector' and type(second) == 'number' then
-		local x = first.x * second
-		local y = first.y * second
-		local z = first.z * second
-		return vector.new(x, y, z)
-	end
-	if type(second) == 'vector' and type(first) == 'number' then
-		local x = second.x * first
-		local y = second.y * first
-		local z = second.z * first
-		return vector.new(x, y, z)
+	if (type(first) == 'vector' and common.istype(second, quntypes)) or (type(second) == 'vector' and common.istype(first, quntypes)) then
+		local units = require('units')
+		local firstx = 1
+		local firsty = 1
+		local firstz = 1
+		local firstunits = units.empty
+		if type(first) == 'vector' then
+			firstx = first.x
+			firsty = first.y
+			firstz = first.z
+			first.units = first.units
+		elseif type(first) == 'quantity' then
+			firstx = first.value
+			firsty = first.value
+			firstz = first.value
+			firstunits = first.units
+		elseif type(first) == 'number' then
+			firstx = first
+			firsty = first
+			firstz = first
+		else
+			first.units = first
+		end
+		local secondx = 1
+		local secondy = 1
+		local secondz = 1
+		local secondunits = units.empty
+		if type(second) == 'vector' then
+			secondx = second.x
+			secondy = second.y
+			secondz = second.z
+			secondunits = second.units
+		elseif type(second) == 'quantity' then
+			secondx = second.value
+			secondy = second.value
+			secondz = second.value
+			secondunits = second.units
+		elseif type(second) == 'number' then
+			secondx = second
+			secondy = second
+			secondz = second
+		else
+			secondunits = second
+		end
+		local x = firstx * secondx
+		local y = firsty * secondy
+		local z = firstz * secondz
+		local units = firstunits * secondunits
+		return vector.new(x, y, z, units)
 	end
 	common.typeerror('multiplication', first, second, 'vector')
 end
 
 vector.divide = function(first, second)
-	if type(first) == 'vector' and type(second) == 'number' then
-		local x = first.x / second
-		local y = first.y / second
-		local z = first.z / second
-		return vector.new(x, y, z)
+	if type(first) == 'vector' and common.istype(second, quntypes) then
+		local units = require('units')
+		local secondx = 1
+		local secondy = 1
+		local secondz = 1
+		local secondunits = units.empty
+		if type(second) == 'vector' then
+			secondx = second.x
+			secondy = second.y
+			secondz = second.z
+			secondunits = second.units
+		elseif type(second) == 'quantity' then
+			secondx = second.value
+			secondy = second.value
+			secondz = second.value
+			secondunits = second.units
+		elseif type(second) == 'number' then
+			secondx = second
+			secondy = second
+			secondz = second
+		else
+			secondunits = second
+		end
+		local x = first.x / secondx
+		local y = first.y / secondy
+		local z = first.z / secondz
+		local units = first.units / secondunits
+		return vector.new(x, y, z, units)
 	end
 	common.typeerror('division', first, second, 'vector')
 end
 
 vector.intdivide = function(first, second)
-	if type(first) == 'vector' and type(second) == 'number' then
+	if type(first) == 'vector' and common.istype(second, quntypes) then
 		local vect = vector.divide(first, second)
 		vect.x = math.floor(vect.x)
 		vect.y = math.floor(vect.y)
@@ -83,10 +154,11 @@ end
 
 vector.negate = function(vect)
 	if type(vect) == 'vector' then
-		local x = vect.x
-		local y = vect.y
-		local z = vect.z
-		return vector.new(-x, -y, -z)
+		local x = -vect.x
+		local y = -vect.y
+		local z = -vect.z
+		local units = vect.units
+		return vector.new(x, y, z, units)
 	end
 	common.typeerror('negation', vect, 'vector')
 end
@@ -170,8 +242,8 @@ vector.altitude = function(vect)
 	common.typeerror('altitude', vect, 'vector')
 end
 
-vector.tostring = function(vect)
-	return string.format("vector: (%g, %g, %g)", vect.x, vect.y, vect.z)
+vector.tostring = function(vect, sci)
+	return string.format("vector: (%g, %g, %g)%s", vect.x, vect.y, vect.z, vect.units:isempty() and '' or ' ' .. vect.units:tostring(sci))
 end
 
 
