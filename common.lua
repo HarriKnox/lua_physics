@@ -69,6 +69,12 @@ common.typeerror = function(...)
 	error(message, 3)
 end
 
+common.uniterror = function(...)
+	local args = {...}
+	local message = getincompatablemessage(args, function(thing) return thing.units end, 'units')
+	error(message, 3)
+end
+
 common.istype = function(thing, types)
 	local t = type(thing)
 	for key, value in pairs(types) do
