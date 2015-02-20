@@ -69,7 +69,7 @@ end
 
 common.uniterror = function(...)
 	local args = {...}
-	local message = getincompatablemessage(args, function(thing) return thing.units end, 'units')
+	local message = getincompatablemessage(args, tostring, 'units')
 	error(message, 3)
 end
 
