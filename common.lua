@@ -31,9 +31,9 @@ common.registertype = function(typemeta, typename)
 end
 
 local prettyconcatination = function(args)
-	local things = {}
+	local things = {tostring(args[1])}
 	local len = #args
-	for i = 1, len do
+	for i = 2, len do
 		table.insert(things, tostring(args[i]))
 	end
 	if len < 2 then
@@ -42,7 +42,7 @@ local prettyconcatination = function(args)
 		return things[1] .. " and " .. things[2]
 	end
 	local last = table.remove(things)
-	return message = table.concat(things, ", ") .. ", and " .. last
+	return table.concat(things, ", ") .. ", and " .. last
 end
 
 local getarguments = function(args, func)
@@ -54,7 +54,7 @@ local getarguments = function(args, func)
 end
 
 local getincompatiblemessage = function(args, func, field)
-	local things = getarguments(args, type)
+	local things = getarguments(args, func)
 	local typename = args[#args]
 	local operation = args[1]
 	local message = string.format("incompatible %s for %s %s: ", field, typename, operation) .. prettyconcatination(things)
@@ -69,7 +69,7 @@ end
 
 common.uniterror = function(...)
 	local args = {...}
-	local message = getincompatablemessage(args, tostring, 'units')
+	local message = getincompatiblemessage(args, tostring, 'units')
 	error(message, 3)
 end
 
