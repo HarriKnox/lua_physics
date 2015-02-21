@@ -7,7 +7,7 @@ local quntypes = {'quantity', 'unit', 'number'}
 
 vector.new = function(parx, pary, parz, paru)
 	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' and common.istype(paru, {'unit', 'nil'}) then
-		return setmetatable({x = parx, y = pary, z = parz, units = type(paru) == 'units' and paru:clone() or require('units').empty}, vector_meta)
+		return setmetatable({x = parx, y = pary, z = parz, units = (type(paru) == 'unit' and paru:clone() or require('units').empty)}, vector_meta)
 	end
 	common.typeerror('creation', parx, pary, parz, paru, 'vector')
 end
@@ -265,8 +265,31 @@ vector.anglebetween = function(first, second)
 	common.typeerror('angle', first, second, 'vector')
 end
 
-vector.tostring = function(vect, sci)
-	return string.format("vector: (%g, %g, %g)%s", vect.x, vect.y, vect.z, vect.units:isempty() and '' or ' ' .. vect.units:tostring(sci))
+vector.tostring = function(vect, comp, sci)
+	local units = vect.units:isempty() and '' or ' ' .. vect.units:tostring(sci)
+	if comp then
+		local components = ''
+		if vect.x ~= 0 then
+			components = tostring(vect.x) .. " i"
+		end
+		if vect.y ~= 0 then
+			if #components > 0 then
+				components = components .. " + "
+			end
+			components = components .. tostring(vect.y) .. " j"
+		end
+		if vect.z ~= 0 then
+			if #components > 0 then
+				components = components .. " + "
+			end
+			components = components .. tostring(vect.z) .. " k"
+		end
+		if #components ~= 0 then
+			return "(" .. components .. ")" .. units
+		end
+		return "0" .. units
+	end
+	return string.format("<%g, %g, %g>%s", vect.x, vect.y, vect.z, units)
 end
 
 
