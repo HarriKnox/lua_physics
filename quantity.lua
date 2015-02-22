@@ -31,7 +31,7 @@ quantity.add = function(first, second)
 			local units = first.units
 			return quantity.new(value, units)
 		end
-		error("Incompatable units", 2)
+		common.uniterror('addition', first, second, 'quantity')
 	end
 	common.typeerror('addition', first, second, 'quantity')
 end
@@ -43,90 +43,28 @@ quantity.subtract = function(first, second)
 			local units = first.units
 			return quantity.new(value, units)
 		end
-		error("Incompatable units", 2)
+		common.uniterror('subtraction', first, second, 'quantity')
 	end
-	common.typeerror('addition', first, second, 'quantity')
+	common.typeerror('subtraction', first, second, 'quantity')
 end
 
 quantity.multiply = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
-		local units = require('units')
-		local firstvalue = 1
-		local firstunits = units.empty
-		if type(first) == 'quantity' then
-			firstvalue = first.value
-			firstunits = first.units
-		elseif type(first) == 'unit' then
-			firstunits = first
-		else
-			firstvalue = first
-		end
-		local secondvalue = 1
-		local secondunits = units.empty
-		if type(second) == 'quantity' then
-			secondvalue = second.value
-			secondunits = second.units
-		elseif type(second) == 'unit' then
-			secondunits = second
-		else
-			secondvalue = second
-		end
-		local value = firstvalue * secondvalue
-		local units = firstunits * secondunits
-		if (type(units) == 'unit' and units:isempty()) or type(units) == 'number' then
-			return value
-		elseif value == 1 then
-			return units
-		end
-		return quantity.new(value, units)
+	if common.checkvaluntype(first, second) then
+		return require('vector').multiply(first, second)
 	end
 	common.typeerror('multiplication', first, second, 'quantity')
 end
 
 quantity.divide = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
-		local units = require('units')
-		local firstvalue = 1
-		local firstunits = units.empty
-		if type(first) == 'quantity' then
-			firstvalue = first.value
-			firstunits = first.units
-		elseif type(first) == 'unit' then
-			firstunits = first
-		else
-			firstvalue = first
-		end
-		local secondvalue = 1
-		local secondunits = units.empty
-		if type(second) == 'quantity' then
-			secondvalue = second.value
-			secondunits = second.units
-		elseif type(second) == 'unit' then
-			secondunits = second
-		else
-			secondvalue = second
-		end
-		local value = firstvalue / secondvalue
-		local units = firstunits / secondunits
-		if (type(units) == 'unit' and units:isempty()) or type(units) == 'number' then
-			return value
-		elseif value == 1 then
-			return units
-		end
-		return quantity.new(value, units)
+	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+		return require('vector').divide(first, second)
 	end
 	common.typeerror('division', first, second, 'quantity')
 end
 
 quantity.intdivide = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
-		local qua = quantity.divide(first, second)
-		if type(qua) == 'quantity' then
-			qua.value = math.floor(qua.value)
-		elseif type(qua) == 'number' then
-			qua = math.floor(qua)
-		end
-		return qua
+	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+		return require('vector').intdivide(first, second)
 	end
 	common.typeerror('division', first, second, 'quantity')
 end
