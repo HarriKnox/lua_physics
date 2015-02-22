@@ -266,11 +266,17 @@ vector.divide = function(first, second)
 end
 
 vector.intdivide = function(first, second)
-	if type(first) == 'vector' and common.istype(second, quntypes) then
+	if common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and type(second) ~= 'vector' then
 		local vect = vector.divide(first, second)
-		vect.x = math.floor(vect.x)
-		vect.y = math.floor(vect.y)
-		vect.z = math.floor(vect.z)
+		if type(vect) == 'vector' then
+			vect.x = math.floor(vect.x)
+			vect.y = math.floor(vect.y)
+			vect.z = math.floor(vect.z)
+		elseif type(vect) == 'quantity' then
+			vect.value = math.floor(vect.value)
+		elseif type(vect) == 'number' then
+			vect = math.floor(vect)
+		end
 		return vect
 	end
 	common.typeerror('division', first, second, 'vector')
