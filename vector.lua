@@ -167,37 +167,100 @@ vector.multiply = function(first, second)
 end
 
 vector.divide = function(first, second)
-	if type(first) == 'vector' and common.istype(second, quntypes) then
-		local units = require('units')
-		local secondx = 1
-		local secondy = 1
-		local secondz = 1
-		local secondunits = units.empty
-		if type(second) == 'vector' then
-			secondx = second.x
-			secondy = second.y
-			secondz = second.z
-			secondunits = second.units
-		elseif type(second) == 'quantity' then
-			secondx = second.value
-			secondy = second.value
-			secondz = second.value
-			secondunits = second.units
-		elseif type(second) == 'number' then
-			secondx = second
-			secondy = second
-			secondz = second
+	if common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and type(second) ~= 'vector' then
+		local firstvalue = 1
+		local firstx = 1
+		local firsty = 1
+		local firstz = 1
+		local firstkg = 0
+		local firstm = 0
+		local firsts = 0
+		local firsta = 0
+		local firstk = 0
+		local firstmol = 0
+		local firstcd = 0
+		if common.istype(first, {'vector', 'quantity'}) then
+			firstkg = first.units.kilogram
+			firstm = first.units.meter
+			firsts = first.units.second
+			firsta = first.units.ampere
+			firstk = first.units.kelvin
+			firstmol = first.units.mole
+			firstcd = first.units.candela
+		end
+		if type(first) == 'vector' then
+			firstx = first.x
+			firsty = first.y
+			firstz = first.z
+		elseif type(first) == 'quantity' then
+			firstvalue = first.value
+			firstx = first.value
+			firsty = first.value
+			firstz = first.value
+		elseif type(first) == 'number' then
+			firstvalue = first
+			firstx = first
+			firsty = first
+			firstz = first
 		else
-			secondunits = second
+			firstkg = first.kilogram
+			firstm = first.meter
+			firsts = first.second
+			firsta = first.ampere
+			firstk = first.kelvin
+			firstmol = first.mole
+			firstcd = first.candela
 		end
-		local x = first.x / secondx
-		local y = first.y / secondy
-		local z = first.z / secondz
-		local units = first.units / secondunits
-		if type(units) == 'unit' then
-			return vector.new(x, y, z, units)
+		local secondvalue = 1
+		local secondkg = 0
+		local secondm = 0
+		local seconds = 0
+		local seconda = 0
+		local secondk = 0
+		local secondmol = 0
+		local secondcd = 0
+		if common.istype(second, {'vector', 'quantity'}) then
+			secondkg = second.units.kilogram
+			secondm = second.units.meter
+			seconds = second.units.second
+			seconda = second.units.ampere
+			secondk = second.units.kelvin
+			secondmol = second.units.mole
+			secondcd = second.units.candela
 		end
-		return vector.new(x, y, z)
+		if type(second) == 'quantity' then
+			secondvalue = second.value
+		elseif type(second) == 'number' then
+			secondvalue = second
+		else
+			secondkg = second.kilogram
+			secondm = second.meter
+			seconds = second.second
+			seconda = second.ampere
+			secondk = second.kelvin
+			secondmol = second.mole
+			secondcd = second.candela
+		end
+		local value = firstvalue / secondvalue
+		local x = firstx / secondvalue
+		local y = firsty / secondvalue
+		local z = firstz / secondvalue
+		local kg = firstkg - secondkg
+		local m = firstm - secondm
+		local s = firsts - seconds
+		local a = firsta - seconda
+		local k = firstk - firstk
+		local mol = firstmol - secondmol
+		local cd = firstcd - secondcd
+		local unt = unit.new(kg, m, s, a, k, mol, cd)
+		if type(first) == 'vector' then
+			return vector.new(x, y, z, unt)
+		elseif (type(unt) == 'unit' and unt:isempty()) or type(unt) == 'number' then
+			return value
+		elseif value == 1 then
+			return unt
+		end
+		return require('quantity').new(value, unt)
 	end
 	common.typeerror('division', first, second, 'vector')
 end
