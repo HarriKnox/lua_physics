@@ -2,7 +2,7 @@ local vector = {}
 local vector_meta = {}
 vector_meta.__index = vector_meta
 local common = require('common')
-local quntypes = {'quantity', 'unit', 'number'}
+local qvuntypes = {'quantity', 'vector', 'unit', 'number'}
 
 
 vector.new = function(parx, pary, parz, paru)
@@ -55,7 +55,7 @@ vector.subtract = function(first, second)
 end
 
 vector.multiply = function(first, second)
-	if (type(first) == 'vector' and common.istype(second, quntypes)) or (type(second) == 'vector' and common.istype(first, quntypes)) then
+	if common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and not (type(first) == 'vector' and type(second) == 'vector') then
 		local firstvalue = 1
 		local firstx = 1
 		local firsty = 1
