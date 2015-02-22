@@ -83,6 +83,11 @@ common.istype = function(thing, types)
 	return false
 end
 
+common.checkvaluntypes = function(first, second) -- check first and second if they are of 'qvun' types
+	local qvuntypes = {'quantity', 'vector', 'unit', 'number'}
+	return common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and not (type(first) == 'vector' and type(second) == 'vector')
+end
+
 common.anyoftype = function(...) -- pass type name as last argument
 	local args = {...}
 	local len = #args - 1

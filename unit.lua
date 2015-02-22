@@ -30,172 +30,22 @@ unit.clone = function(un)
 end
 
 unit.multiply = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
-		local firstvalue = 1
-		local firstkg = 0
-		local firstm = 0
-		local firsts = 0
-		local firsta = 0
-		local firstk = 0
-		local firstmol = 0
-		local firstcd = 0
-		if type(first) == 'quantity' then
-			firstvalue = first.value
-			local units = first.units
-			firstkg = units.kilogram
-			firstm = units.meter
-			firsts = units.second
-			firsta = units.ampere
-			firstk = units.kelvin
-			firstmol = units.mole
-			firstcd = units.candela
-		elseif type(first) == 'unit' then
-			firstkg = first.kilogram
-			firstm = first.meter
-			firsts = first.second
-			firsta = first.ampere
-			firstk = first.kelvin
-			firstmol = first.mole
-			firstcd = first.candela
-		else
-			firstvalue = first
-		end
-		local secondvalue = 1
-		local secondkg = 0
-		local secondm = 0
-		local seconds = 0
-		local seconda = 0
-		local secondk = 0
-		local secondmol = 0
-		local secondcd = 0
-		if type(second) == 'quantity' then
-			secondvalue = second.value
-			local units = second.units
-			secondkg = units.kilogram
-			secondm = units.meter
-			seconds = units.second
-			seconda = units.ampere
-			secondk = units.kelvin
-			secondmol = units.mole
-			secondcd = units.candela
-		elseif type(second) == 'unit' then
-			secondkg = second.kilogram
-			secondm = second.meter
-			seconds = second.second
-			seconda = second.ampere
-			secondk = second.kelvin
-			secondmol = second.mole
-			secondcd = second.candela
-		else
-			secondvalue = second
-		end
-		local value = firstvalue * secondvalue
-		local kg = firstkg + secondkg
-		local m = firstm + secondm
-		local s = firsts + seconds
-		local a = firsta + seconda
-		local k = firstk + secondk
-		local mol = firstmol + secondmol
-		local cd = firstcd + secondcd
-		local unt = unit.new(kg, m, s, a, k, mol, cd)
-		if (type(unt) == 'unit' and unt:isempty()) or type(unt) == 'number' then
-			return value
-		elseif value == 1 then
-			return unt
-		end
-		return require('quantity').new(value, unt)
+	if common.checkvaluntype(first, second) then
+		return require('vector').multiply(first, second)
 	end
 	common.typeerror('multiplication', first, second, 'unit')
 end
 
 unit.divide = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
-		local firstvalue = 1
-		local firstkg = 0
-		local firstm = 0
-		local firsts = 0
-		local firsta = 0
-		local firstk = 0
-		local firstmol = 0
-		local firstcd = 0
-		if type(first) == 'quantity' then
-			firstvalue = first.value
-			local units = first.units
-			firstkg = units.kilogram
-			firstm = units.meter
-			firsts = units.second
-			firsta = units.ampere
-			firstk = units.kelvin
-			firstmol = units.mole
-			firstcd = units.candela
-		elseif type(first) == 'unit' then
-			firstkg = first.kilogram
-			firstm = first.meter
-			firsts = first.second
-			firsta = first.ampere
-			firstk = first.kelvin
-			firstmol = first.mole
-			firstcd = first.candela
-		else
-			firstvalue = first
-		end
-		local secondvalue = 1
-		local secondkg = 0
-		local secondm = 0
-		local seconds = 0
-		local seconda = 0
-		local secondk = 0
-		local secondmol = 0
-		local secondcd = 0
-		if type(second) == 'quantity' then
-			secondvalue = second.value
-			local units = second.units
-			secondkg = units.kilogram
-			secondm = units.meter
-			seconds = units.second
-			seconda = units.ampere
-			secondk = units.kelvin
-			secondmol = units.mole
-			secondcd = units.candela
-		elseif type(second) == 'unit' then
-			secondkg = second.kilogram
-			secondm = second.meter
-			seconds = second.second
-			seconda = second.ampere
-			secondk = second.kelvin
-			secondmol = second.mole
-			secondcd = second.candela
-		else
-			secondvalue = second
-		end
-		local value = firstvalue / secondvalue
-		local kg = firstkg - secondkg
-		local m = firstm - secondm
-		local s = firsts - seconds
-		local a = firsta - seconda
-		local k = firstk - secondk
-		local mol = firstmol - secondmol
-		local cd = firstcd - secondcd
-		local unt = unit.new(kg, m, s, a, k, mol, cd)
-		if (type(unt) == 'units' and unt:isempty()) or type(unt) == 'number' then
-			return value
-		elseif value == 1 then
-			return unt
-		end
-		return require('quantity').new(value, unt)
+	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+		return require('vector').divide(first, second)
 	end
 	common.typeerror('division', first, second, 'unit')
 end
 
 unit.intdivide = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
-		local unt = unit.divide(first, second)
-		if type(unt) == 'quantity' then
-			unt.value = math.floor(unt.value)
-		elseif type(unt) == 'number' then
-			unt = math.floor(unt)
-		end
-		return unt
+	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+		return require('vector').intdivide(first, second)
 	end
 	common.typeerror('division', first, second, 'quantity')
 end
