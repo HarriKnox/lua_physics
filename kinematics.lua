@@ -2,7 +2,7 @@ local kinematics = {}
 local common = require('common')
 
 kinematics.position = function(initialposition, initialvelocity, acceleration, timeelapsed)
-	if common.alloftype(initialposition, initialvelocity, acceleration, timeelapsed, 'quantity') then
+	if type(timeelapsed) == 'quantity' and common.alloftype(initialposition, initialvelocity, acceleration, {'quantity', 'vector'}) then
 		local units = require('units')
 		local meter = units.meter
 		local speed = meter / units.second
@@ -13,7 +13,7 @@ kinematics.position = function(initialposition, initialvelocity, acceleration, t
 				timeelapsed.units == units.second then
 			return initialposition + (initialvelocity * timeelapsed) + (acceleration * (timeelapsed ^ 2) / 2)
 		end
-		error("Incompatable types", 2)
+		common.uniterror('position', initialposition, initialvelocity, acceleration, timeelapsed, 'kinematics')
 	end
 	common.typeerror('position', initialposition, initialvelocity, acceleration, timeelapsed, 'kinematics')
 end
