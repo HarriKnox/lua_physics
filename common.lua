@@ -88,6 +88,18 @@ common.checkvaluntypes = function(first, second) -- check first and second if th
 	return common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and not (type(first) == 'vector' and type(second) == 'vector')
 end
 
+common.getunits = function(thing) -- returns the units of passed value (units.empty if value is a number) or nil if there are no units associated to the value
+	if common.istype(thing, {'quantity', 'vector', 'unit', 'number'}) then
+		if common.istype(thing, {'quantity', 'vector'}) then
+			return thing.units
+		elseif type(thing) == 'unit' then
+			return thing
+		end
+		return require('units').empty
+	end
+	return nil
+end
+
 common.alloftype = function(...)
 	local args = {...}
 	local len = #args - 1

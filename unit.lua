@@ -121,9 +121,6 @@ unit.tostring = function(unt, sci)
 			end
 		end
 		if #numerator == 0 then
-			if #denominator == 0 then
-				return ''
-			end
 			table.insert(numerator, '1')
 		end
 		local str = table.concat(numerator, ' ')
