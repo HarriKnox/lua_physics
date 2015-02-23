@@ -167,7 +167,7 @@ vector.multiply = function(first, second)
 end
 
 vector.divide = function(first, second)
-	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+	if common.checkvaluntypes(first, second) and type(second) ~= 'vector' then
 		local firstvalue = 1
 		local firstx = 1
 		local firsty = 1
@@ -266,7 +266,7 @@ vector.divide = function(first, second)
 end
 
 vector.intdivide = function(first, second)
-	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+	if common.checkvaluntypes(first, second) and type(second) ~= 'vector' then
 		local vect = vector.divide(first, second)
 		if type(vect) == 'vector' then
 			vect.x = math.floor(vect.x)
