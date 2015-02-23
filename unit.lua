@@ -29,6 +29,18 @@ unit.clone = function(un)
 	common.typeerror('cloning', un, 'unit')
 end
 
+unit.add = function(first, second)
+	if common.istype(first, quntypes) and common.istype(second, quntypes) then
+		local firstunits = common.getunits(first)
+		local secondunits = common.getunits(second)
+		if firstunits == secondunits then
+			return require('quantity').add(first, secon)
+		end
+		common.uniterror('addition', firstunits, secondunits, 'unit')
+	end
+	common.typeerror('addition', first, second, 'unit')
+end
+
 unit.multiply = function(first, second)
 	if common.checkvaluntypes(first, second) then
 		return require('vector').multiply(first, second)
