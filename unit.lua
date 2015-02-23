@@ -30,21 +30,21 @@ unit.clone = function(un)
 end
 
 unit.multiply = function(first, second)
-	if common.checkvaluntype(first, second) then
+	if common.checkvaluntypes(first, second) then
 		return require('vector').multiply(first, second)
 	end
 	common.typeerror('multiplication', first, second, 'unit')
 end
 
 unit.divide = function(first, second)
-	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+	if common.checkvaluntypes(first, second) and type(second) ~= 'vector' then
 		return require('vector').divide(first, second)
 	end
 	common.typeerror('division', first, second, 'unit')
 end
 
 unit.intdivide = function(first, second)
-	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+	if common.checkvaluntypes(first, second) and type(second) ~= 'vector' then
 		return require('vector').intdivide(first, second)
 	end
 	common.typeerror('division', first, second, 'quantity')

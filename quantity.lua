@@ -49,21 +49,21 @@ quantity.subtract = function(first, second)
 end
 
 quantity.multiply = function(first, second)
-	if common.checkvaluntype(first, second) then
+	if common.checkvaluntypes(first, second) then
 		return require('vector').multiply(first, second)
 	end
 	common.typeerror('multiplication', first, second, 'quantity')
 end
 
 quantity.divide = function(first, second)
-	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+	if common.checkvaluntypes(first, second) and type(second) ~= 'vector' then
 		return require('vector').divide(first, second)
 	end
 	common.typeerror('division', first, second, 'quantity')
 end
 
 quantity.intdivide = function(first, second)
-	if common.checkvaluntype(first, second) and type(second) ~= 'vector' then
+	if common.checkvaluntypes(first, second) and type(second) ~= 'vector' then
 		return require('vector').intdivide(first, second)
 	end
 	common.typeerror('division', first, second, 'quantity')
