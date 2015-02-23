@@ -2,7 +2,6 @@ local vector = {}
 local vector_meta = {}
 vector_meta.__index = vector_meta
 local common = require('common')
-local qvuntypes = {'quantity', 'vector', 'unit', 'number'}
 
 
 vector.new = function(parx, pary, parz, paru)

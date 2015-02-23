@@ -2,7 +2,6 @@ local unit = {}
 local unit_meta = {}
 unit_meta.__index = unit_meta
 local common = require('common')
-local quntypes = {'quantity', 'unit', 'number'}
 
 
 unit.new = function(parkg, parm, pars, para, park, parmol, parcd)
@@ -30,7 +29,7 @@ unit.clone = function(un)
 end
 
 unit.add = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
+	if common.isquntype(first) and common.isquntype(second) then
 		local firstunits = common.getunits(first)
 		local secondunits = common.getunits(second)
 		if firstunits == secondunits then
@@ -39,6 +38,18 @@ unit.add = function(first, second)
 		common.uniterror('addition', firstunits, secondunits, 'unit')
 	end
 	common.typeerror('addition', first, second, 'unit')
+end
+
+unit.subtract = function(first, second)
+	if common.isquntype(first) and common.isquntype(second) then
+		local firstunits = common.getunits(first)
+		local secondunits = common.getunits(second)
+		if firstunits == secondunits then
+			return require('quantity').add(first, secon)
+		end
+		common.uniterror('subtraction', firstunits, secondunits, 'unit')
+	end
+	common.typeerror('subtraction', first, second, 'unit')
 end
 
 unit.multiply = function(first, second)

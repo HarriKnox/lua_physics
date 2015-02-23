@@ -2,7 +2,6 @@ local quantity = {}
 local quantity_meta = {}
 quantity_meta.__index = quantity_meta
 local common = require('common')
-local quntypes = {'quantity', 'unit', 'number'}
 
 
 quantity.new = function(parvalue, parunits)
@@ -25,7 +24,7 @@ quantity.clone = function(qua)
 end
 
 quantity.add = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
+	if common.isquntype(first) and common.isquntype(second) then
 		local firstunits = common.getunits(first)
 		local secondunits = common.getunits(second)
 		if firstunits == secondunits then
@@ -54,13 +53,30 @@ quantity.add = function(first, second)
 end
 
 quantity.subtract = function(first, second)
-	if type(first) == 'quantity' and type(second) == 'quantity' then
-		if first.units == second.units then
-			local value = first.value - second.value
-			local units = first.units
-			return quantity.new(value, units)
+	if common.isquntype(first) and common.isquntype(second) then
+		local firstunits = common.getunits(first)
+		local secondunits = common.getunits(second)
+		if firstunits == secondunits then
+			local units = require('units')
+			local firstvalue = 1
+			if type(first) == 'quantity' then
+				firstvalue = first.value
+			else
+				firstvalue = first
+			end
+			local secondvalue = 1
+			if type(second) == 'quantity' then
+				secondvalue = second.value
+			else
+				secondvalue = second
+			end
+			local value = firstvalue - secondvalue
+			if (type(firstunits) == 'unit' and firstunits:isempty()) or type(firstunits) == 'number' then
+				return value
+			end
+			return quantity.new(value, firstunits)
 		end
-		common.uniterror('subtraction', first, second, 'quantity')
+		common.uniterror('addition', firstunits, secondunits, 'quantity')
 	end
 	common.typeerror('subtraction', first, second, 'quantity')
 end
@@ -103,7 +119,7 @@ quantity.power = function(qua, num)
 end
 
 quantity.equals = function(first, second)
-	if common.istype(first, quntypes) and common.istype(second, quntypes) then
+	if common.isquntype(first) and common.isquntype(second) then
 		local units = require('units')
 		local firstvalue = 1
 		local firstunits = units.empty
