@@ -88,6 +88,10 @@ common.checkvaluntypes = function(first, second) -- check first and second if th
 	return common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and not (type(first) == 'vector' and type(second) == 'vector')
 end
 
+common.isquntype = function(thing)
+	return common.istype(thing, {'quantity', 'unit', 'number'})
+end
+
 common.getunits = function(thing) -- returns the units of passed value (units.empty if value is a number) or nil if there are no units associated to the value
 	if common.istype(thing, {'quantity', 'vector', 'unit', 'number'}) then
 		if common.istype(thing, {'quantity', 'vector'}) then
