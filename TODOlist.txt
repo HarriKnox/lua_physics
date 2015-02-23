@@ -1,4 +1,3 @@
-add vectors to quantity or units to vector
 create Grouping to group quantities that cannot be added together so they stick together (basically a parentheses system)
 create Unknowns
 Documentation
