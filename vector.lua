@@ -298,7 +298,8 @@ vector.equals = function(first, second)
 		local x = first.x == second.x
 		local y = first.y == second.y
 		local z = first.z == second.z
-		return x and y and z
+		local units = first.units == second.units
+		return x and y and z and units
 	end
 	return false
 end
@@ -308,19 +309,25 @@ vector.magnitude = function(vect)
 		local x = vect.x ^ 2
 		local y = vect.y ^ 2
 		local z = vect.z ^ 2
-		return math.sqrt(x + y + z)
+		local mag = math.sqrt(x + y + z)
+		local units = vect.units
+		if units:isempty() then
+			return mag
+		end
+		return require('quantity').new(mag, units)
 	end
 	common.typeerror('magnitude', vect, 'vector')
 end
 
 vector.normalize = function(vect)
 	if type(vect) == 'vector' then
-		local mag = vector.magnitude(vect)
+		local mag = vector.magnitude(vect).value
 		if mag > 0 then
 			local x = vect.x / mag
 			local y = vect.y / mag
 			local z = vect.z / mag
-			return vector.new(x, y, z)
+			local units = vect.units
+			return vector.new(x, y, z, units)
 		end
 		error("zero-length vector")
 	end
@@ -332,7 +339,12 @@ vector.dotproduct = function(first, second)
 		local x = first.x * second.x
 		local y = first.y * second.y
 		local z = first.z * second.z
-		return x + y + z
+		local dot = x + y + z
+		local units = first.units * second.units
+		if (type(units) == 'unit' and units:isempty()) or type(units) == 'number' then
+			return dot
+		end
+		return require('quantity').new(x + y + z, units)
 	end
 	common.typeerror('dot-product', first, second, 'vector')
 end
@@ -342,7 +354,8 @@ vector.crossproduct = function(first, second)
 		local x = (first.y * second.z) - (first.z * second.y)
 		local y = (first.z * second.x) - (first.x * second.z)
 		local z = (first.y * second.x) - (first.x * second.y)
-		return vector.new(x, y, z)
+		local units = first.units * second.units
+		return vector.new(x, y, z, units)
 	end
 	common.typeerror('cross-product', first, second, 'vector')
 end
@@ -380,7 +393,7 @@ vector.anglebetween = function(first, second)
 		local firstmag = vector.magnitude(first)
 		local secondmag = vector.magnitude(second)
 		local mags = firstmag * secondmag
-		if mags > 0 then
+		if (type(mags) == 'number' and mags > 0) or mags.value > 0 then
 			local dot = vector.dotproduct(first, second)
 			return math.acos(dot / mags)
 		end
