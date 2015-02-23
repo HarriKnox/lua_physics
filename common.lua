@@ -88,28 +88,20 @@ common.checkvaluntypes = function(first, second) -- check first and second if th
 	return common.istype(first, qvuntypes) and common.istype(second, qvuntypes) and not (type(first) == 'vector' and type(second) == 'vector')
 end
 
-common.anyoftype = function(...) -- pass type name as last argument
+common.alloftype = function(...)
 	local args = {...}
 	local len = #args - 1
-	local typename = table.remove(args)
-	for i = 1, len do
-		if type(args[i]) == typename then
-			return true
+	local types = table.remove(args)
+	if common.istype(args[1], types) then
+		local typename = type(args[1])
+		for i = 2, len do
+			if type(args[1]) ~= typename then
+				return false
+			end
 		end
+		return true
 	end
 	return false
-end
-
-common.alloftype = function(...) -- pass type name as last argument
-	local args = {...}
-	local len = #args - 1
-	local typename = table.remove(args)
-	for i = 1, len do
-		if type(args[1]) ~= typename then
-			return false
-		end
-	end
-	return true
 end
 
 common.notsupported = function(typename, operation)
