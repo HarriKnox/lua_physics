@@ -122,18 +122,18 @@ end
 
 common.getmethods(quantity, quantity_meta)
 
+quantity_meta.__add = quantity.add
+quantity_meta.__sub = quantity.subtract
+quantity_meta.__unm = quantity.negate
+quantity_meta.__pow = quantity.power
 quantity_meta.__eq = quantity.equals
 quantity_meta.__mul = quantity.multiply
 quantity_meta.__div = quantity.divide
 quantity_meta.__idiv = quantity.intdivide
 quantity_meta.__tostring = quantity.tostring
 
-quantity_meta.__add = quantity.add -- common.notsupported('quantities', 'addition')
-quantity_meta.__sub = quantity.subtract -- common.notsupported('quantities', 'subtraction')
-quantity_meta.__unm = quantity.negate -- common.notsupported('quantities', 'unary-minus')
 quantity_meta.__len = common.notsupported('quantities', 'length')
 quantity_meta.__mod = common.notsupported('quantities', 'modulo')
-quantity_meta.__pow = quantity.power -- common.notsupported('quantities', 'powers')
 quantity_meta.__concat = common.notsupported('quantities', 'concatination')
 quantity_meta.__lt = common.notsupported('quantities', 'less-than')
 quantity_meta.__le = common.notsupported('quantities', 'less-than-or-equal-to')
