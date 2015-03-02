@@ -411,26 +411,26 @@ vector.tostring = function(vect, comp, sci)
 	if comp then
 		local components = ''
 		if vect.x ~= 0 then
-			components = tostring(vect.x) .. " i"
+			components = tostring(vect.x.value) .. " i"
 		end
 		if vect.y ~= 0 then
 			if #components > 0 then
 				components = components .. " + "
 			end
-			components = components .. tostring(vect.y) .. " j"
+			components = components .. tostring(vect.y.value) .. " j"
 		end
 		if vect.z ~= 0 then
 			if #components > 0 then
 				components = components .. " + "
 			end
-			components = components .. tostring(vect.z) .. " k"
+			components = components .. tostring(vect.z.value) .. " k"
 		end
 		if #components ~= 0 then
 			return "(" .. components .. ")" .. units
 		end
 		return "0" .. units
 	end
-	return string.format("<%g, %g, %g>%s", vect.x, vect.y, vect.z, units)
+	return string.format("<%g, %g, %g>%s", vect.x.value, vect.y.value, vect.z.value, units)
 end
 
 
