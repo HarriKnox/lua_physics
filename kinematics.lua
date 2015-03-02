@@ -22,7 +22,7 @@ kinematics.position = function(initialposition, initialvelocity, acceleration, t
 				timeelapsed.units == units.second then
 			return initialposition + (initialvelocity * timeelapsed) + (acceleration * (timeelapsed ^ 2) / 2)
 		end
-		common.uniterror('position', initialposition, initialvelocity, acceleration, timeelapsed, 'kinematics')
+		common.uniterror('position', initialposition.units, initialvelocity.units, acceleration.units, timeelapsed.units, 'kinematics')
 	end
 	common.typeerror('position', initialposition, initialvelocity, acceleration, timeelapsed, 'kinematics')
 end
@@ -35,7 +35,7 @@ kinematics.velocity = function(initialvelocity, acceleration, timeelapsed)
 		if initialvelocity.units == speed and acceleration.units == accel and timeelapsed.units == units.second then
 			return initialvelocity + (acceleration * timeelapsed)
 		end
-		common.uniterror('velocity', initialvelocity, acceleration, timeelapsed, 'kinematics')
+		common.uniterror('velocity', initialvelocity.units, acceleration.units, timeelapsed.units, 'kinematics')
 	end
 	common.typeerror('velocity', initialvelocity, acceleration, timeelapsed, 'kinematics')
 end
@@ -56,7 +56,7 @@ kinematics.timeelapsed = function(deltax, velocity, acceleration)
 			local minus = ((-velocity) - math.sqrt(discriminant)) / (2 * acceleration)
 			return plus, minus
 		end
-		common.uniterror('timeelapsed', deltax, velocity, acceleration, 'kinematics')
+		common.uniterror('timeelapsed', deltax.units, velocity.units, acceleration.units, 'kinematics')
 	end
 	common.typeerror('timeelapsed', deltax, velocity, acceleration, 'kinematics')
 end
