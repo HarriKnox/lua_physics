@@ -18,6 +18,14 @@ units.kelvin = k
 units.mole = mol
 units.candela = cd
 
+units.kilo = 1000
+units.hecto = 100
+units.deka = 10
+units.deci = 0.1
+units.centi = 0.01
+units.milli = 0.001
+
+units.gram = kg / 1000
 units.hertz = 1 / s
 units.newton = (kg * m) / (s ^ 2)
 units.pascal = units.newton / (m ^ 2)
