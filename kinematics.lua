@@ -2,13 +2,17 @@ local kinematics = {}
 local common = require('common')
 
 --[[
-	x_f = x_i + (v)(t) + (a)(t)/2
+	x_f = x_i + (v)(t) + (a)(t^2)/2
 	t = (-v +- (v^2 - 4(a)(d_x))^0.5) / 2(a)
+	a = 2(d_x)/(t^2) - 2(v)/(t)
+	v = (d_x/t) - (a)(t)/2
+	
 	v_f = v_i + (a)(t)
 	2(a)(d_x) = (v_f)^2 - (v_i)^2
 	v_ave = (v_f - v_i) / 2
 	a_ave = v_ave / t
 --]]
+
 
 kinematics.position = function(initialposition, initialvelocity, acceleration, timeelapsed)
 	if type(timeelapsed) == 'quantity' and common.alloftype(initialposition, initialvelocity, acceleration, {'quantity', 'vector'}) then
@@ -45,15 +49,15 @@ kinematics.timeelapsed = function(deltax, velocity, acceleration)
 		local units = require('units')
 		local speed = units.meter / units.second
 		local accel = speed / units.second
-		if delta_x.units == units.meter and velocity.units == speed and acceleration.units == accel then
+		if deltax.units == units.meter and velocity.units == speed and acceleration.units == accel then
 			local discriminant = (velocity ^ 2) - (4 * acceleration * deltax)
-			if discriminant < 0 then
+			if discriminant < (0 * units.meter ^ 2 / units.second ^ 2) then
 				return nil
-			elseif discriminant == 0 then
+			elseif discriminant == (0 * units.meter ^ 2 / units.second ^ 2) then
 				return (-velocity) / (2 * acceleration)
 			end
-			local plus = ((-velocity) + math.sqrt(discriminant)) / (2 * acceleration)
-			local minus = ((-velocity) - math.sqrt(discriminant)) / (2 * acceleration)
+			local plus = ((-velocity) + (discriminant ^ 0.5)) / (2 * acceleration)
+			local minus = ((-velocity) - (discriminant ^ 0.5)) / (2 * acceleration)
 			return plus, minus
 		end
 		common.uniterror('timeelapsed', deltax.units, velocity.units, acceleration.units, 'kinematics')
