@@ -3,14 +3,19 @@ local common = require('common')
 
 --[[
 	x_f = x_i + (v)(t) + (a)(t^2)/2
-	t = (-v +- (v^2 - 4(a)(d_x))^0.5) / 2(a)
+	t = (-v +- (v^2 - 4(a/2)(d_x))^0.5) / 2(a/2)
 	a = 2(d_x)/(t^2) - 2(v)/(t)
 	v = (d_x/t) - (a)(t)/2
 	
 	v_f = v_i + (a)(t)
+	a = d_v / t
+	t = d_v / a
+	
 	2(a)(d_x) = (v_f)^2 - (v_i)^2
-	v_ave = (v_f - v_i) / 2
-	a_ave = v_ave / t
+	d_x = (v_f^2 - v_i^2)/2(a)
+	a = (v_f^2 - v_i^2)/2(d_x)
+	v_f = (2(a)(d_x) / -(v_i^2))^0.5
+	v_i = (2(a)(d_x) / -(v_f^2))^0.5
 --]]
 
 
