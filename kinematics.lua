@@ -50,14 +50,14 @@ kinematics.timeelapsed = function(deltax, velocity, acceleration)
 		local speed = units.meter / units.second
 		local accel = speed / units.second
 		if deltax.units == units.meter and velocity.units == speed and acceleration.units == accel then
-			local discriminant = (velocity ^ 2) - (4 * acceleration * deltax)
+			local discriminant = (velocity ^ 2) - (4 * (acceleration / 2) * deltax)
 			if discriminant < (0 * units.meter ^ 2 / units.second ^ 2) then
 				return nil
 			elseif discriminant == (0 * units.meter ^ 2 / units.second ^ 2) then
 				return (-velocity) / (2 * acceleration)
 			end
-			local plus = ((-velocity) + (discriminant ^ 0.5)) / (2 * acceleration)
-			local minus = ((-velocity) - (discriminant ^ 0.5)) / (2 * acceleration)
+			local plus = ((-velocity) + (discriminant ^ 0.5)) / (2 * (acceleration / 2))
+			local minus = ((-velocity) - (discriminant ^ 0.5)) / (2 * (acceleration / 2))
 			return plus, minus
 		end
 		common.uniterror('timeelapsed', deltax.units, velocity.units, acceleration.units, 'kinematics')
