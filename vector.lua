@@ -6,7 +6,12 @@ local common = require('common')
 
 vector.new = function(parx, pary, parz, paru)
 	if type(parx) == 'number' and type(parx) == 'number' and type(parx) == 'number' and common.istype(paru, {'unit', 'nil'}) then
-		return setmetatable({x = parx, y = pary, z = parz, units = (type(paru) == 'unit' and paru:clone() or require('units').empty)}, vector_meta)
+		local quantity = require('quantity')
+		local units = (type(paru) == 'unit' and paru:clone() or require('units').empty)
+		local x = quantity.new(parx, units)
+		local y = quantity.new(pary, units)
+		local z = quantity.new(parz, units)
+		return setmetatable({x = x, y = y, z = z, units = units}, vector_meta)
 	end
 	common.typeerror('creation', parx, pary, parz, paru, 'vector')
 end
