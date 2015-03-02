@@ -5,8 +5,8 @@ local common = require('common')
 
 
 quantity.new = function(parvalue, parunits)
-	if type(parvalue) == 'number' and type(parunits) == 'unit' then
-		return setmetatable({value = parvalue, units = parunits:clone()}, quantity_meta)
+	if type(parvalue) == 'number' and common.istype(parunits, {'unit', 'nil'}) then
+		return setmetatable({value = parvalue, units = (type(parunits) == 'unit' and parunits:clone() or require('units').empty)}, quantity_meta)
 	end
 	common.typeerror('creation', parvalue, parunits, 'quantity')
 end
