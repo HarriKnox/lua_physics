@@ -18,4 +18,17 @@ kinematics.position = function(initialposition, initialvelocity, acceleration, t
 	common.typeerror('position', initialposition, initialvelocity, acceleration, timeelapsed, 'kinematics')
 end
 
+kinematics.velocity = function(initialvelocity, acceleration, timeelapsed)
+	if type(timeelapsed) == 'quantity' and common.alloftype(initialvelocity, acceleration, {'quantity', 'vector'}) then
+		local units = require('units')
+		local speed = units.meter / units.second
+		local accel = speed / units.second
+		if initialvelocity.units == speed and acceleration.units = accel and timeelapsed.units == units.second then
+			return initialvelocity + (acceleration * timeelapsed)
+		end
+		common.uniterror('velocity', initialvelocity, acceleration, timeelapsed, 'kinematics')
+	end
+	common.typeerror('velocity', initialvelocity, acceleration, timeelapsed, 'kinematics')
+end
+
 return kinematics
