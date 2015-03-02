@@ -148,6 +148,26 @@ quantity.equals = function(first, second)
 	return false
 end
 
+quantity.lessthan = function(first, second)
+	if type(first) == 'quantity' and type(second) == 'quantity' then
+		if first.units == second.units then
+			return first.value < second.value
+		end
+		common.uniterror('less-than', first.units, second.units, 'units')
+	end
+	common.typeerror('less-than', first, second, 'units')
+end
+
+quantity.lessthanorequalto = function(first, second)
+	if type(first) == 'quantity' and type(second) == 'quantity' then
+		if first.units == second.units then
+			return first.value <= second.value
+		end
+		common.uniterror('less-than', first.units, second.units, 'units')
+	end
+	common.typeerror('less-than', first, second, 'units')
+end
+
 quantity.tostring = function(qua, sci)
 	return string.format("%g%s", qua.value, qua.units:isempty() and '' or ' ' .. qua.units:tostring(sci))
 end
@@ -164,12 +184,12 @@ quantity_meta.__mul = quantity.multiply
 quantity_meta.__div = quantity.divide
 quantity_meta.__idiv = quantity.intdivide
 quantity_meta.__tostring = quantity.tostring
+quantity_meta.__lt = quantity.lessthan
+quantity_meta.__le = quantity.lessthanorequalto
 
 quantity_meta.__len = common.notsupported('quantities', 'length')
 quantity_meta.__mod = common.notsupported('quantities', 'modulo')
 quantity_meta.__concat = common.notsupported('quantities', 'concatination')
-quantity_meta.__lt = common.notsupported('quantities', 'less-than')
-quantity_meta.__le = common.notsupported('quantities', 'less-than-or-equal-to')
 quantity_meta.__band = common.notsupported('quantities', 'bitwise')
 quantity_meta.__bor = quantity_meta.__band
 quantity_meta.__bxor = quantity_meta.__band
