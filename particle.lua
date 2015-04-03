@@ -17,15 +17,17 @@ common.registertype(particle_meta, 'particle')
 
 particle.clone = function(part)
 	if type(part) == 'particle' then
+		local charge = part.charge
 		local mass = part.mass
 		local position = part.position
-		return particle.new(mass, position)
+		return particle.new(charge, mass, position)
 	end
 	common.typeerror('cloning', part, 'particle')
 end
 
 particle.equals = function(first, second)
 	if common.alloftype(first, second, {'particle'}) then
+		local charge = first.charge == second.charge
 		local mass = first.mass == second.mass
 		local position = first.position == second.position
 		return mass and position
@@ -34,7 +36,7 @@ particle.equals = function(first, second)
 end
 
 particle.tostring = function(part, comp)
-	return "Particle: " .. part.mass:tostring() .. " at " .. part.position:tostring(comp)
+	return string.format("%s %s %s", part.mass:tostring(), part.charge:tostring(), part.position:tostring(comp)
 end
 
 
