@@ -4,12 +4,12 @@ particle_meta.__index = particle_meta
 local common = require('common')
 
 
-particle.new = function(parm, parp)
+particle.new = function(parc, parm, parp)
 	local units = require('units')
-	if type(parm) == 'quantity' and parm.units == units.kilogram and common.istype(parp, {'quantity', 'vector'}) and parp.units == units.meter then
-		return setmetatable({mass = parm, position = parp}, particle_meta)
+	if type(parc) == 'quantity' and parc.units == units.coulomb and type(parm) == 'quantity' and parm.units == units.kilogram and common.istype(parp, {'quantity', 'vector'}) and parp.units == units.meter then
+		return setmetatable({charge = parc, mass = parm, position = parp}, particle_meta)
 	end
-	common.typeerror('creation', parm, parp, 'particle')
+	common.typeerror('creation', parc, parm, parp, 'particle')
 end
 
 common.setcallmeta(particle)
