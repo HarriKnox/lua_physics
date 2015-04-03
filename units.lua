@@ -36,7 +36,7 @@ units.volt = units.watt / a
 units.farad = units.coulomb / units.volt
 units.ohm = units.volt / a
 units.henry = units.ohm * s
-units.tesla = kg / ((s ^ 2) * A)
+units.tesla = kg / ((s ^ 2) * a)
 units.weber = units.tesla * (m ^ 2)
 
 units.minute = 60 * s
