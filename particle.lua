@@ -6,7 +6,7 @@ local common = require('common')
 
 particle.new = function(parm, parp)
 	local units = require('units')
-	if type(parm) == 'scalar' and parm.units == units.kilogram and common.istype(parp, {'scalar', 'vector'}) and parp.units == units.meter then
+	if type(parm) == 'quantity' and parm.units == units.kilogram and common.istype(parp, {'quantity', 'vector'}) and parp.units == units.meter then
 		return setmetatable({mass = parm, position = parp}, particle_meta)
 	end
 	common.typeerror('creation', parm, parp, 'particle')
