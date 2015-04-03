@@ -153,7 +153,7 @@ vector.multiply = function(first, second)
 		local k = firstk + firstk
 		local mol = firstmol + secondmol
 		local cd = firstcd + secondcd
-		local unt = unit.new(kg, m, s, a, k, mol, cd)
+		local unt = require('unit').new(kg, m, s, a, k, mol, cd)
 		if type(first) == 'vector' or type(second) == 'vector' then
 			return vector.new(x, y, z, unt)
 		elseif (type(unt) == 'unit' and unt:isempty()) or type(unt) == 'number' then
