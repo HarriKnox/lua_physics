@@ -14,8 +14,8 @@ local common = require('common')
 	2(a)(d_x) = (v_f)^2 - (v_i)^2
 --	d_x = (v_f^2 - v_i^2)/2(a)
 	a = (v_f^2 - v_i^2)/2(d_x)
-	v_f = (2(a)(d_x) / -(v_i^2))^0.5
-	v_i = (2(a)(d_x) / -(v_f^2))^0.5
+	v_f = ((v_i^2) + 2(a)(d_x))^0.5
+	v_i = ((v_f^2) - 2(a)(d_x))^0.5
 --]]
 
 
