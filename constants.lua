@@ -11,5 +11,6 @@ local cd = unit.new(0, 0, 0, 0, 0, 0, 1)
 
 constants.speedoflight = 299792458 * m / s
 constants.earthgravity = 9.80665 * m / (s ^ 2)
+constants.electrostatic = 8987551787.3681764 * kg * (m ^ 3) / ((s ^ 4) * (a ^ 2))
 
 return constants
