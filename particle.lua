@@ -23,3 +23,12 @@ particle.clone = function(part)
 	end
 	common.typeerror('cloning', part, 'particle')
 end
+
+particle.equals = function(first, second)
+	if common.alloftype(first, second, {'particle'}) then
+		local mass = first.mass == second.mass
+		local position = first.position == second.position
+		return mass and position
+	end
+	return false
+end
