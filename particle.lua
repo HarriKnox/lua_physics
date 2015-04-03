@@ -36,14 +36,21 @@ particle.equals = function(first, second)
 end
 
 particle.tostring = function(part, comp)
-	return string.format("%s %s %s", part.mass:tostring(), part.charge:tostring(), part.position:tostring(comp))
+	return string.format("(%s) (%s) (%s)", part.mass:tostring(), part.charge:tostring(), part.position:tostring(comp))
 end
 
 particle.forcebetween = function(first, second)
 	if type(first) == 'particle' and type(second) == 'particle' then
 		local ke = require('constants').electrostatic
 		local r = first.position - second.position
-		return ke * first.charge * second.charge / (r ^ 2)
+		if r == 0 or type(r) == 'vector' and #r == 0 then error("zero-length vector") end
+		local direction
+		if type(r) == 'vector' then
+			direction = r:normalize().value
+		else
+			direction = r.value >= 0 and 1 or -1
+		end
+		return ke * first.charge * second.charge * direction / (r ^ 2)
 	end
 	common.typeerror('force-between', first, second, 'particle')
 end
