@@ -55,6 +55,29 @@ particle.forcebetween = function(first, second)
 	common.typeerror('force-between', first, second, 'particle')
 end
 
+particle.electricfield = function(part, loc)
+	if type(part) == 'particle' and common.istype(loc, {'vector', 'quantity'}) and loc.units == require('units').meter then
+		if type(part.position) == 'vector' or type(loc) == type(part.position) then
+			local ke = require('constants').electrostatic
+			local r
+			if type(loc) ~= type(part.position) then
+				r = loc
+			else
+				r = loc - part.position
+			end
+			local direction
+			if type(r) == 'vector' then
+				direction = r:normalize().value
+			else
+				direction = r.value >= 0 and 1 or -1
+			end
+			return ke * part.charge * direction / (r ^ 2)
+		end
+		common.typeerror('distance', particle.position, loc, 'particle')
+	end
+	common.typeerror('electric-field', part, loc, 'particle')
+end
+
 
 common.getmethods(particle, particle_meta)
 
