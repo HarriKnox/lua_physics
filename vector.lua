@@ -332,7 +332,10 @@ end
 
 vector.normalize = function(vect)
 	if type(vect) == 'vector' then
-		local mag = vector.magnitude(vect).value
+		local mag = vector.magnitude(vect)
+		if type(mag) == 'quantity' then
+			mag = mag.value
+		end
 		if mag > 0 then
 			local x = vect.x / mag
 			local y = vect.y / mag
