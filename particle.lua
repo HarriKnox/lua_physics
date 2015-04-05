@@ -46,7 +46,8 @@ particle.forcebetween = function(first, second)
 		if r == 0 or type(r) == 'vector' and #r == 0 then error("zero-length vector") end
 		local direction
 		if type(r) == 'vector' then
-			direction = r:normalize().value
+			direction = r:normalize()
+			direction.units = require('units').empty
 		else
 			direction = r.value >= 0 and 1 or -1
 		end
@@ -67,7 +68,8 @@ particle.electricfield = function(part, loc)
 			end
 			local direction
 			if type(r) == 'vector' then
-				direction = r:normalize().value
+				direction = r:normalize()
+				direction.units = require('units').empty
 			else
 				direction = r.value >= 0 and 1 or -1
 			end
