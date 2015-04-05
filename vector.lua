@@ -304,6 +304,17 @@ vector.equals = function(first, second)
 	return false
 end
 
+vector.power = function(vect, pow)
+	if type(vect) == 'vector' and type(pow) == 'number' then
+		local mag = vector.magnitude(vect)
+		if type(mag) == 'quantity' then
+			return require('quantity').new(mag.value ^ pow, mag.units ^ pow)
+		end
+		return mag ^ pow
+	end
+	common.typeerror('power', vect, pow, 'vector')
+end
+
 vector.magnitude = function(vect)
 	if type(vect) == 'vector' then
 		local x = vect.x ^ 2
@@ -438,12 +449,12 @@ vector_meta.__mul = vector.multiply
 vector_meta.__div = vector.divide
 vector_meta.__unm = vector.negate
 vector_meta.__idiv = vector.intdivide
+vector_meta.__pow = vector.power
 vector_meta.__eq = vector.equals
 vector_meta.__len = vector.magnitude
 vector_meta.__tostring = vector.tostring
 
 vector_meta.__mod = common.notsupported('vectors', 'modulo')
-vector_meta.__pow = common.notsupported('vectors', 'powers')
 vector_meta.__concat = common.notsupported('vectors', 'concatination')
 vector_meta.__lt = common.notsupported('vectors', 'less-than')
 vector_meta.__le = common.notsupported('vectors', 'less-than-or-equal-to')
