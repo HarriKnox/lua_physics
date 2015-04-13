@@ -49,7 +49,13 @@ system.electricfield = function(sys, loc)
 	common.typeerror('electric field', loc, 'system')
 end
 
-common.getmethods(system,system_meta)
+system.tostring = function(sys)
+	return string.format("System with %d particles", #sys.objects)
+end
+
+common.getmethods(system, system_meta)
+
+system_meta.__tostring = system.tostring
 
 system_meta.__add = common.notsupported('systems', 'addition')
 system_meta.__sub = common.notsupported('systems', 'subtraction')
@@ -60,7 +66,6 @@ system_meta.__idiv = common.notsupported('systems', 'int-division')
 system_meta.__pow = common.notsupported('systems', 'power')
 system_meta.__eq = common.notsupported('systems', 'equals')
 system_meta.__len = common.notsupported('systems', 'length')
-system_meta.__tostring = common.notsupported('systems', 'tostring')
 system_meta.__mod = common.notsupported('systems', 'modulo')
 system_meta.__concat = common.notsupported('systems', 'concatination')
 system_meta.__lt = common.notsupported('systems', 'less-than')
