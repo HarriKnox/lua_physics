@@ -34,6 +34,21 @@ system.removeparticle = function(sys, part)
 	common.typeerror('particle removal', sys, part, 'system')
 end
 
+system.electricfield = function(sys, loc)
+	if type(sys) == 'system'  and type(loc) == 'vector' then
+		local units = require('units')
+		if loc.units == units.meter then
+			local efield = require('vector').new(0, 0, 0, units.newton / units.coulomb)
+			for i, p in pairs(sys.objects) do
+				efield = efield + p:electricfield(loc)
+			end
+			return efield
+		end
+		common.uniterror('electric field', loc.units, 'system')
+	end
+	common.typeerror('electric field', loc, 'system')
+end
+
 common.getmethods(vector, vector_meta)
 
 system_meta.__add = common.notsupported('systems', 'addition')
