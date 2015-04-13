@@ -23,7 +23,9 @@ common.setcallmeta = function(parmodule)
 					error(obj, 2)
 				end
 				return obj
-			end})
+			end
+		}
+	)
 end
 
 common.registertype = function(typemeta, typename)
@@ -71,6 +73,15 @@ common.uniterror = function(...)
 	local args = {...}
 	local message = getincompatiblemessage(args, tostring, 'units')
 	error(message, 3)
+end
+
+common.intable = function(item, list)
+	for k, v in pairs(list) do
+		if item == v then
+			return true
+		end
+	end
+	return false
 end
 
 common.istype = function(thing, types)
