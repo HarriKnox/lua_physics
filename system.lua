@@ -10,7 +10,7 @@ end
 common.setmetacall(system)
 common.registertype(system_meta, 'system')
 
-system.addparticle(sys, part)
+system.addparticle = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
 		if not common.intable(part, sys.objects) then
 			table.insert(sys.objects, part)
@@ -21,7 +21,7 @@ system.addparticle(sys, part)
 	common.typeerror('particle addition', sys, part, 'system')
 end
 
-system.removeparticle(sys, part)
+system.removeparticle = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
 		for i, p in pairs(sys.objects) do
 			if p == part then
@@ -33,3 +33,5 @@ system.removeparticle(sys, part)
 	end
 	common.typeerror('particle removal', sys, part, 'system')
 end
+
+return system
