@@ -75,9 +75,10 @@ common.uniterror = function(...)
 	error(message, 3)
 end
 
-common.intable = function(item, list)
+common.intable = function(item, list, equalsfunc)
+	local equals = equalsfunc or function(a, b) return a == b end
 	for k, v in pairs(list) do
-		if rawequal(item, v) then
+		if equals(item, v) then
 			return true
 		end
 	end
