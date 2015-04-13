@@ -7,7 +7,7 @@ system.new = function()
 	return setmetatable({objects = {}}, system_meta)
 end
 
-common.setmetacall(system)
+common.setcallmeta(system)
 common.registertype(system_meta, 'system')
 
 system.addparticle = function(sys, part)
