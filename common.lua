@@ -77,7 +77,7 @@ end
 
 common.intable = function(item, list)
 	for k, v in pairs(list) do
-		if item == v then
+		if rawequal(item, v) then
 			return true
 		end
 	end
