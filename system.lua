@@ -20,3 +20,16 @@ system.addparticle(sys, part)
 	end
 	common.typeerror('particle addition', sys, part, 'system')
 end
+
+system.removeparticle(sys, part)
+	if type(sys) == 'system' and type(part) == 'particle' then
+		for i, p in pairs(sys.objects) do
+			if p == part then
+				table.remove(sys.objects, i)
+				return sys
+			end
+		end
+		error("particle doesn't exist in system")
+	end
+	common.typeerror('particle removal', sys, part, 'system')
+end
