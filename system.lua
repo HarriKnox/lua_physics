@@ -34,6 +34,22 @@ system.removeparticle = function(sys, part)
 	common.typeerror('particle removal', sys, part, 'system')
 end
 
+system.forcesactingon(sys, part)
+	if type(sys) == 'system' and type(part) == 'particle' then
+		if common.intable(part, sys.objects) then
+			local forces = require('vector').new(0, 0, 0, require('units').newton)
+			for i, p in pairs(sys.objects) do
+				if p ~= part then
+					forces = forces + part:forcebetween(p)
+				end
+			end
+			return forces
+		end
+		error("particle doesn't exist in system")
+	end
+	common.typeerror('force calculation', sys, part, 'system')
+end
+
 system.electricfield = function(sys, loc)
 	if type(sys) == 'system'  and type(loc) == 'vector' then
 		local units = require('units')
