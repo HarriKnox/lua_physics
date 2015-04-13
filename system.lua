@@ -34,4 +34,27 @@ system.removeparticle = function(sys, part)
 	common.typeerror('particle removal', sys, part, 'system')
 end
 
+common.getmethods(vector, vector_meta)
+
+system_meta.__add = common.notsupported('systems', 'addition')
+system_meta.__sub = common.notsupported('systems', 'subtraction')
+system_meta.__mul = common.notsupported('systems', 'multiplication')
+system_meta.__div = common.notsupported('systems', 'division')
+system_meta.__unm = common.notsupported('systems', 'unary-minus')
+system_meta.__idiv = common.notsupported('systems', 'int-division')
+system_meta.__pow = common.notsupported('systems', 'power')
+system_meta.__eq = common.notsupported('systems', 'equals')
+system_meta.__len = common.notsupported('systems', 'length')
+system_meta.__tostring = common.notsupported('systems', 'tostring')
+system_meta.__mod = common.notsupported('systems', 'modulo')
+system_meta.__concat = common.notsupported('systems', 'concatination')
+system_meta.__lt = common.notsupported('systems', 'less-than')
+system_meta.__le = common.notsupported('systems', 'less-than-or-equal-to')
+system_meta.__band = common.notsupported('systems', 'bitwise')
+system_meta.__bor = vector_meta.__band
+system_meta.__bxor = vector_meta.__band
+system_meta.__bnot = vector_meta.__band
+system_meta.__shl = vector_meta.__band
+system_meta.__shr = vector_meta.__band
+
 return system
