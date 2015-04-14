@@ -34,7 +34,7 @@ system.removeparticle = function(sys, part)
 	common.typeerror('particle removal', sys, part, 'system')
 end
 
-system.forcesactingon(sys, part)
+system.forcesactingon = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
 		if common.intable(part, sys.objects) then
 			local forces = require('vector').new(0, 0, 0, require('units').newton)
