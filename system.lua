@@ -23,11 +23,10 @@ end
 
 system.removeparticle = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
-		for i, p in pairs(sys.objects) do
-			if p == part then
-				table.remove(sys.objects, i)
-				return sys
-			end
+		local i = common.intable(part, sys.objects)
+		if i then
+			table.remove(sys.objects, i)
+			return sys
 		end
 		error("particle doesn't exist in system")
 	end
@@ -36,10 +35,11 @@ end
 
 system.forcesactingon = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
-		if common.intable(part, sys.objects) then
+		local index = common.intable(part, sys.objects)
+		if index then
 			local forces = require('vector').new(0, 0, 0, require('units').newton)
 			for i, p in pairs(sys.objects) do
-				if p ~= part then
+				if i ~= index then
 					forces = forces + part:forcebetween(p)
 				end
 			end
