@@ -77,12 +77,12 @@ end
 
 common.intable = function(item, list, equalsfunc)
 	local equals = equalsfunc or function(a, b) return a == b end
-	for k, v in pairs(list) do
-		if equals(item, v) then
-			return true
+	for key, value in pairs(list) do
+		if equals(item, value) then
+			return key
 		end
 	end
-	return false
+	return nil
 end
 
 common.istype = function(thing, types)
