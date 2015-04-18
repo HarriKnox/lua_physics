@@ -10,20 +10,34 @@ end
 common.setcallmeta(system)
 common.registertype(system_meta, 'system')
 
+local particleequals = function(first, second)
+	return first.charge.value == second.charge.value and
+			first.mass.value == second.mass.value and
+			first.position.x == second.position.x and
+			first.position.y == second.position.y and
+			first.position.z == second.position.z
+end
+
+local particlepositionequals = function(first, second)
+	return first.position.x == second.position.x and
+			first.position.y == second.position.y and
+			first.position.z == second.position.z
+end
+
 system.addparticle = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
-		if not common.intable(part, sys.objects) then
+		if not common.intable(part, sys.objects, particlepositionequals) then
 			table.insert(sys.objects, part)
 			return sys
 		end
-		error("particle already exists in system")
+		error("particle already exists at that location system")
 	end
 	common.typeerror('particle addition', sys, part, 'system')
 end
 
 system.removeparticle = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
-		local i = common.intable(part, sys.objects)
+		local i = common.intable(part, sys.objects, particleequals)
 		if i then
 			table.remove(sys.objects, i)
 			return sys
@@ -35,7 +49,7 @@ end
 
 system.forcesactingon = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
-		local index = common.intable(part, sys.objects)
+		local index = common.intable(part, sys.objects, particleequals)
 		if index then
 			local forces = require('vector').new(0, 0, 0, require('units').newton)
 			for i, p in pairs(sys.objects) do
