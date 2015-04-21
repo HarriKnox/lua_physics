@@ -6,8 +6,11 @@ local common = require('common')
 
 particle.new = function(parc, parm, parp)
 	local units = require('units')
-	if type(parc) == 'quantity' and parc.units == units.coulomb and type(parm) == 'quantity' and parm.units == units.kilogram and common.istype(parp, {'quantity', 'vector'}) and parp.units == units.meter then
-		return setmetatable({charge = parc, mass = parm, position = parp}, particle_meta)
+	if type(parc) == 'quantity' and type(parm) == 'quantity' and common.istype(parp, {'quantity', 'vector'}) then
+		if parc.units == units.coulomb and parm.units == units.kilogram and parp.units == units.meter then
+			return setmetatable({charge = parc, mass = parm, position = parp}, particle_meta)
+		end
+		common.uniterror('creation', parc.units, parm.units, parp.units, 'particle')
 	end
 	common.typeerror('creation', parc, parm, parp, 'particle')
 end
