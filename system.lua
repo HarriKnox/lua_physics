@@ -26,11 +26,14 @@ end
 
 system.addparticle = function(sys, part)
 	if type(sys) == 'system' and type(part) == 'particle' then
-		if not common.intable(part, sys.objects, particlepositionequals) then
-			table.insert(sys.objects, part)
-			return sys
+		if type(part.position) == 'vector' then
+			if not common.intable(part, sys.objects, particlepositionequals) then
+				table.insert(sys.objects, part)
+				return sys
+			end
+			error("particle already exists at that location system")
 		end
-		error("particle already exists at that location system")
+		error("cannot add particle with 1D position to 3D system (at least not yet)")
 	end
 	common.typeerror('particle addition', sys, part, 'system')
 end
