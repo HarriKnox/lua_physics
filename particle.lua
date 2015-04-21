@@ -5,8 +5,8 @@ local common = require('common')
 
 
 particle.new = function(parc, parm, parp)
-	local units = require('units')
 	if type(parc) == 'quantity' and type(parm) == 'quantity' and common.istype(parp, {'quantity', 'vector'}) then
+		local units = require('units')
 		if parc.units == units.coulomb and parm.units == units.kilogram and parp.units == units.meter then
 			return setmetatable({charge = parc, mass = parm, position = parp}, particle_meta)
 		end
@@ -33,7 +33,7 @@ particle.equals = function(first, second)
 		local charge = first.charge == second.charge
 		local mass = first.mass == second.mass
 		local position = first.position == second.position
-		return mass and position
+		return charge and mass and position
 	end
 	return false
 end
